@@ -1,0 +1,18 @@
+{
+    "objects": [
+        {
+            "id": "player",
+            "path": "img/player.png",
+            "position": [200, 200],
+            "velocity": [],
+            "acceleration": [],
+            "textureID": "player",
+            "width": 80,
+            "height": 45,
+            "currentFrame": 0,
+            "currentRow": 0,
+            "numFrames": 2,
+            "animSpeed": 100
+        }
+    ]
+}
