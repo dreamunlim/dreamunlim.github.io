@@ -16,10 +16,9 @@ class InputHandler {
         this.upPressed = false;
         this.downPressed = false;
         
-        // this.escPressed = false;
+        this.escPressed = false;
 
-        // this.mouseLeft = false;
-        // this.mouseRight = false;
+        this.mouseLeftPressed = false;
     }
 
     keyDownHandler(e) {
@@ -35,6 +34,9 @@ class InputHandler {
                 break;
             case "ArrowDown":
                 InputHandler.downPressed = true;
+                break;
+            case "Escape":
+                InputHandler.escPressed = true;
                 break;
         }
     }
@@ -53,6 +55,26 @@ class InputHandler {
             case "ArrowDown":
                 InputHandler.downPressed = false;
                 break;
+            case "Escape":
+                InputHandler.escPressed = false;
+                break;
+        }
+    }
+
+    mouseDownHandler(e) {
+        switch (e.button) {
+            case 0: // 0/1/2 - left/middle/right button
+                InputHandler.mouseLeftPressed = true;
+
+                var to = new Vector2D(e.offsetX, e.offsetY);
+                player.position = to;
+        }
+    }
+
+    mouseUpHandler(e) {
+        switch (e.button) {
+            case 0:
+                InputHandler.mouseLeftPressed = false;
         }
     }
     

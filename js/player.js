@@ -10,16 +10,16 @@ class Player extends GameObject {
         // have no idea why referencing class "InputHandler.leftPressed" property
         // works but referencing object "inputHandler." property does not work here
         if (InputHandler.leftPressed) {
-            this.position.x -= 7;
+            this.position.x -= this.velocity.x - this.acceleration.x;
         }
         if (InputHandler.rightPressed) {
-            this.position.x += 7;
+            this.position.x += this.velocity.x + this.acceleration.x;
         }
         if (InputHandler.upPressed) {
-            this.position.y -= 7;
+            this.position.y -= this.velocity.y - this.acceleration.x;
         }
         if (InputHandler.downPressed) {
-            this.position.y += 7;
+            this.position.y += this.velocity.y + this.acceleration.x;
         }
     }
 

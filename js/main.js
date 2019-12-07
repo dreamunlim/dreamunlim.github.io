@@ -41,12 +41,13 @@ const FRAME_TIME = 1000 / FPS;
 
 //create TextureManager object
 var textureManager = new TextureManager();
-// textureManager.storeTexture("img/player.png", "player");
 
 //create InputHandler object
 var inputHandler = new InputHandler();
 document.addEventListener("keydown", inputHandler.keyDownHandler, false);
 document.addEventListener("keyup", inputHandler.keyUpHandler, false);
+document.addEventListener('mousedown', inputHandler.mouseDownHandler, false);
+document.addEventListener('mouseup', inputHandler.mouseUpHandler, false);
 
 
 //create game object factory and register game object types
