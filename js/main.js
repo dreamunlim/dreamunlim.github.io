@@ -5,18 +5,13 @@ console.log("Hello, Stanislav :)");
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-const width = canvas.width = 720;
-const height = canvas.height = window.innerHeight;
+var width = canvas.width = 640;
+var height = canvas.height = 640;
 
-function random(min, max) {
-  const num = Math.floor(Math.random() * (max - min + 1)) + min;
-  return num;
-}
-
-// var player = new Image();
-// player.src = 'img/player.png';
-// player.onload = function() {
-//ctx.drawImage(player, 200, 200, 80, 45);}
+// for smartphone screen
+var scale = resize();
+// console.log(scale);
+// console.log(canvas.width);
 
 
 // function draw() {

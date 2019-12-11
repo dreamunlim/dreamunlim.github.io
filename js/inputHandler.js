@@ -66,7 +66,12 @@ class InputHandler {
             case 0: // 0/1/2 - left/middle/right button
                 InputHandler.mouseLeftPressed = true;
 
-                var to = new Vector2D(e.offsetX, e.offsetY);
+                if (window.innerWidth < window.innerHeight) {
+                    var to = new Vector2D(e.clientX/scale, e.clientY/scale);
+                } else {
+                    var to = new Vector2D(e.offsetX, e.offsetY);
+                }
+
                 player.position = to;
         }
     }
