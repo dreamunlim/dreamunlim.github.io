@@ -10,8 +10,9 @@ var height = canvas.height = 640;
 
 // for smartphone screen
 var scale = resize();
-// console.log(scale);
-// console.log(canvas.width);
+console.log(scale, canvas.width, canvas.height);
+console.log(window.innerWidth, window.innerHeight);
+
 
 
 // function draw() {
@@ -20,6 +21,7 @@ var scale = resize();
 //     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI); // draw contour arc
 //     ctx.fill(); // finish drawing the path we started with beginPath(), and fill the area it takes up with the color we specified earlier in fillStyle
 // }
+
 
 // create game objects
 // var gameJson = parseJson("json/initAll.json");
@@ -41,12 +43,13 @@ var textureManager = new TextureManager();
 var inputHandler = new InputHandler();
 document.addEventListener("keydown", inputHandler.keyDownHandler, false);
 document.addEventListener("keyup", inputHandler.keyUpHandler, false);
-document.addEventListener('mousedown', inputHandler.mouseDownHandler, false);
-document.addEventListener('mouseup', inputHandler.mouseUpHandler, false);
-
+document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
+// document.addEventListener("pointerup", inputHandler.mouseUpHandler, false);
+// window.addEventListener("orientationchange", onRotate, false);
 
 //create game object factory and register game object types
-// GameObjectFactory::getpGameObjectFactory();
+var gameObjectFactory = new GameObjectFactory();
+gameObjectFactory.registerObject("player", new Player());
 
 //create finite state machine
 // pGameStateMachine = new GameStateMachine();

@@ -1,42 +1,36 @@
 'use strict'
-// had to make these global since after listener events get added,
-// listeners temporarily modify the vars below (or they do modify
-// but their own copy of the vars) unless I explicitly
-// tell the listeners to access vars like "InputHandler.leftPressed"
-      
-// var leftPressed = false;
-// var rightPressed = false;
-// var upPressed = false;
-// var downPressed = false;
 
 class InputHandler {
-    constructor() {
-        this.leftPressed = false;
-        this.rightPressed = false;
-        this.upPressed = false;
-        this.downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    upPressed = false;
+    downPressed = false;
         
-        this.escPressed = false;
+    escPressed = false;
 
-        this.mouseLeftPressed = false;
+    mouseLeftPressed = false;
+    mEvent; // bookkeep mouse event
+    
+    constructor() {
+        // defining vars here seemed to create constants 
     }
 
     keyDownHandler(e) {
         switch (e.key) {
             case "ArrowLeft":
-                InputHandler.leftPressed = true;
+                inputHandler.leftPressed = true;
                 break;
             case "ArrowRight":
-                InputHandler.rightPressed = true;
+                inputHandler.rightPressed = true;
                 break;
             case "ArrowUp":
-                InputHandler.upPressed = true;
+                inputHandler.upPressed = true;
                 break;
             case "ArrowDown":
-                InputHandler.downPressed = true;
+                inputHandler.downPressed = true;
                 break;
             case "Escape":
-                InputHandler.escPressed = true;
+                inputHandler.escPressed = true;
                 break;
         }
     }
@@ -44,19 +38,19 @@ class InputHandler {
     keyUpHandler(e) {
         switch (e.key) {
             case "ArrowLeft":
-                InputHandler.leftPressed = false;
+                inputHandler.leftPressed = false;
                 break;
             case "ArrowRight":
-                InputHandler.rightPressed = false;
+                inputHandler.rightPressed = false;
                 break;
             case "ArrowUp":
-                InputHandler.upPressed = false;
+                inputHandler.upPressed = false;
                 break;
             case "ArrowDown":
-                InputHandler.downPressed = false;
+                inputHandler.downPressed = false;
                 break;
             case "Escape":
-                InputHandler.escPressed = false;
+                inputHandler.escPressed = false;
                 break;
         }
     }
@@ -64,22 +58,18 @@ class InputHandler {
     mouseDownHandler(e) {
         switch (e.button) {
             case 0: // 0/1/2 - left/middle/right button
-                InputHandler.mouseLeftPressed = true;
-
-                if (window.innerWidth < window.innerHeight) {
-                    var to = new Vector2D(e.clientX/scale, e.clientY/scale);
-                } else {
-                    var to = new Vector2D(e.offsetX, e.offsetY);
-                }
-
-                player.position = to;
+                inputHandler.mouseLeftPressed = true;
+                inputHandler.mEvent = e;
         }
     }
 
     mouseUpHandler(e) {
         switch (e.button) {
             case 0:
-                InputHandler.mouseLeftPressed = false;
+                // 'pointerup' event triggers too fast on mobile
+                // 'mouseLeftPressed' is mostly 'false' when 'player'
+                // gets to update itself
+                // inputHandler.mouseLeftPressed = false;
         }
     }
     

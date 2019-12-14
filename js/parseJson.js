@@ -35,10 +35,15 @@ function parseObjects (gameJson) {
         var numFrames = currObject["numFrames"];
         var animSpeed = currObject["animSpeed"];
 
-        var playerInit = new InitData(pos, veloc, accel, texID, width, height, currFrame, 
+        // object init data
+        var initData = new InitData(pos, veloc, accel, texID, width, height, currFrame, 
             currRow, numFrames, animSpeed);
-        player = new Player(playerInit);
 
-        textureManager.storeTexture(path, id);
+        // create object
+        player = gameObjectFactory.createObject(id);
+        player.initObject(initData);
+        
+        //
+        textureManager.storeTexture(texID, path);
     }
 }

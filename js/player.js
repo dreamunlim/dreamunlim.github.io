@@ -1,26 +1,48 @@
 'use strict'
 
 class Player extends GameObject {
-    constructor (initData) {
-        super(initData);
+    constructor () {
+        super();
         
     }
 
+    initObject(initData) {
+        super.initObject(initData);
+    }
+
     updateObject() {
-        // have no idea why referencing class "InputHandler.leftPressed" property
-        // works but referencing object "inputHandler." property does not work here
-        if (InputHandler.leftPressed) {
+        //reset velocity
+
+
+        if (inputHandler.leftPressed) {
             this.position.x -= this.velocity.x - this.acceleration.x;
         }
-        if (InputHandler.rightPressed) {
+        if (inputHandler.rightPressed) {
             this.position.x += this.velocity.x + this.acceleration.x;
         }
-        if (InputHandler.upPressed) {
+        if (inputHandler.upPressed) {
             this.position.y -= this.velocity.y - this.acceleration.x;
         }
-        if (InputHandler.downPressed) {
+        if (inputHandler.downPressed) {
             this.position.y += this.velocity.y + this.acceleration.x;
         }
+
+        if (inputHandler.mouseLeftPressed) {
+            var to;
+
+            if (window.innerWidth < window.innerHeight) {
+                to = new Vector2D(inputHandler.mEvent.clientX/scale, inputHandler.mEvent.clientY/scale);
+            } else {
+                to = new Vector2D(inputHandler.mEvent.offsetX, inputHandler.mEvent.offsetY);
+            }
+
+            this.position = to;
+
+            // be sure 'player' has indeed had time to update itself  
+            inputHandler.mouseLeftPressed = false;
+        }
+
+        super.updateObject();
     }
 
 

@@ -8,7 +8,7 @@ class TextureManager {
         // this.textureMap = new Map();
     }
 
-    storeTexture(filePath, textureID) {
+    storeTexture(textureID, filePath) {
         var texture = new Image();
         texture.src = filePath; // 'img/player.png'
 

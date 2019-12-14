@@ -1,7 +1,11 @@
 'use strict'
 
 class GameObject {
-    constructor (initData) {
+    constructor () {
+        
+    }
+
+    initObject(initData) {
         this.position = initData.position;
         this.velocity = initData.velocity;
         this.acceleration = initData.acceleration;
