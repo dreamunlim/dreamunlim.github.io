@@ -14,27 +14,13 @@ console.log(scale, canvas.width, canvas.height);
 console.log(window.innerWidth, window.innerHeight);
 
 
-
-// function draw() {
-//     ctx.beginPath(); // draw a shape on the paper
-//     ctx.fillStyle = this.color; // what color we want the shape to be 
-//     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI); // draw contour arc
-//     ctx.fill(); // finish drawing the path we started with beginPath(), and fill the area it takes up with the color we specified earlier in fillStyle
-// }
-
-
-// create game objects
-// var gameJson = parseJson("json/initAll.json");
-// console.log(gameJson); // undefined.. 
-// parseObjects(gameJson);
-parseJson("json/initAll.json");
-
-
-var player;
-
-
 const FPS = 10;
 const FRAME_TIME = 1000 / FPS;
+
+var time = 0; // timestamp
+
+// load game json file
+var levelParser = new LevelParser();
 
 //create TextureManager object
 var textureManager = new TextureManager();
@@ -51,26 +37,30 @@ document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
 var gameObjectFactory = new GameObjectFactory();
 gameObjectFactory.registerObject("player", new Player());
 
-//create finite state machine
-// pGameStateMachine = new GameStateMachine();
+//create finite state machine and register states
+var gameStateMachine = new GameStateMachine();
+// gameStateMachine.registerState(StateID.Loading, new LoadingState());
+// gameStateMachine.registerState(StateID.Menu, new MenuState());
+gameStateMachine.registerState(StateID.Play, new PlayState());
+// gameStateMachine.registerState(StateID.Pause, new PauseState());
+// gameStateMachine.registerState(StateID.Gameover, new GameoverState());
+var state = gameStateMachine.createState(StateID.Play);
+// ˅ async related undefined 'gameJson': was used before runtime initialised
+// gameStateMachine.pushState(state);
+gameStateMachine.requestStackPush(StateID.Play);
 
 
 // main loop  
 function loop() {
+  time = performance.now();
+
   ctx.fillStyle = 'rgba(0, 0, 0, 1)'; // 0.5 to create trail effect
   ctx.fillRect(0, 0, width, height);
   // ctx.clearRect(0, 0, width, height);
   
-  // Object.getPrototypeOf(x);
-  // console.log(new Foo() instanceof Foo); // false
-
-
   // getInput(); input events get processed by document  
-  // update();
-  // render();
-  player.updateObject();
-  player.drawObject();
-  
+  gameStateMachine.updateCurrentState();
+  gameStateMachine.drawCurrentState();
 
   // requestAnimationFrame(loop);
 }

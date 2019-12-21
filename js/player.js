@@ -47,8 +47,7 @@ class Player extends GameObject {
 
 
     drawObject() {
-        var t = performance.now();
-        this.currentFrame = Math.floor((t / this.animSpeed) % this.numFrames);
+        this.currentFrame = Math.floor((time / this.animSpeed) % this.numFrames);
 
         super.drawObject();
     }
