@@ -5,6 +5,11 @@ function random(min, max) {
     return num;
 }
 
+// to yield positive mod on negative numbers
+function mod(n, m) {
+    return ((n % m) + m) % m;
+}
+
 // if window width < window height, i assume smartphone screen
 // and need to resize canvas and objects
 function resize() {
@@ -20,4 +25,19 @@ function resize() {
     }
 
     return scale;
+}
+
+function insertionSort(array) {
+    for (var i = 1; i < array.length; ++i) {
+        // insert part
+        var j = i - 1; // rightIndex
+        var value = array[i];
+
+        while (j >= 0 && array[j] > value) {
+            array[j + 1] = array[j];
+            --j;
+        }
+
+        array[j + 1] = value;
+    }
 }

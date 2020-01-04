@@ -12,8 +12,11 @@ class GameObject {
         
         this.textureID = initData.textureID;
 
-        this.width = initData.width;
-        this.height = initData.height;
+        this.sWidth = initData.sWidth;
+        this.sHeight = initData.sHeight;
+
+        this.dWidth = initData.dWidth;
+        this.dHeight = initData.dHeight;
 
         this.currentFrame = initData.currentFrame;
         this.currentRow = initData.currentRow;
@@ -24,11 +27,14 @@ class GameObject {
     }
 
     updateObject() {
+        this.currentFrame = Math.floor((time / this.animSpeed) % this.numFrames);
 
+        this.velocity = this.velocity.add(this.acceleration);
+        this.position = this.position.add(this.velocity);
     }
 
     drawObject() {
         textureManager.drawTexture(this.textureID, this.currentFrame, this.currentRow, 
-            this.width, this.height, this.position.x, this.position.y, this.width, this.height);        
+            this.sWidth, this.sHeight, this.position.x, this.position.y, this.dWidth, this.dHeight);        
     }
 }

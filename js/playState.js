@@ -3,6 +3,8 @@
 class PlayState extends GameState {
     constructor() {
         super();
+
+        this.lanes;
     }
 
     update() {
@@ -15,7 +17,7 @@ class PlayState extends GameState {
 
     onEnter() {
         // console.log(gameJson);
-        levelParser.parseLevel(this.level);
+        levelParser.parseLevel(this);
 
         return true;
     }

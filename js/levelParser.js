@@ -8,6 +8,7 @@ class LevelParser {
     constructor() {
         this.parseJson("json/initAll.json");
 
+        this.stateID;
     }
 
     parseJson(jsonPath) {
@@ -36,8 +37,17 @@ class LevelParser {
         // }
     }
 
-    parseLevel(level) {
-        this.parseObjectLayer(level);
+    parseLevel(state) {
+        this.stateID = state.constructor.name; // define the caller
+
+        switch(this.stateID) {
+            case "PlayState":
+                state.lanes = gameJson[this.stateID]["lanes"];
+        }
+        
+        this.parseObjectLayer(state.level);
+
+        this.stateID = null;
     }
 
     // parseTilesets(pTilesetRoot) {}
@@ -56,7 +66,7 @@ class LevelParser {
     }
 
     parseObjects(objectLayer) {
-        const objects = gameJson["objects"];
+        const objects = gameJson[this.stateID]["objects"];
         // console.log(objects);
         for (var i = 0; i < objects.length; ++i) {
             var currObject = objects[i];
@@ -67,19 +77,21 @@ class LevelParser {
             var veloc = new Vector2D(currObject["velocity"][0], currObject["velocity"][1]);
             var accel = new Vector2D(currObject["acceleration"][0], currObject["acceleration"][1]);
             var texID = currObject["textureID"];
-            var width = currObject["width"];
-            var height = currObject["height"];
+            var sWidth = currObject["sWidth"];
+            var sHeight = currObject["sHeight"];
+            var dWidth = currObject["dWidth"] ? currObject["dWidth"] : sWidth;
+            var dHeight = currObject["dHeight"] ? currObject["dHeight"] : sHeight;
             var currFrame = currObject["currentFrame"];
             var currRow = currObject["currentRow"];
             var numFrames = currObject["numFrames"];
             var animSpeed = currObject["animSpeed"];
 
             // object init data
-            var initData = new InitData(pos, veloc, accel, texID, width, height, currFrame,
-                currRow, numFrames, animSpeed);
+            var initData = new InitData(pos, veloc, accel, texID, sWidth, sHeight,
+                dWidth, dHeight, currFrame, currRow, numFrames, animSpeed);
 
             // create object
-            var object = gameObjectFactory.createObject(id);
+            var object = new (gameObjectFactory.createObject(id))();
             object.initObject(initData);
 
             // store object texture

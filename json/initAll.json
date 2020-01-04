@@ -1,18 +1,122 @@
 {
-    "objects": [
-        {
-            "id": "player",
-            "path": "img/player.png",
-            "position": [200, 200],
-            "velocity": [7, 7],
-            "acceleration": [],
-            "textureID": "player",
-            "width": 80,
-            "height": 45,
-            "currentFrame": 0,
-            "currentRow": 0,
-            "numFrames": 2,
-            "animSpeed": 100
-        }
-    ]
+    "LoadingState": {},
+    "MenuState": {
+        "objects": [
+            {
+                "id": "menu-background",
+                "path": "img/menu-background.jpg",
+                "position": [0, 0],
+                "velocity": [],
+                "acceleration": [],
+                "textureID": "menu-background",
+                "sWidth": 640,
+                "sHeight": 640,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            }
+        ]
+    },
+    "PlayState": {
+        "lanes": [-114, 14, 142, 270, 398, 526, 654],
+        "objects": [
+            {
+                "id": "background",
+                "path": "img/background.jpg",
+                "position": [-20, -20],
+                "velocity": [],
+                "acceleration": [],
+                "textureID": "background",
+                "sWidth": 680,
+                "sHeight": 680,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            },
+            {
+                "id": "player",
+                "path": "img/player.png",
+                "position": [270, 510],
+                "velocity": [1, 0],
+                "acceleration": [],
+                "textureID": "player",
+                "sWidth": 329,
+                "sHeight": 427,
+                "dWidth": 100,
+                "dHeight": 130,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            },
+            {
+                "id": "enemy",
+                "path": "img/enemy-red.png",
+                "position": [50, -100],
+                "velocity": [0, 7],
+                "acceleration": [0, 0.3],
+                "textureID": "enemy-red",
+                "sWidth": 240,
+                "sHeight": 240,
+                "dWidth": 100,
+                "dHeight": 100,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            },
+            {
+                "id": "enemy",
+                "path": "img/enemy-purple.png",
+                "position": [150, -100],
+                "velocity": [0, 7],
+                "acceleration": [0, 0.2],
+                "textureID": "enemy-purple",
+                "sWidth": 240,
+                "sHeight": 240,
+                "dWidth": 100,
+                "dHeight": 100,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            },
+            {
+                "id": "enemy",
+                "path": "img/enemy-spider.png",
+                "position": [250, -100],
+                "velocity": [0, 7],
+                "acceleration": [0, -0.1],
+                "textureID": "enemy-spider",
+                "sWidth": 178,
+                "sHeight": 182,
+                "dWidth": 100,
+                "dHeight": 102,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            },
+            {
+                "id": "enemy",
+                "path": "img/booster.png",
+                "position": [350, -100],
+                "velocity": [0, 1],
+                "acceleration": [0, 0.1],
+                "textureID": "booster",
+                "sWidth": 240,
+                "sHeight": 240,
+                "dWidth": 100,
+                "dHeight": 100,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 1,
+                "animSpeed": 100
+            }
+        ]
+    },
+    "PauseState": {},
+    "GameoverState": {}
 }

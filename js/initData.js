@@ -1,16 +1,19 @@
 'use strict'
 
 class InitData {
-    constructor (pos, veloc, accel, texID, width, height, currFrame,
-        currRow, numFrames, animSpeed, callbackID = 0) {
+    constructor (pos, veloc, accel, texID, sWidth, sHeight, dWidth, dHeight,
+        currFrame, currRow, numFrames, animSpeed, callbackID = 0) {
         this.position = pos;
         this.velocity = veloc;
         this.acceleration = accel;
         
         this.textureID = texID;
 
-        this.width = width;
-        this.height = height;
+        this.sWidth = sWidth;
+        this.sHeight = sHeight;
+
+        this.dWidth = dWidth;
+        this.dHeight = dHeight;
 
         this.currentFrame = currFrame;
         this.currentRow = currRow;

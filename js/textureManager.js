@@ -1,25 +1,23 @@
 'use strict'
 
-var textureMap = new Map();
-
 class TextureManager {
     constructor() {
-        // textureMap is undefined if doing like this
-        // this.textureMap = new Map();
+        this.textureMap = new Map();
     }
 
     storeTexture(textureID, filePath) {
         var texture = new Image();
         texture.src = filePath; // 'img/player.png'
+        // texture.id = textureID; // id to apply css
 
         // when texture is successfully loaded
-        texture.onload = function() {
-            textureMap.set(textureID, texture);
+        texture.onload = function () {
+            textureManager.textureMap.set(textureID, texture);
         }
     }
 
     drawTexture(textureID, currentFrame, currentRow, sWidth, sHeight, dx, dy, dWidth, dHeight) {
-        var texture = textureMap.get(textureID);
+        var texture = this.textureMap.get(textureID);
 
         var sx = currentFrame * sWidth;
         var sy = currentRow * sHeight;

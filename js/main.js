@@ -1,7 +1,5 @@
 'use strict'
 
-console.log("Hello, Stanislav :)");
-
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -28,14 +26,18 @@ var textureManager = new TextureManager();
 //create InputHandler object
 var inputHandler = new InputHandler();
 document.addEventListener("keydown", inputHandler.keyDownHandler, false);
-document.addEventListener("keyup", inputHandler.keyUpHandler, false);
+// document.addEventListener("keyup", inputHandler.keyUpHandler, false);
 document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
 // document.addEventListener("pointerup", inputHandler.mouseUpHandler, false);
 // window.addEventListener("orientationchange", onRotate, false);
 
 //create game object factory and register game object types
 var gameObjectFactory = new GameObjectFactory();
-gameObjectFactory.registerObject("player", new Player());
+gameObjectFactory.registerObject("player", Player);
+gameObjectFactory.registerObject("enemy", Enemy);
+// gameObjectFactory.registerObject("button", new Player());
+// gameObjectFactory.registerObject("booster", new Booster());
+gameObjectFactory.registerObject("background", Background);
 
 //create finite state machine and register states
 var gameStateMachine = new GameStateMachine();
@@ -68,5 +70,3 @@ function loop() {
 // loop(); // start loop
 
 setInterval(loop, FRAME_TIME);
-
-console.log("MAIN.JS_BOTTOM");
