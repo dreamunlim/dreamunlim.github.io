@@ -4,7 +4,7 @@ class PlayState extends GameState {
     constructor() {
         super();
 
-        this.lanes;
+        this.lanes = [-114, 14, 142, 270, 398, 526, 654];
     }
 
     update() {

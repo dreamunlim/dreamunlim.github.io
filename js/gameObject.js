@@ -26,9 +26,11 @@ class GameObject {
         this.animSpeed = initData.animSpeed;
     }
 
-    updateObject() {
+    animateFrame() {
         this.currentFrame = Math.floor((time / this.animSpeed) % this.numFrames);
+    }
 
+    updateObject() {
         this.velocity = this.velocity.add(this.acceleration);
         this.position = this.position.add(this.velocity);
     }

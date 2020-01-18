@@ -1,6 +1,6 @@
 'use strict'
 
-class Enemy extends GameObject {
+class Booster extends GameObject {
     constructor () {
         super();
         

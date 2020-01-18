@@ -40,10 +40,10 @@ class LevelParser {
     parseLevel(state) {
         this.stateID = state.constructor.name; // define the caller
 
-        switch(this.stateID) {
-            case "PlayState":
-                state.lanes = gameJson[this.stateID]["lanes"];
-        }
+        // switch(this.stateID) {
+        //     case "PlayState":
+        //         state.lanes = gameJson[this.stateID]["lanes"];
+        // }
         
         this.parseObjectLayer(state.level);
 
@@ -79,12 +79,12 @@ class LevelParser {
             var texID = currObject["textureID"];
             var sWidth = currObject["sWidth"];
             var sHeight = currObject["sHeight"];
-            var dWidth = currObject["dWidth"] ? currObject["dWidth"] : sWidth;
-            var dHeight = currObject["dHeight"] ? currObject["dHeight"] : sHeight;
-            var currFrame = currObject["currentFrame"];
-            var currRow = currObject["currentRow"];
-            var numFrames = currObject["numFrames"];
-            var animSpeed = currObject["animSpeed"];
+            var dWidth = currObject["dWidth"] || sWidth;
+            var dHeight = currObject["dHeight"] || sHeight;
+            var currFrame = currObject["currentFrame"] || 0;
+            var currRow = currObject["currentRow"] || 0;
+            var numFrames = currObject["numFrames"] || 1;
+            var animSpeed = currObject["animSpeed"] || 100;
 
             // object init data
             var initData = new InitData(pos, veloc, accel, texID, sWidth, sHeight,

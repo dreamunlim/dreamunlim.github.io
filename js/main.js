@@ -12,7 +12,7 @@ console.log(scale, canvas.width, canvas.height);
 console.log(window.innerWidth, window.innerHeight);
 
 
-const FPS = 10;
+const FPS = 30;
 const FRAME_TIME = 1000 / FPS;
 
 var time = 0; // timestamp
@@ -34,10 +34,11 @@ document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
 //create game object factory and register game object types
 var gameObjectFactory = new GameObjectFactory();
 gameObjectFactory.registerObject("player", Player);
-gameObjectFactory.registerObject("enemy", Enemy);
-// gameObjectFactory.registerObject("button", new Player());
-// gameObjectFactory.registerObject("booster", new Booster());
-gameObjectFactory.registerObject("background", Background);
+gameObjectFactory.registerObject("booster", Booster);
+gameObjectFactory.registerObject("heart", Heart);
+gameObjectFactory.registerObject("spider", Spider);
+// gameObjectFactory.registerObject("button", Button);
+gameObjectFactory.registerObject("play-background", PlayBackground);
 
 //create finite state machine and register states
 var gameStateMachine = new GameStateMachine();
@@ -46,10 +47,10 @@ var gameStateMachine = new GameStateMachine();
 gameStateMachine.registerState(StateID.Play, new PlayState());
 // gameStateMachine.registerState(StateID.Pause, new PauseState());
 // gameStateMachine.registerState(StateID.Gameover, new GameoverState());
-var state = gameStateMachine.createState(StateID.Play);
-// ˅ async related undefined 'gameJson': was used before runtime initialised
-// gameStateMachine.pushState(state);
 gameStateMachine.requestStackPush(StateID.Play);
+// ˅ async related undefined 'gameJson': was used before runtime initialised
+// var state = gameStateMachine.createState(StateID.Play);
+// gameStateMachine.pushState(state);
 
 
 // main loop  
