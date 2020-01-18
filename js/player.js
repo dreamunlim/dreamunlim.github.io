@@ -11,20 +11,18 @@ class Player extends GameObject {
 
         this.teleport = false;
         this.animate = false;
-        this.time = FPS; // in frames
+        this.time = 5; // in frames
         this.dist = this.lanes[1] - this.lanes[0]; // constant
-        // this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
+        this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
     }
 
     initObject(initData) {
         super.initObject(initData);
-
-        this.accel = 2 * (this.dist * this.velocity.x * this.time) / (this.time * this.time);
-        this.velocity.x = 0;
     }
 
     updateObject() {
         super.updateObject();
+        super.animateFrame();
 
         this.currLane = this.targLane;
 
@@ -57,18 +55,22 @@ class Player extends GameObject {
         // disallow 'targLane' change during animation to avoid lane fly-throughs, especially at edges
         if (inputHandler.leftPressed && !this.animate) {
             this.targLane = mod(--this.targLane, this.numLanes);
+            this.currentRow = 0;
         }
         if (inputHandler.rightPressed && !this.animate) {
             this.targLane = (++this.targLane) % this.numLanes;
+            this.currentRow = 1;
         }
 
         // mouse
         if (inputHandler.mouseLeftPressed && !this.animate) {
             if (inputHandler.mEvent.clientX < window.innerWidth / 2) {
                 this.targLane = mod(--this.targLane, this.numLanes);
+                this.currentRow = 0;
             }
             else {
                 this.targLane = (++this.targLane) % this.numLanes;
+                this.currentRow = 1;
             }
         }
 
