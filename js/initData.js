@@ -2,7 +2,7 @@
 
 class InitData {
     constructor (pos, veloc, accel, texID, sWidth, sHeight, dWidth, dHeight,
-        currFrame, currRow, numFrames, animSpeed, callbackID = 0) {
+        currFrame, currRow, numFrames, animSpeed, collisionCircle, callbackID = 0) {
         this.position = pos;
         this.velocity = veloc;
         this.acceleration = accel;
@@ -21,6 +21,8 @@ class InitData {
         this.numFrames = numFrames;
 
         this.animSpeed = animSpeed;
+
+        this.collisionCircle = collisionCircle;
 
         this.callbackID = callbackID;
     }

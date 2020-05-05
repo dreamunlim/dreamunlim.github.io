@@ -20,6 +20,9 @@ class Spider extends GameObject {
 
         // set negative accelaration at this point
         this.halfDist = this.dist / 2 - this.dHeight;
+
+        // keep initial velocity for respawn 
+        this.initial.velocity = this.velocity.y;
     }
 
     updateObject() {

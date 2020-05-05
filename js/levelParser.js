@@ -85,10 +85,19 @@ class LevelParser {
             var currRow = currObject["currentRow"] || 0;
             var numFrames = currObject["numFrames"] || 1;
             var animSpeed = currObject["animSpeed"] || 100;
+            var collisionCircle = currObject["collisionCircle"] || null;
+            var soundPath = currObject["soundPath"] || null;
+            
+            // convert literal object to vector
+            if (collisionCircle != null) {
+                let temp = collisionCircle;
+                collisionCircle = new Vector2D(temp.center[0], temp.center[1]);
+                collisionCircle.radius = temp.radius;
+            };
 
             // object init data
             var initData = new InitData(pos, veloc, accel, texID, sWidth, sHeight,
-                dWidth, dHeight, currFrame, currRow, numFrames, animSpeed);
+                dWidth, dHeight, currFrame, currRow, numFrames, animSpeed, collisionCircle);
 
             // create object
             var object = new (gameObjectFactory.createObject(id))();
@@ -96,6 +105,11 @@ class LevelParser {
 
             // store object texture
             textureManager.storeTexture(texID, path);
+
+            // store sound
+            if (soundPath != null) {
+                soundManager.storeSound(id, soundPath);
+            };
 
             // store object in layer
             objectLayer.push(object);

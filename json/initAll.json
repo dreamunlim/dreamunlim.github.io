@@ -40,36 +40,54 @@
                 "currentFrame": 0,
                 "currentRow": 1,
                 "numFrames": 4,
-                "animSpeed": 100
+                "animSpeed": 100,
+                "collisionCircle": {"center": [50, 26.80], "radius": 25.11}
+            },
+            {
+                "id": "booster",
+                "path": "img/booster.png",
+                "position": [],
+                "velocity": [0, 1],
+                "acceleration": [0, 0.1],
+                "textureID": "booster",
+                "sWidth": 240,
+                "sHeight": 240,
+                "dWidth": 100,
+                "dHeight": 100,
+                "collisionCircle": {"center": [50, 50], "radius": 41.25},
+                "soundPath": "sound/player-booster.ogg"
             },
             {
                 "id": "heart",
                 "path": "img/enemy-red.png",
-                "position": [50, -100],
+                "position": [],
                 "velocity": [0, 7],
                 "acceleration": [0, 0.3],
                 "textureID": "enemy-red",
                 "sWidth": 240,
                 "sHeight": 240,
                 "dWidth": 100,
-                "dHeight": 100
+                "dHeight": 100,
+                "collisionCircle": {"center": [50, 44.38], "radius": 34.78},
+                "soundPath": "sound/player-heart.ogg"
             },
             {
                 "id": "heart",
                 "path": "img/enemy-purple.png",
-                "position": [150, -100],
+                "position": [],
                 "velocity": [0, 7],
                 "acceleration": [0, 0.2],
                 "textureID": "enemy-purple",
                 "sWidth": 240,
                 "sHeight": 240,
                 "dWidth": 100,
-                "dHeight": 100
+                "dHeight": 100,
+                "collisionCircle": {"center": [50, 44.38], "radius": 34.78}
             },
             {
                 "id": "spider",
                 "path": "img/enemy-spider.png",
-                "position": [250, -102],
+                "position": [],
                 "velocity": [],
                 "acceleration": [],
                 "textureID": "enemy-spider",
@@ -80,19 +98,9 @@
                 "currentFrame": 0,
                 "currentRow": 0,
                 "numFrames": 2,
-                "animSpeed": 250
-            },
-            {
-                "id": "booster",
-                "path": "img/booster.png",
-                "position": [350, -100],
-                "velocity": [0, 1],
-                "acceleration": [0, 0.1],
-                "textureID": "booster",
-                "sWidth": 240,
-                "sHeight": 240,
-                "dWidth": 100,
-                "dHeight": 100
+                "animSpeed": 250,
+                "collisionCircle": {"center": [50, 49], "radius": 32.045},
+                "soundPath": "sound/player-spider.ogg"   
             }
         ]
     },

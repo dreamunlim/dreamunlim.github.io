@@ -20,10 +20,12 @@ var time = 0; // timestamp
 // load game json file
 var levelParser = new LevelParser();
 
-//create TextureManager object
+// 
 var textureManager = new TextureManager();
+var collisionManager = new CollisionManager();
+var soundManager = new SoundManager();
 
-//create InputHandler object
+//
 var inputHandler = new InputHandler();
 document.addEventListener("keydown", inputHandler.keyDownHandler, false);
 // document.addEventListener("keyup", inputHandler.keyUpHandler, false);

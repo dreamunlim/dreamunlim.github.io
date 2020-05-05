@@ -4,7 +4,6 @@ class Player extends GameObject {
     constructor() {
         super();
 
-        this.lanes = gameStateMachine.stack[gameStateMachine.stack.length - 1].lanes; // offscreen lanes at sides
         this.currLane = 3;
         this.targLane = 3;
         this.numLanes = this.lanes.length;
@@ -14,6 +13,9 @@ class Player extends GameObject {
         this.time = 5; // in frames
         this.dist = this.lanes[1] - this.lanes[0]; // constant
         this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
+
+        this.immune = false;
+        this.immuneDuration = 1000; // in ms
     }
 
     initObject(initData) {
@@ -102,6 +104,16 @@ class Player extends GameObject {
         inputHandler.leftPressed = false;
         inputHandler.rightPressed = false;
         inputHandler.mouseLeftPressed = false;
+
+        
+        this.checkPlayerEnemyCollision();
+
+        // remove player immunity
+        this.t2 = time;
+        if ((this.t2 - this.t1) > this.immuneDuration) {
+            this.immune = false;
+        }
+
     }
 
 
@@ -124,4 +136,31 @@ class Player extends GameObject {
 
         super.drawObject();
     }
+
+    checkPlayerEnemyCollision() {
+        var enemyList = gameStateMachine.stack[gameStateMachine.stack.length - 1].level.layers[0];
+        var booster = enemyList[2];
+
+        // enemy indexes: [3, 5]
+        if (! this.immune) {
+            for (var i = 3; i != enemyList.length; ++i) {
+                var enemy = enemyList[i];
+                var collided = collisionManager.playerEnemyCollision(this, enemy);
+
+                if (collided) {
+                    this.immune = true;
+                    this.t1 = time;
+                    soundManager.playSound(enemy.constructor.name.toLowerCase());
+                }
+            }
+        }
+
+        // check booster explicitly 
+        var collided = collisionManager.playerEnemyCollision(this, booster);
+        if (collided) {
+            soundManager.playSound(booster.constructor.name.toLowerCase());
+            booster.respawn();
+        }
+    }
+
 }
