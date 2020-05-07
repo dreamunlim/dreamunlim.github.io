@@ -16,10 +16,15 @@ class Player extends GameObject {
 
         this.immune = false;
         this.immuneDuration = 1000; // in ms
+        this.flickerDuration = 10; // in ms
     }
 
     initObject(initData) {
         super.initObject(initData);
+
+        // keep initial dimensions for flicker reset  
+        this.initial.dWidth = this.dWidth;
+        this.initial.dHeight = this.dHeight;
     }
 
     updateObject() {
@@ -108,11 +113,7 @@ class Player extends GameObject {
         
         this.checkPlayerEnemyCollision();
 
-        // remove player immunity
-        this.t2 = time;
-        if ((this.t2 - this.t1) > this.immuneDuration) {
-            this.immune = false;
-        }
+        this.flickerOnCollision();
 
     }
 
@@ -160,6 +161,27 @@ class Player extends GameObject {
         if (collided) {
             soundManager.playSound(booster.constructor.name.toLowerCase());
             booster.respawn();
+        }
+
+        // remove immunity
+        this.t2 = time;
+        if ((this.t2 - this.t1) > this.immuneDuration) {
+            this.immune = false;
+        }
+    }
+
+    flickerOnCollision() {
+        // reset flicker
+        this.dWidth = this.initial.dWidth;
+        this.dHeight = this.initial.dHeight;
+        
+        // flicker
+        if (this.immune) {
+            if (Math.floor(time / this.flickerDuration) % 2) {
+                // draw trasparent pixels
+                this.dWidth = 1;
+                this.dHeight = 1;
+            }
         }
     }
 
