@@ -41,3 +41,10 @@ function insertionSort(array) {
         array[j + 1] = value;
     }
 }
+
+function drawText(text, x, y, font, align, colour) {
+    ctx.font = font;
+    ctx.textAlign = align;
+    ctx.fillStyle = colour;
+    ctx.fillText(text, x / scale, y / scale);
+}

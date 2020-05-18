@@ -1,5 +1,20 @@
 {
-    "LoadingState": {},
+    "LoadingState": {
+        "textures": [
+            ["menu-background", "img/menu-background.jpg"],
+            ["play-background", "img/play-background.jpg"],
+            ["player", "img/player.png"],
+            ["booster", "img/booster.png"],
+            ["enemy-red", "img/enemy-red.png"],
+            ["enemy-purple", "img/enemy-purple.png"],
+            ["enemy-spider", "img/enemy-spider.png"]
+        ],
+        "sounds": [
+            ["booster", "sound/player-booster.ogg"],
+            ["heart", "sound/player-heart.ogg"],
+            ["spider", "sound/player-spider.ogg"]
+        ]
+    },
     "MenuState": {
         "objects": [
             {

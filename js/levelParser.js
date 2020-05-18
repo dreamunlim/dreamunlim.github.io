@@ -40,22 +40,55 @@ class LevelParser {
     parseLevel(state) {
         this.stateID = state.constructor.name; // define the caller
 
-        // switch(this.stateID) {
-        //     case "PlayState":
-        //         state.lanes = gameJson[this.stateID]["lanes"];
-        // }
-        
-        this.parseObjectLayer(state.level);
+        switch(this.stateID) {
+            case "LoadingState":
+                this.parseTextures(state);
+                this.parseSounds(state);
+                break;
+            case "MenuState":
+                break;
+            case "PlayState":
+                this.parseObjectLayer(state.level);
+                break;
+            case "PauseState":
+                break;
+            case "GameoverState":
+                break; 
+        }
 
         this.stateID = null;
     }
 
-    // parseTilesets(pTilesetRoot) {}
+    // LoadingState
+    parseTextures(state) {
+        const textures = gameJson[this.stateID]["textures"];
+        state.totalAssets += textures.length;
+        
+        var id;
+        var path;
 
-    // parseTileLayer(pLayerRoot) {}
+        for (var i = 0; i < textures.length; ++i) {
+            id = textures[i][0];
+            path = textures[i][1];
+            textureManager.storeTexture(id, path);
+        }
+    }
+
+    parseSounds(state) {
+        const sounds = gameJson[this.stateID]["sounds"];
+        state.totalAssets += sounds.length;
+        
+        var id;
+        var path;
+
+        for (var i = 0; i < sounds.length; ++i) {
+            id = sounds[i][0];
+            path = sounds[i][1];
+            soundManager.storeSound(id, path);
+        }
+    }
     
-    // parseTextures(pTexturesRoot) {}
-
+    // PlayState
     parseObjectLayer(level) {
         var objectLayer = new Array(); // new ObjectLayer();
 
@@ -102,14 +135,6 @@ class LevelParser {
             // create object
             var object = new (gameObjectFactory.createObject(id))();
             object.initObject(initData);
-
-            // store object texture
-            textureManager.storeTexture(texID, path);
-
-            // store sound
-            if (soundPath != null) {
-                soundManager.storeSound(id, soundPath);
-            };
 
             // store object in layer
             objectLayer.push(object);

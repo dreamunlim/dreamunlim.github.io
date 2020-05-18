@@ -44,15 +44,12 @@ gameObjectFactory.registerObject("play-background", PlayBackground);
 
 //create finite state machine and register states
 var gameStateMachine = new GameStateMachine();
-// gameStateMachine.registerState(StateID.Loading, new LoadingState());
+gameStateMachine.registerState(StateID.Loading, new LoadingState());
 // gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
 // gameStateMachine.registerState(StateID.Pause, new PauseState());
 // gameStateMachine.registerState(StateID.Gameover, new GameoverState());
-gameStateMachine.requestStackPush(StateID.Play);
-// ˅ async related undefined 'gameJson': was used before runtime initialised
-// var state = gameStateMachine.createState(StateID.Play);
-// gameStateMachine.pushState(state);
+gameStateMachine.requestStackPush(StateID.Loading);
 
 
 // main loop  
