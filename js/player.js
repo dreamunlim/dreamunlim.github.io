@@ -16,7 +16,7 @@ class Player extends GameObject {
 
         this.immune = false;
         this.immuneDuration = 1000; // in ms
-        this.flickerDuration = 10; // in ms
+        this.flickerDuration = 30; // in ms
     }
 
     initObject(initData) {
