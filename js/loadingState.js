@@ -8,20 +8,14 @@ class LoadingState extends GameState {
     }
 
     update() {
-        this.level.update();
-
         if ((textureManager.textureMap.size + soundManager.soundMap.size) == this.totalAssets) {
-            this.switchToPlayState();
+            this.switchToMenuState();
         }
     }
 
     draw() {
-        this.level.draw();
-
-        document.fonts.ready.then(_ => {
-            drawText("Loading Assets", width / 2, height / 2, "68px Bebas Neue", "center", "purple");
-            drawText("Loading Assets", width / 2, height / 2, "65px Bebas Neue", "center", "mediumpurple");
-        });
+        drawText("Loading Assets", width/2 / scale, height/2 / scale, "68px Bebas Neue", "center", "purple", "alphabetic");
+        drawText("Loading Assets", width/2 / scale, height/2 / scale, "65px Bebas Neue", "center", "mediumpurple", "alphabetic");
     }
 
     onEnter() {
@@ -36,8 +30,8 @@ class LoadingState extends GameState {
     }
 
     //call back functions
-    switchToPlayState() {
-        gameStateMachine.requestStackChange(StateID.Play);
+    switchToMenuState() {
+        gameStateMachine.requestStackChange(StateID.Menu);
     }
 
 }

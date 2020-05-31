@@ -18,14 +18,12 @@ class CollisionManager {
         return false;
     }
 
-    mouseUIButtonCollision(mEvent, button) {
-        if (inputHandler.mouseLeftPressed) {
-            if (mEvent.clientX > button.position.x &&
-                mEvent.clientX < button.position.x + button.sWidth &&
-                mEvent.clientY > button.position.y &&
-                mEvent.clientY < button.position.y + button.dHeight) {
-                    return true;
-            }
+    mouseButtonCollision(mEvent, button) {
+        if (mEvent.offsetX/scale > button.position.x &&
+            mEvent.offsetX/scale < button.position.x + button.width &&
+            mEvent.offsetY/scale > button.position.y &&
+            mEvent.offsetY/scale < button.position.y + button.height) {
+            return true;
         }
 
         return false;

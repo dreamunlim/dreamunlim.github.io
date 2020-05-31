@@ -12,7 +12,7 @@ function mod(n, m) {
 
 // if window width < window height, i assume smartphone screen
 // and need to resize canvas and objects
-function resize() {
+function resizeCanvas() {
     var scale = 1;
 
     if (window.innerWidth < window.innerHeight) {
@@ -42,9 +42,15 @@ function insertionSort(array) {
     }
 }
 
-function drawText(text, x, y, font, align, colour) {
+function drawText(text, x, y, font, align, colour, baseline = "top", width = canvas.width) {
     ctx.font = font;
     ctx.textAlign = align;
     ctx.fillStyle = colour;
-    ctx.fillText(text, x / scale, y / scale);
+    ctx.textBaseline = baseline;
+    ctx.fillText(text, x, y, width);
+}
+
+function clearCanvas(x = 0, y = 0, width = canvas.width, height = canvas.height, colour = "rgba(0, 0, 0, 1)") {
+    ctx.fillStyle = colour; // 0.5 to create trail effect
+    ctx.fillRect(x, y, width, height);
 }

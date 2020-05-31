@@ -16,7 +16,6 @@ class PlayState extends GameState {
     }
 
     onEnter() {
-        // console.log(gameJson);
         levelParser.parseLevel(this);
 
         return true;
@@ -28,11 +27,11 @@ class PlayState extends GameState {
     }
 
     //call back functions
-    switchToPause() {
+    switchToPauseState() {
 
     }
 
-    switchToGameOver() {
+    switchToGameOverState() {
 
     }
 

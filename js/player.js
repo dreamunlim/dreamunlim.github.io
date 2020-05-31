@@ -22,9 +22,11 @@ class Player extends GameObject {
     initObject(initData) {
         super.initObject(initData);
 
-        // keep initial dimensions for flicker reset  
-        this.initial.dWidth = this.dWidth;
-        this.initial.dHeight = this.dHeight;
+        // keep initial dimensions for flicker reset
+        this.initial = {
+            dWidth: this.dWidth,
+            dHeight: this.dHeight
+        }
     }
 
     updateObject() {

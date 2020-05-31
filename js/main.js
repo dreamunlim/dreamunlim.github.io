@@ -7,7 +7,7 @@ var width = canvas.width = 640;
 var height = canvas.height = 640;
 
 // for smartphone screen
-var scale = resize();
+const scale = resizeCanvas();
 console.log(scale, canvas.width, canvas.height);
 console.log(window.innerWidth, window.innerHeight);
 
@@ -15,7 +15,7 @@ console.log(window.innerWidth, window.innerHeight);
 const FPS = 30;
 const FRAME_TIME = 1000 / FPS;
 
-var time = 0; // timestamp
+var time = 0; // loop start timestamp
 
 // load game json file
 var levelParser = new LevelParser();
@@ -39,13 +39,14 @@ gameObjectFactory.registerObject("player", Player);
 gameObjectFactory.registerObject("booster", Booster);
 gameObjectFactory.registerObject("heart", Heart);
 gameObjectFactory.registerObject("spider", Spider);
-// gameObjectFactory.registerObject("button", Button);
+gameObjectFactory.registerObject("button", Button);
 gameObjectFactory.registerObject("play-background", PlayBackground);
+gameObjectFactory.registerObject("background", Background);
 
 //create finite state machine and register states
 var gameStateMachine = new GameStateMachine();
 gameStateMachine.registerState(StateID.Loading, new LoadingState());
-// gameStateMachine.registerState(StateID.Menu, new MenuState());
+gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
 // gameStateMachine.registerState(StateID.Pause, new PauseState());
 // gameStateMachine.registerState(StateID.Gameover, new GameoverState());
@@ -56,9 +57,7 @@ gameStateMachine.requestStackPush(StateID.Loading);
 function loop() {
   time = performance.now();
 
-  ctx.fillStyle = 'rgba(0, 0, 0, 1)'; // 0.5 to create trail effect
-  ctx.fillRect(0, 0, width, height);
-  // ctx.clearRect(0, 0, width, height);
+  clearCanvas();
   
   // getInput(); input events get processed by document  
   gameStateMachine.updateCurrentState();
