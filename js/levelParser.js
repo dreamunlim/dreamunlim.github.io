@@ -31,8 +31,7 @@ class LevelParser {
         // request.send();
 
         // request.onload = function () {
-        //     // could not store 'request.response' even in a global var  
-        //     // would pass json further from here
+        //     // could not store 'request.response' in a global var from here
         //     gameJson = request.response;
         // }
     }
@@ -42,13 +41,16 @@ class LevelParser {
 
         switch(this.stateID) {
             case "LoadingState":
+                this.parseFonts();
                 this.parseTextures(state);
                 this.parseSounds(state);
                 break;
             case "MenuState":
+                this.parseObjectLayer(state, "objects");
+                this.parseObjectLayer(state, "buttons");
                 break;
             case "PlayState":
-                this.parseObjectLayer(state.level);
+                this.parseObjectLayer(state, "objects");
                 break;
             case "PauseState":
                 break;
@@ -60,6 +62,10 @@ class LevelParser {
     }
 
     // LoadingState
+    parseFonts() {
+
+    }
+    
     parseTextures(state) {
         const textures = gameJson[this.stateID]["textures"];
         state.totalAssets += textures.length;
@@ -88,34 +94,41 @@ class LevelParser {
         }
     }
     
-    // PlayState
-    parseObjectLayer(level) {
+    // MenuState, PlayState
+    parseObjectLayer(state, layerName) {
         var objectLayer = new Array(); // new ObjectLayer();
 
-        this.parseObjects(objectLayer);
+        switch (layerName) {
+            case "objects":
+                this.parseObjects(objectLayer, layerName);
+                break;
+            case "buttons":
+                this.parseButtons(objectLayer, layerName);
+                break;
+        }
 
         // store current level objects layer
-        level.layers.push(objectLayer);
+        state.level.layers.push(objectLayer);
     }
 
-    parseObjects(objectLayer) {
-        const objects = gameJson[this.stateID]["objects"];
-        // console.log(objects);
+    parseObjects(objectLayer, layerName) {
+        const objects = gameJson[this.stateID][layerName];
+
         for (var i = 0; i < objects.length; ++i) {
             var currObject = objects[i];
 
             var id = currObject["id"];
             var path = currObject["path"];
-            var pos = new Vector2D(currObject["position"][0], currObject["position"][1]);
-            var veloc = new Vector2D(currObject["velocity"][0], currObject["velocity"][1]);
-            var accel = new Vector2D(currObject["acceleration"][0], currObject["acceleration"][1]);
-            var texID = currObject["textureID"];
+            var position = new Vector2D(currObject["position"][0], currObject["position"][1]);
+            var velocity = new Vector2D(currObject["velocity"][0], currObject["velocity"][1]);
+            var acceleration = new Vector2D(currObject["acceleration"][0], currObject["acceleration"][1]);
+            var textureID = currObject["textureID"];
             var sWidth = currObject["sWidth"];
             var sHeight = currObject["sHeight"];
             var dWidth = currObject["dWidth"] || sWidth;
             var dHeight = currObject["dHeight"] || sHeight;
-            var currFrame = currObject["currentFrame"] || 0;
-            var currRow = currObject["currentRow"] || 0;
+            var currentFrame = currObject["currentFrame"] || 0;
+            var currentRow = currObject["currentRow"] || 0;
             var numFrames = currObject["numFrames"] || 1;
             var animSpeed = currObject["animSpeed"] || 100;
             var collisionCircle = currObject["collisionCircle"] || null;
@@ -129,8 +142,8 @@ class LevelParser {
             };
 
             // object init data
-            var initData = new InitData(pos, veloc, accel, texID, sWidth, sHeight,
-                dWidth, dHeight, currFrame, currRow, numFrames, animSpeed, collisionCircle);
+            var initData = {position, velocity, acceleration, textureID, sWidth, sHeight,
+                dWidth, dHeight, currentFrame, currentRow, numFrames, animSpeed, collisionCircle};
 
             // create object
             var object = new (gameObjectFactory.createObject(id))();
@@ -139,6 +152,34 @@ class LevelParser {
             // store object in layer
             objectLayer.push(object);
         }
+    }
+
+    parseButtons(objectLayer, layerName) {
+        const objects = gameJson[this.stateID][layerName];
+
+        for (var i = 0; i < objects.length; ++i) {
+            var currObject = objects[i];
+
+            var id = currObject["id"];
+            var text = currObject["text"];
+            var pos = {
+                x: currObject["position"][0],
+                y: currObject["position"][1]
+            };
+            var width = currObject["width"];
+            var height = currObject["height"];
+
+            var url = currObject["url"] || null;
+
+            var initData = {text, pos, width, height, url};
+            
+            // create object
+            var object = new (gameObjectFactory.createObject(id))(initData);
+
+            // store object in layer
+            objectLayer.push(object);
+        }
+
     }
 
 }
