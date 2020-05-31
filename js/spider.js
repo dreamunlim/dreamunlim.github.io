@@ -1,6 +1,6 @@
 'use strict'
 
-class Spider extends GameObject {
+class Spider extends Enemy {
     constructor() {
         super();
 

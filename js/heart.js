@@ -1,6 +1,6 @@
 'use strict'
 
-class Heart extends GameObject {
+class Heart extends Enemy {
     constructor () {
         super();
 
