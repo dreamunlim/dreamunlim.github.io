@@ -21,6 +21,14 @@ class PlayBackground extends GameObject {
         this.rumblePattern = [[-1,1], [1,1], [1,-1], [-1,-1]];
 
         this.initRumblePattern();
+
+        // remove unused properties
+        delete this.lanes;
+        delete this.velocity;
+        delete this.acceleration;
+        delete this.numFrames;
+        delete this.animSpeed;
+        delete this.collisionCircle;
     }
 
     initRumblePattern() {
@@ -34,8 +42,6 @@ class PlayBackground extends GameObject {
     }
 
     updateObject() {
-        super.updateObject();
-
         this.t2 = Math.floor(time / (this.seconds * 1000));
 
         // rumble once every n seconds
