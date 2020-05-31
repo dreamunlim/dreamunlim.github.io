@@ -1,5 +1,9 @@
 {
     "LoadingState": {
+        "fonts": [
+            ["font/"],
+            ["font/"]
+        ],
         "textures": [
             ["menu-background", "img/menu-background.jpg"],
             ["play-background", "img/play-background.jpg"],
@@ -12,7 +16,8 @@
         "sounds": [
             ["booster", "sound/player-booster.ogg"],
             ["heart", "sound/player-heart.ogg"],
-            ["spider", "sound/player-spider.ogg"]
+            ["spider", "sound/player-spider.ogg"],
+            ["gameover", "sound/player-spider.ogg"]
         ]
     },
     "MenuState": {
@@ -26,6 +31,37 @@
                 "textureID": "menu-background",
                 "sWidth": 640,
                 "sHeight": 640
+            }
+        ],
+        "buttons": [
+            {
+                "id": "button",
+                "text": "Play",
+                "position": [470, 100],
+                "width": 140,
+                "height": 110
+            },
+            {
+                "id": "button",
+                "text": "Share Score",
+                "position": [470, 230],
+                "width": 140,
+                "height": 110
+            },
+            {
+                "id": "button",
+                "text": "Override Pic",
+                "position": [470, 360],
+                "width": 140,
+                "height": 110
+            },
+            {
+                "id": "button",
+                "text": "How To",
+                "position": [470, 490],
+                "width": 140,
+                "height": 110,
+                "url": "https://sites.google.com/view/punlim"
             }
         ]
     },
