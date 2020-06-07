@@ -33,6 +33,13 @@ class Player extends GameObject {
         super.updateObject();
         super.animateFrame();
 
+        // exit update if pause button tapped
+        if (inputHandler.mouseLeftPressed) {
+            if (collisionManager.mouseButtonCollision(inputHandler.mEvent, gameStateMachine.stack[gameStateMachine.stack.length - 1].pauseButton)) {
+                return;
+            }
+        }
+
         this.currLane = this.targLane;
 
         // decide velocity and acceleration reset

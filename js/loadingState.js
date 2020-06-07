@@ -8,14 +8,18 @@ class LoadingState extends GameState {
     }
 
     update() {
-        if ((textureManager.textureMap.size + soundManager.soundMap.size) == this.totalAssets) {
+        if ((document.fonts.size + textureManager.textureMap.size + soundManager.soundMap.size) == this.totalAssets) {
             this.switchToMenuState();
         }
     }
 
     draw() {
-        drawText("Loading Assets", width/2 / scale, height/2 / scale, "68px Bebas Neue", "center", "purple", "alphabetic");
-        drawText("Loading Assets", width/2 / scale, height/2 / scale, "65px Bebas Neue", "center", "mediumpurple", "alphabetic");
+        clearCanvas();
+        
+        if(document.fonts.size) {
+            drawText("Loading Assets", width / 2 / scale, height / 2 / scale, "68px Bebas Neue", "center", "purple", "alphabetic");
+            drawText("Loading Assets", width / 2 / scale, height / 2 / scale, "65px Bebas Neue", "center", "mediumpurple", "alphabetic");
+        }
     }
 
     onEnter() {

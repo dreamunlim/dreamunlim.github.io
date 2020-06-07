@@ -28,7 +28,7 @@ var soundManager = new SoundManager();
 //
 var inputHandler = new InputHandler();
 document.addEventListener("keydown", inputHandler.keyDownHandler, false);
-// document.addEventListener("keyup", inputHandler.keyUpHandler, false);
+document.addEventListener("keyup", inputHandler.keyUpHandler, false);
 document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
 // document.addEventListener("pointerup", inputHandler.mouseUpHandler, false);
 // window.addEventListener("orientationchange", onRotate, false);
@@ -48,7 +48,7 @@ var gameStateMachine = new GameStateMachine();
 gameStateMachine.registerState(StateID.Loading, new LoadingState());
 gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
-// gameStateMachine.registerState(StateID.Pause, new PauseState());
+gameStateMachine.registerState(StateID.Pause, new PauseState());
 // gameStateMachine.registerState(StateID.Gameover, new GameoverState());
 gameStateMachine.requestStackPush(StateID.Loading);
 
@@ -57,11 +57,13 @@ gameStateMachine.requestStackPush(StateID.Loading);
 function loop() {
   time = performance.now();
 
-  clearCanvas();
-  
-  // getInput(); input events get processed by document  
-  gameStateMachine.updateCurrentState();
-  gameStateMachine.drawCurrentState();
+  try {
+    // getInput(); input events get processed by document  
+    gameStateMachine.updateCurrentState();
+    gameStateMachine.drawCurrentState();
+  } catch (error) {
+    console.error(error);
+  }
 
   // requestAnimationFrame(loop);
 }
