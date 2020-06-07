@@ -28,11 +28,20 @@ class Button {
         }
 
         this.setButtonStyle();
+
+        // state specific adjustments
+        switch (this.state.constructor.name) {
+            case "PlayState":
+                this.state.pauseButton = this; // make visible to Player, PauseState
+                this.callbackDelay = 0;
+                break;
+        }
     }
 
     setButtonStyle() {
         switch (this.state.constructor.name) {
             case "MenuState":
+            case "GameoverState":
                 this.titleFont = "55px Bebas Neue";
                 this.strokeWidth = 3;
                 this.strokeColour = "maroon";
@@ -41,6 +50,12 @@ class Button {
                 this.fontColour = "lightsalmon";
                 break;
             case "PlayState":
+                this.titleFont = "55px Bebas Neue";
+                this.strokeWidth = 5;
+                this.strokeColour = "indianred";
+                this.fillColour ="rgba(165,42,42, 0.3)"; //brown
+                this.fontShadowColour = "brown";
+                this.fontColour = "indianred";
                 break;
         }
     }

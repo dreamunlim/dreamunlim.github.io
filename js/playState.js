@@ -5,10 +5,24 @@ class PlayState extends GameState {
         super();
 
         this.lanes = [-114, 14, 142, 270, 398, 526, 654];
+
+        this.pauseButton = null; // to be visible to Player object, Pause state
+        
+        // fuction pointers
+        this.funcPointersMap = {
+            "II": this.switchToPauseState
+        };
     }
 
     update() {
         this.level.update();
+
+        // keyboard
+        // avoid PauseState pushed second time in a row  
+        if (inputHandler.escPressed && !gameStateMachine.pendingList.length) {
+            inputHandler.escPressed = false;
+            this.switchToPauseState();
+        }
     }
 
     draw() {
@@ -28,11 +42,11 @@ class PlayState extends GameState {
 
     //call back functions
     switchToPauseState() {
-
+        gameStateMachine.requestStackPush(StateID.Pause);
     }
 
     switchToGameOverState() {
-
+        gameStateMachine.requestStackPush(StateID.Gameover);
     }
 
 }
