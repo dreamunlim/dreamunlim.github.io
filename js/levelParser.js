@@ -41,7 +41,7 @@ class LevelParser {
 
         switch(this.stateID) {
             case "LoadingState":
-                this.parseFonts();
+                this.parseFonts(state);
                 this.parseTextures(state);
                 this.parseSounds(state);
                 break;
@@ -51,6 +51,7 @@ class LevelParser {
                 break;
             case "PlayState":
                 this.parseObjectLayer(state, "objects");
+                this.parseObjectLayer(state, "buttons");
                 break;
             case "PauseState":
                 break;
@@ -62,8 +63,26 @@ class LevelParser {
     }
 
     // LoadingState
-    parseFonts() {
+    parseFonts(state) {
+        const fonts = gameJson[this.stateID]["fonts"];
+        state.totalAssets += fonts.length;
 
+        for (var i = 0; i < fonts.length; ++i) {
+            var currFont = fonts[i];
+
+            var family = currFont["font-family"];
+            var source = currFont["source"];
+            var descriptors = {
+                "style": currFont["descriptors"]["font-style"],
+                "weight": currFont["descriptors"]["font-weight"],
+                "display": currFont["descriptors"]["font-display"],
+                "unicodeRange": currFont["descriptors"]["unicode-range"]
+            };
+
+            var font = new FontFace(family, "url(" + source + ")", descriptors);
+            
+            font.load().then(loadedFont => document.fonts.add(loadedFont));
+        }
     }
     
     parseTextures(state) {
