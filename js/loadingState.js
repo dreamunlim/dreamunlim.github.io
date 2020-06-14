@@ -23,6 +23,12 @@ class LoadingState extends GameState {
     }
 
     onEnter() {
+        const fonts = gameJson["LoadingState"]["fonts"];
+        const textures = gameJson["LoadingState"]["textures"];
+        const sounds = gameJson["LoadingState"]["sounds"];
+
+        this.totalAssets = fonts.length + textures.length + sounds.length;
+
         levelParser.parseLevel(this);
 
         return true;
