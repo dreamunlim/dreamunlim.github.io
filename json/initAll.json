@@ -111,7 +111,9 @@
                 "numFrames": 4,
                 "animSpeed": 100,
                 "collisionCircle": {"center": [50, 26.80], "radius": 25.11}
-            },
+            }
+        ],
+        "enemies": [
             {
                 "id": "booster",
                 "path": "img/booster.png",
@@ -179,6 +181,23 @@
                 "position": [570, 4],
                 "width": 65,
                 "height": 65
+            }
+        ],
+        "counters": [
+            {
+                "id": "counter",
+                "counterID": "score",
+                "font": "35px Orbitron",
+                "fontColour": "indianred",
+                "fontShadowColour": "brown"
+            },
+            {
+                "id": "counter",
+                "counterID": "timer",
+                "font": "65px Orbitron",
+                "fontShadow": "68px Orbitron",
+                "fontColour": "mediumpurple",
+                "fontShadowColour": "purple"
             }
         ]
     },
