@@ -4,9 +4,6 @@ class PauseState extends GameState {
     constructor() {
         super();
 
-        // PlayState stack index
-        this.PlayState = 1; 
-
         // fuction pointers
         this.funcPointersMap = {
             "II": this.switchToPlayState
@@ -14,7 +11,7 @@ class PauseState extends GameState {
     }
 
     update() {
-        gameStateMachine.stack[this.PlayState].pauseButton.updateObject();
+        this.playState.pauseButton.updateObject();
 
         // keyboard
         // avoid two stack pops in a row  
@@ -25,21 +22,32 @@ class PauseState extends GameState {
     }
 
     draw() {
-        gameStateMachine.stack[this.PlayState].pauseButton.drawObject();
+        this.playState.pauseButton.drawObject();
     }
 
     onEnter() {
-        levelParser.parseLevel(this);
+        this.pauseStartTime = time;
+        
+        // PlayState reference
+        this.playState = gameStateMachine.stack[1];
 
         // take Pause button ownership from PlayState
-        gameStateMachine.stack[this.PlayState].pauseButton.state = this;
+        this.playState.pauseButton.state = this;
+
+        levelParser.parseLevel(this);
 
         return true;
     }
 
     onExit() {
+        var pauseDuration = time - this.pauseStartTime;
+
+        // correct PlayState time counters
+        this.playState.timerObject.actionStartTime += pauseDuration;
+        this.playState.timerObject.boosterPickUpTime += pauseDuration;
+
         // return Pause button ownership to PlayState
-        gameStateMachine.stack[this.PlayState].pauseButton.state = gameStateMachine.stack[this.PlayState];
+        this.playState.pauseButton.state = this.playState;
 
         return true;
     }
