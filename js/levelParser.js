@@ -41,9 +41,9 @@ class LevelParser {
 
         switch(this.stateID) {
             case "LoadingState":
-                this.parseFonts(state);
-                this.parseTextures(state);
-                this.parseSounds(state);
+                this.parseFonts();
+                this.parseTextures();
+                this.parseSounds();
                 break;
             case "MenuState":
                 this.parseObjectLayer(state, "objects");
@@ -51,7 +51,9 @@ class LevelParser {
                 break;
             case "PlayState":
                 this.parseObjectLayer(state, "objects");
+                this.parseObjectLayer(state, "enemies");
                 this.parseObjectLayer(state, "buttons");
+                this.parseObjectLayer(state, "counters");
                 break;
             case "PauseState":
                 break;
@@ -63,9 +65,8 @@ class LevelParser {
     }
 
     // LoadingState
-    parseFonts(state) {
+    parseFonts() {
         const fonts = gameJson[this.stateID]["fonts"];
-        state.totalAssets += fonts.length;
 
         for (var i = 0; i < fonts.length; ++i) {
             var currFont = fonts[i];
@@ -85,9 +86,8 @@ class LevelParser {
         }
     }
     
-    parseTextures(state) {
+    parseTextures() {
         const textures = gameJson[this.stateID]["textures"];
-        state.totalAssets += textures.length;
         
         var id;
         var path;
@@ -99,9 +99,8 @@ class LevelParser {
         }
     }
 
-    parseSounds(state) {
+    parseSounds() {
         const sounds = gameJson[this.stateID]["sounds"];
-        state.totalAssets += sounds.length;
         
         var id;
         var path;
@@ -119,10 +118,14 @@ class LevelParser {
 
         switch (layerName) {
             case "objects":
+            case "enemies":
                 this.parseObjects(objectLayer, layerName);
                 break;
             case "buttons":
                 this.parseButtons(objectLayer, layerName);
+                break;
+            case "counters":
+                this.parseCounters(objectLayer, layerName);
                 break;
         }
 
@@ -191,6 +194,30 @@ class LevelParser {
             var url = currObject["url"] || null;
 
             var initData = {text, pos, width, height, url};
+            
+            // create object
+            var object = new (gameObjectFactory.createObject(id))(initData);
+
+            // store object in layer
+            objectLayer.push(object);
+        }
+
+    }
+
+    parseCounters(objectLayer, layerName) {
+        const objects = gameJson[this.stateID][layerName];
+
+        for (var i = 0; i < objects.length; ++i) {
+            var currObject = objects[i];
+
+            var id = currObject["id"];
+            var counterID = currObject["counterID"];
+            var font = currObject["font"];
+            var fontColour = currObject["fontColour"];
+            var fontShadow = currObject["fontShadow"] || null;
+            var fontShadowColour = currObject["fontShadowColour"];
+
+            var initData = {counterID, font, fontColour, fontShadow, fontShadowColour};
             
             // create object
             var object = new (gameObjectFactory.createObject(id))(initData);
