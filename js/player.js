@@ -4,6 +4,9 @@ class Player extends GameObject {
     constructor() {
         super();
 
+        // player owner
+        this.state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
+
         this.currLane = 3;
         this.targLane = 3;
         this.numLanes = this.lanes.length;
@@ -121,9 +124,7 @@ class Player extends GameObject {
 
         
         this.checkPlayerEnemyCollision();
-
         this.flickerOnCollision();
-
     }
 
 
@@ -148,34 +149,62 @@ class Player extends GameObject {
     }
 
     checkPlayerEnemyCollision() {
-        var enemyList = gameStateMachine.stack[gameStateMachine.stack.length - 1].level.layers[0];
-        var booster = enemyList[2];
+        var enemyLayer = this.state.level.layers[1];
+        var boosterCollided = false;
 
-        // enemy indexes: [3, 5]
-        if (! this.immune) {
-            for (var i = 3; i != enemyList.length; ++i) {
-                var enemy = enemyList[i];
-                var collided = collisionManager.playerEnemyCollision(this, enemy);
+        for (var i = 0; i != enemyLayer.length; ++i) {
+            var enemy = enemyLayer[i];
+            var enemyID = enemy.constructor.name.toLowerCase();
+            var collided = collisionManager.playerEnemyCollision(this, enemy);
 
-                if (collided) {
-                    this.immune = true;
-                    this.t1 = time;
-                    soundManager.playSound(enemy.constructor.name.toLowerCase());
+            if (collided) {
+                if (enemyID == "booster") {
+                    this.state.timerObject.boosterPickUpTime = time;
+                    this.state.scoreObject.score += 3;
+                    boosterCollided = true;
+                    enemy.respawn();
+                    soundManager.playSound(enemyID);
+                }
+
+                if (enemyID == "star") {
+                    this.state.scoreObject.score += 2;
+                    enemy.respawn();
+                    soundManager.playSound("spider");
+                }
+
+                if (enemyID == "heart") {
+                    this.state.scoreObject.score += 1;
+                    enemy.respawn();
+                    soundManager.playSound(enemyID);
+                }
+
+                if (enemyID == "spider") {
+                    // if player-spider-booster collided at the same time
+                    if (boosterCollided) {
+                        this.immune = true;
+                        this.t1 = time;
+                    }
+
+                    if (this.immune) {
+                        // play sound once per immunity duration
+                        if (! this.soundPlayedOnce) {
+                            this.soundPlayedOnce = true;
+                            soundManager.playSound(enemyID);
+                        }
+                    }
+
+                    if (! this.immune) {
+                        this.state.switchToGameOverState();
+                        soundManager.playSound(enemyID);
+                    }
                 }
             }
         }
 
-        // check booster explicitly 
-        var collided = collisionManager.playerEnemyCollision(this, booster);
-        if (collided) {
-            soundManager.playSound(booster.constructor.name.toLowerCase());
-            booster.respawn();
-        }
-
         // remove immunity
-        this.t2 = time;
-        if ((this.t2 - this.t1) > this.immuneDuration) {
+        if ((time - this.t1) > this.immuneDuration) {
             this.immune = false;
+            delete this.soundPlayedOnce;
         }
     }
 
