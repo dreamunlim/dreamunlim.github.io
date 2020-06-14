@@ -7,7 +7,9 @@ class PlayState extends GameState {
         this.lanes = [-114, 14, 142, 270, 398, 526, 654];
 
         this.pauseButton = null; // to be visible to Player object, Pause state
-        
+        this.scoreObject = null; // to be visible to Player object
+        this.timerObject = null; // to be visible to Booster, Pause state
+
         // fuction pointers
         this.funcPointersMap = {
             "II": this.switchToPauseState
