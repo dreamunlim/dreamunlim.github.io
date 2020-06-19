@@ -10,8 +10,7 @@ function mod(n, m) {
     return ((n % m) + m) % m;
 }
 
-// if window width < window height, i assume smartphone screen
-// and need to resize canvas and objects
+// if window width < window height, i assume smartphone screen and resize canvas
 function resizeCanvas() {
     var scale = 1;
 
@@ -27,13 +26,14 @@ function resizeCanvas() {
     return scale;
 }
 
+// sort in descending order
 function insertionSort(array) {
     for (var i = 1; i < array.length; ++i) {
         // insert part
         var j = i - 1; // rightIndex
         var value = array[i];
 
-        while (j >= 0 && array[j] > value) {
+        while (j >= 0 && array[j][0] < value[0]) {
             array[j + 1] = array[j];
             --j;
         }
