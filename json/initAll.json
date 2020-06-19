@@ -208,8 +208,8 @@
                 "id": "button",
                 "text": "OK",
                 "position": [320, 320],
-                "width": 65,
-                "height": 65
+                "width": 80,
+                "height": 80
             }
         ]
     }

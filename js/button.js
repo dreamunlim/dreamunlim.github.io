@@ -35,13 +35,16 @@ class Button {
                 this.state.pauseButton = this; // make visible to Player, PauseState
                 this.callbackDelay = 0;
                 break;
+            case "GameoverState":
+                this.state.textBox.okButton = this; // make visible to TextBox
+                this.state.textBox.alignOkButton();
+                break;
         }
     }
 
     setButtonStyle() {
         switch (this.state.constructor.name) {
             case "MenuState":
-            case "GameoverState":
                 this.titleFont = "55px Bebas Neue";
                 this.strokeWidth = 3;
                 this.strokeColour = "maroon";
@@ -54,6 +57,14 @@ class Button {
                 this.strokeWidth = 5;
                 this.strokeColour = "indianred";
                 this.fillColour ="rgba(165,42,42, 0.3)"; //brown
+                this.fontShadowColour = "brown";
+                this.fontColour = "indianred";
+                break;
+            case "GameoverState":
+                this.titleFont = "55px Bebas Neue";
+                this.strokeWidth = 5;
+                this.strokeColour = "indianred";
+                this.fillColour ="rgba(255,192,203, 0.3)"; //pink
                 this.fontShadowColour = "brown";
                 this.fontColour = "indianred";
                 break;
