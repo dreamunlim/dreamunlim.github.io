@@ -4,6 +4,9 @@ class PauseState extends GameState {
     constructor() {
         super();
 
+        this.pauseStartTime = 0;
+        this.playState = null; // PlayState reference
+        
         // fuction pointers
         this.funcPointersMap = {
             "II": this.switchToPlayState
@@ -28,7 +31,6 @@ class PauseState extends GameState {
     onEnter() {
         this.pauseStartTime = time;
         
-        // PlayState reference
         this.playState = gameStateMachine.stack[1];
 
         // take Pause button ownership from PlayState
@@ -49,7 +51,18 @@ class PauseState extends GameState {
         // return Pause button ownership to PlayState
         this.playState.pauseButton.state = this.playState;
 
+        this.clean();
+
         return true;
+    }
+
+    clean() {
+        // delete old object layers
+        this.level.layers = new Array();
+
+        // reset
+        this.pauseStartTime = 0;
+        this.playState = null;
     }
 
     //call back functions

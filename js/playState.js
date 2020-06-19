@@ -38,8 +38,21 @@ class PlayState extends GameState {
     }
 
     onExit() {
+        this.clean();
 
         return true;
+    }
+
+    clean() {
+        // delete old object layers, since:
+        // 1) was causing instant player-spider collision on game restart
+        // 2) new layers stacked onto old ones
+        this.level.layers = new Array();
+        
+        // reset
+        this.pauseButton = null;
+        this.scoreObject = null;
+        this.timerObject = null;
     }
 
     //call back functions
