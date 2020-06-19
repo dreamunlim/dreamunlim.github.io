@@ -58,6 +58,7 @@ class LevelParser {
             case "PauseState":
                 break;
             case "GameoverState":
+                this.parseObjectLayer(state, "buttons");
                 break; 
         }
 

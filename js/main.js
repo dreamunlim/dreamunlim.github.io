@@ -50,7 +50,7 @@ gameStateMachine.registerState(StateID.Loading, new LoadingState());
 gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
 gameStateMachine.registerState(StateID.Pause, new PauseState());
-// gameStateMachine.registerState(StateID.Gameover, new GameoverState());
+gameStateMachine.registerState(StateID.Gameover, new GameoverState());
 gameStateMachine.requestStackPush(StateID.Loading);
 
 
