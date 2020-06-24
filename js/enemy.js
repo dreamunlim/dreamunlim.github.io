@@ -3,6 +3,8 @@
 class Enemy extends GameObject {
     constructor () {
         super();
+
+        this.spawned = true;
     }
 
     initObject(initData) {
@@ -22,10 +24,22 @@ class Enemy extends GameObject {
     }
 
     respawn() {
+        var enemyID = this.constructor.name.toLowerCase();
+
         this.position.x = this.lanes[random(1, 5)];
         this.position.y = -this.dHeight;
         this.velocity.y = this.initial.velocity
         this.acceleration.y = this.initial.acceleration;
+
+        switch (enemyID) {
+            case "booster":
+                this.spawned = false;
+                break;
+            case "star":
+                this.spawned = false;
+                this.currentRow = (++this.currentRow) % this.totalRows;
+                break;
+        }
     }
 
     updateObject() {
