@@ -29,20 +29,20 @@
             ["booster", "img/booster.png"],
             ["enemy-red", "img/enemy-red.png"],
             ["enemy-purple", "img/enemy-purple.png"],
-            ["enemy-spider", "img/enemy-spider.png"]
+            ["enemy-spider", "img/enemy-spider.png"],
+            ["enemy-star", "img/enemy-star.png"]
         ],
         "sounds": [
             ["booster", "sound/player-booster.ogg"],
             ["heart", "sound/player-heart.ogg"],
             ["spider", "sound/player-spider.ogg"],
-            ["gameover", "sound/gameover.ogg"]
+            ["star", "sound/player-star.ogg"]
         ]
     },
     "MenuState": {
         "objects": [
             {
                 "id": "background",
-                "path": "img/menu-background.jpg",
                 "position": [0, 0],
                 "velocity": [],
                 "acceleration": [],
@@ -87,7 +87,6 @@
         "objects": [
             {
                 "id": "play-background",
-                "path": "img/play-background.jpg",
                 "position": [-20, -20],
                 "velocity": [],
                 "acceleration": [],
@@ -97,7 +96,6 @@
             },
             {
                 "id": "player",
-                "path": "img/player.png",
                 "position": [270, 510],
                 "velocity": [],
                 "acceleration": [],
@@ -110,44 +108,39 @@
                 "currentRow": 1,
                 "numFrames": 4,
                 "animSpeed": 100,
-                "collisionCircle": {"center": [50, 26.80], "radius": 25.11}
+                "collisionCircle": {"center": [50, 30.28], "radius": 27.10}
             }
         ],
         "enemies": [
             {
                 "id": "booster",
-                "path": "img/booster.png",
                 "position": [],
                 "velocity": [0, 1],
-                "acceleration": [0, 0.1],
+                "acceleration": [0, 0.4],
                 "textureID": "booster",
                 "sWidth": 240,
                 "sHeight": 240,
                 "dWidth": 100,
                 "dHeight": 100,
-                "collisionCircle": {"center": [50, 50], "radius": 41.25},
-                "soundPath": "sound/player-booster.ogg"
+                "collisionCircle": {"center": [50, 50], "radius": 41.25}
             },
             {
                 "id": "heart",
-                "path": "img/enemy-red.png",
                 "position": [],
                 "velocity": [0, 7],
-                "acceleration": [0, 0.3],
+                "acceleration": [0, 0.2],
                 "textureID": "enemy-red",
                 "sWidth": 240,
                 "sHeight": 240,
                 "dWidth": 100,
                 "dHeight": 100,
-                "collisionCircle": {"center": [50, 44.38], "radius": 34.78},
-                "soundPath": "sound/player-heart.ogg"
+                "collisionCircle": {"center": [50, 44.38], "radius": 34.78}
             },
             {
                 "id": "heart",
-                "path": "img/enemy-purple.png",
                 "position": [],
                 "velocity": [0, 7],
-                "acceleration": [0, 0.2],
+                "acceleration": [0, 0.125],
                 "textureID": "enemy-purple",
                 "sWidth": 240,
                 "sHeight": 240,
@@ -157,7 +150,6 @@
             },
             {
                 "id": "spider",
-                "path": "img/enemy-spider.png",
                 "position": [],
                 "velocity": [],
                 "acceleration": [],
@@ -170,8 +162,23 @@
                 "currentRow": 0,
                 "numFrames": 2,
                 "animSpeed": 250,
-                "collisionCircle": {"center": [50, 49], "radius": 32.045},
-                "soundPath": "sound/player-spider.ogg"   
+                "collisionCircle": {"center": [50, 49], "radius": 32.045}
+            },
+            {
+                "id": "star",
+                "position": [],
+                "velocity": [0, 7],
+                "acceleration": [0, 0.25],
+                "textureID": "enemy-star",
+                "sWidth": 68,
+                "sHeight": 63,
+                "dWidth": 100,
+                "dHeight": 93,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 8,
+                "animSpeed": 100,
+                "collisionCircle": {"center": [50, 47.81], "radius": 33.22}
             }
         ],
         "buttons": [
