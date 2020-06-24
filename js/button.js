@@ -36,8 +36,7 @@ class Button {
                 this.callbackDelay = 0;
                 break;
             case "GameoverState":
-                this.state.textBox.okButton = this; // make visible to TextBox
-                this.state.textBox.alignOkButton();
+                this.state.textBox.alignOkButton(this);
                 break;
         }
     }

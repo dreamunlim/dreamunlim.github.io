@@ -103,8 +103,6 @@ class TextBox {
     constructor() {
         this.text = new _Text();
 
-        this.okButton = null;
-
         this.x = 80;
         this.y = 185;
         this.width = 480;
@@ -123,13 +121,13 @@ class TextBox {
         this.text.drawText(this);
     }
 
-    alignOkButton() {
+    alignOkButton(button) {
         // amend button position to TextBox bottom center
-        this.okButton.position.x = this.x + (this.width / 2 - this.okButton.width / 2);
-        this.okButton.position.y = this.y + (this.height - this.okButton.height) - 10;
+        button.position.x = this.x + (this.width / 2 - button.width / 2);
+        button.position.y = this.y + (this.height - button.height) - 10;
         // amend button initial position
-        this.okButton.initial.position.x = this.okButton.position.x;
-        this.okButton.initial.position.y = this.okButton.position.y;
+        button.initial.position.x = button.position.x;
+        button.initial.position.y = button.position.y;
     }
 
 }
