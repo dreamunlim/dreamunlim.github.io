@@ -36,17 +36,16 @@ class Spider extends Enemy {
         // animate only once
         if ((this.position.y >= this.dist - this.dHeight) && !this.animate) {
             this.animate = true;
-            this.t1 = Math.floor(time / this.animDuration);
+            this.t1 = time;
         }
 
         if (this.animate) {
             super.animateFrame();
 
-            this.t2 = Math.floor(time / this.animDuration);
-
             // stop animation
-            if (this.t2 - this.t1) {
+            if (time - this.t1 > this.animDuration) {
                 this.animate = false;
+                this.currentFrame = 0;
             }
         }
     }
