@@ -97,7 +97,11 @@ class MenuState extends GameState {
     }
 
     redirectToAbout(button) {
-        window.open(button.url, "_self");
+        if(button.state.topScore[0][0] === 0) {
+            window.open(button.url, "_self");
+        } else {
+            window.open(button.url, "_blank"); // avoid losing score
+        }
     }
 
 }
