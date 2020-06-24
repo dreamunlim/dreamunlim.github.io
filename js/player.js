@@ -122,7 +122,7 @@ class Player extends GameObject {
         inputHandler.rightPressed = false;
         inputHandler.mouseLeftPressed = false;
 
-        
+
         this.checkPlayerEnemyCollision();
         this.flickerOnCollision();
     }
@@ -149,12 +149,23 @@ class Player extends GameObject {
     }
 
     checkPlayerEnemyCollision() {
+        // drop every third frame from collision check
+        if(! (Math.floor(time / FRAME_TIME) % 3)) {
+            return;
+        }
+
         var enemyLayer = this.state.level.layers[1];
         var boosterCollided = false;
 
         for (var i = 0; i != enemyLayer.length; ++i) {
             var enemy = enemyLayer[i];
             var enemyID = enemy.constructor.name.toLowerCase();
+
+            // if enemy not spawned
+            if(! enemy.spawned) {
+                continue;
+            }
+
             var collided = collisionManager.playerEnemyCollision(this, enemy);
 
             if (collided) {
@@ -169,7 +180,7 @@ class Player extends GameObject {
                 if (enemyID == "star") {
                     this.state.scoreObject.score += 2;
                     enemy.respawn();
-                    soundManager.playSound("spider");
+                    soundManager.playSound(enemyID);
                 }
 
                 if (enemyID == "heart") {
