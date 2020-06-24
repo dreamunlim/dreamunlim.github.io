@@ -89,7 +89,12 @@ class Counter {
 
         // switch state
         if (that.timerCurrentValue <= 0) {
-            that.state.switchToGameOverState();
+            that.formattedTimer = "00";
+            
+            // wait for booster to fall offscreen
+            if (! that.state.boosterObject.spawned) {
+                that.state.switchToGameOverState();
+            }
         }
     }
 

@@ -9,6 +9,7 @@ class PlayState extends GameState {
         this.pauseButton = null; // to be visible to Player object, Pause state
         this.scoreObject = null; // to be visible to Player object
         this.timerObject = null; // to be visible to Booster, Pause state
+        this.boosterObject = null; // to be visible to Timer
 
         // fuction pointers
         this.funcPointersMap = {
@@ -53,6 +54,7 @@ class PlayState extends GameState {
         this.pauseButton = null;
         this.scoreObject = null;
         this.timerObject = null;
+        this.boosterObject = null;
     }
 
     //call back functions
