@@ -6,7 +6,7 @@ class _Text {
             // format data order: [text, align, font, fontColour]
             [["Good Job!",0,0,0]],
             [["You scored ",1,1,1], ["",1,1,2], [" Points",1,1,1]],
-            [["And last ",1,1,1], ["",1,1,2], [" Min ",1,1,1], ["",1,1,2], [" Sec",1,1,1]]
+            [["And lasted ",1,1,1], ["",1,1,2], [" Min ",1,1,1], ["",1,1,2], [" Sec",1,1,1]]
         ];
 
         this.decodeAlign = {
