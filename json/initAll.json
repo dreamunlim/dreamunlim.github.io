@@ -165,6 +165,22 @@
                 "collisionCircle": {"center": [50, 49], "radius": 32.045}
             },
             {
+                "id": "spider",
+                "position": [0, -422],
+                "velocity": [],
+                "acceleration": [],
+                "textureID": "enemy-spider",
+                "sWidth": 178,
+                "sHeight": 182,
+                "dWidth": 100,
+                "dHeight": 102,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 2,
+                "animSpeed": 250,
+                "collisionCircle": {"center": [50, 49], "radius": 32.045}
+            },
+            {
                 "id": "star",
                 "position": [],
                 "velocity": [0, 7],

@@ -34,7 +34,7 @@ class Spider extends Enemy {
         }
 
         // animate only once
-        if ((this.position.y >= this.dist - this.dHeight) && !this.animate) {
+        if ((this.position.y >= this.dist - this.dHeight - 10) && !this.animate) {
             this.animate = true;
             this.t1 = time;
         }

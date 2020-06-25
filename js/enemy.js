@@ -13,11 +13,15 @@ class Enemy extends GameObject {
         // define position
         if(! this.position.x) {
             this.position.x = this.lanes[random(1, 5)];
+        }
+        
+        if(! this.position.y) {
             this.position.y = -this.dHeight;
         }
 
         // initial values for respawn
         this.initial = {
+            position: this.position.y,
             velocity: initData.velocity.y,
             acceleration: initData.acceleration.y
         }
@@ -27,8 +31,8 @@ class Enemy extends GameObject {
         var enemyID = this.constructor.name.toLowerCase();
 
         this.position.x = this.lanes[random(1, 5)];
-        this.position.y = -this.dHeight;
-        this.velocity.y = this.initial.velocity
+        this.position.y = this.initial.position;
+        this.velocity.y = this.initial.velocity;
         this.acceleration.y = this.initial.acceleration;
 
         switch (enemyID) {
@@ -48,7 +52,7 @@ class Enemy extends GameObject {
         // respawn condition
         if (this.position.y > height) {
             this.respawn();
-        } else if (this.position.y < -this.dHeight) {
+        } else if (this.position.y < this.initial.position) {
             this.respawn();
         }
     }
