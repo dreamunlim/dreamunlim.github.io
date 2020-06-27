@@ -149,20 +149,14 @@ class Player extends GameObject {
     }
 
     checkPlayerEnemyCollision() {
-        // drop every third frame from collision check
-        if(! (Math.floor(time / FRAME_TIME) % 3)) {
-            return;
-        }
-
         var enemyLayer = this.state.level.layers[1];
-        var boosterCollided = false;
 
         for (var i = 0; i != enemyLayer.length; ++i) {
             var enemy = enemyLayer[i];
             var enemyID = enemy.constructor.name.toLowerCase();
 
-            // if enemy not spawned
-            if(! enemy.spawned) {
+            // skip collision check
+            if (enemy.position.y + enemy.dHeight < height / 2) {
                 continue;
             }
 
@@ -172,7 +166,7 @@ class Player extends GameObject {
                 if (enemyID == "booster") {
                     this.state.timerObject.boosterPickUpTime = time;
                     this.state.scoreObject.score += 3;
-                    boosterCollided = true;
+                    this.state.boosterObject.collided = true;
                     enemy.respawn();
                     soundManager.playSound(enemyID);
                 }
@@ -191,7 +185,7 @@ class Player extends GameObject {
 
                 if (enemyID == "spider") {
                     // if player-spider-booster collided at the same time
-                    if (boosterCollided) {
+                    if (this.state.boosterObject.collided) {
                         this.immune = true;
                         this.t1 = time;
                     }
@@ -205,7 +199,10 @@ class Player extends GameObject {
                     }
 
                     if (! this.immune) {
-                        this.state.switchToGameOverState();
+                        // avoid GameoverState pushed second time in a row  
+                        if (! gameStateMachine.pendingList.length) {
+                            this.state.switchToGameOverState();
+                        }
                         soundManager.playSound(enemyID);
                     }
                 }
