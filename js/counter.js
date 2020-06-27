@@ -26,7 +26,7 @@ class Counter {
         if (this.counterID == "timer") {
             this.state.timerObject = this;
 
-            this.timerResetValue = 15; // in sec
+            this.timerResetValue = 10; // in sec
             this.actionStartTime = time;
             this.totalTimePassed = 0; // in ms
             this.boosterPickUpTime = time;
