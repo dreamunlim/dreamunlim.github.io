@@ -20,6 +20,9 @@ class LevelParser {
             .then(function (json) {
                 gameJson = json;
             })
+            .then(() => {
+                gameStateMachine.requestStackPush(StateID.Loading);
+            })
             .catch(function (error) {
                 console.error(error);
             });
