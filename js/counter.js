@@ -106,7 +106,7 @@ class Counter {
     }
 
     drawTimer(that) {
-        var x = width / 2 / scale;
+        var x = width / 2;
         var y = 0;
         drawText(that.formattedTimer, x, y - 1, that.fontShadow, "center", that.fontShadowColour);
         drawText(that.formattedTimer, x, y, that.font, "center", that.fontColour);
