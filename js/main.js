@@ -3,14 +3,14 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-var width = canvas.width = 640;
-var height = canvas.height = 640;
+// canvas dimensions before resize
+// crucial to keep to get proper player-enemy collision
+// since enemy y position was automatically rescaled
+// if collision was checked against canvas resized height
+const width = 640;
+const height = 640;
 
-// for smartphone screen
-const scale = resizeCanvas();
-console.log(scale, canvas.width, canvas.height);
-console.log(window.innerWidth, window.innerHeight);
-
+var scale = resizeCanvas();
 
 const FPS = 30;
 const FRAME_TIME = 1000 / FPS;
@@ -18,6 +18,7 @@ const FRAME_TIME = 1000 / FPS;
 var time = 0; // loop start timestamp
 
 // load game json file
+// and push LoadingState
 var levelParser = new LevelParser();
 
 // 
@@ -31,7 +32,8 @@ document.addEventListener("keydown", inputHandler.keyDownHandler, false);
 document.addEventListener("keyup", inputHandler.keyUpHandler, false);
 document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
 // document.addEventListener("pointerup", inputHandler.mouseUpHandler, false);
-// window.addEventListener("orientationchange", onRotate, false);
+document.addEventListener("visibilitychange", onVisibilityChange, false);
+window.addEventListener('resize', () => {scale = resizeCanvas()}, false);
 
 //create game object factory and register game object types
 var gameObjectFactory = new GameObjectFactory();
@@ -52,7 +54,6 @@ gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
 gameStateMachine.registerState(StateID.Pause, new PauseState());
 gameStateMachine.registerState(StateID.Gameover, new GameoverState());
-gameStateMachine.requestStackPush(StateID.Loading);
 
 
 // main loop  
