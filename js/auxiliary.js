@@ -10,18 +10,19 @@ function mod(n, m) {
     return ((n % m) + m) % m;
 }
 
-// if window width < window height, i assume smartphone screen and resize canvas
+// fit canvas to the shortest screen side
 function resizeCanvas() {
     var scale = 1;
 
     if (window.innerWidth < window.innerHeight) {
         scale = window.innerWidth / width;
-
-        width = canvas.width = canvas.width * scale;
-        height = canvas.height = canvas.height * scale;
-        ctx.scale(scale, scale);
-        ctx.save();
+    } else {
+        scale = window.innerHeight / height;
     }
+
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+    ctx.scale(scale, scale);
 
     return scale;
 }
@@ -53,4 +54,14 @@ function drawText(text, x, y, font, align, colour, baseline = "top", width = can
 function clearCanvas(x = 0, y = 0, width = canvas.width, height = canvas.height, colour = "rgba(0, 0, 0, 1)") {
     ctx.fillStyle = colour; // 0.5 to create trail effect
     ctx.fillRect(x, y, width, height);
+}
+
+function onVisibilityChange() {
+    if (document.visibilityState == "hidden") {
+        var state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
+
+        if (state instanceof PlayState) {
+            state.switchToPauseState();
+        }
+    }
 }
