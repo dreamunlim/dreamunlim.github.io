@@ -195,6 +195,22 @@
                 "numFrames": 8,
                 "animSpeed": 100,
                 "collisionCircle": {"center": [50, 47.81], "radius": 33.22}
+            },
+            {
+                "id": "star",
+                "position": [0, -333],
+                "velocity": [0, 7],
+                "acceleration": [0, 0.2],
+                "textureID": "enemy-star",
+                "sWidth": 68,
+                "sHeight": 63,
+                "dWidth": 100,
+                "dHeight": 93,
+                "currentFrame": 0,
+                "currentRow": 2,
+                "numFrames": 8,
+                "animSpeed": 100,
+                "collisionCircle": {"center": [50, 47.81], "radius": 33.22}
             }
         ],
         "buttons": [

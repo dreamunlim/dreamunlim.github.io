@@ -4,9 +4,6 @@ class Star extends Enemy {
     constructor () {
         super();
 
-        // star owner
-        this.state = gameStateMachine.stack[1];
-
         this.spawned = false;
         this.spawnPeriod = 2; // in sec
         this.totalRows = 4;
