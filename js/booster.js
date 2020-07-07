@@ -4,8 +4,6 @@ class Booster extends Enemy {
     constructor () {
         super();
 
-        // booster owner
-        this.state = gameStateMachine.stack[1];
         this.state.boosterObject = this;
         
         this.spawned = false;
