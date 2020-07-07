@@ -4,6 +4,11 @@ class Enemy extends GameObject {
     constructor () {
         super();
 
+        // enemy owner
+        this.state = gameStateMachine.stack[1];
+
+        this.enemyID = this.constructor.name.toLowerCase();
+
         this.spawned = true;
     }
 
@@ -12,7 +17,13 @@ class Enemy extends GameObject {
 
         // define position
         if(! this.position.x) {
-            this.position.x = this.lanes[random(1, 5)];
+            var lane = random(1, 5);
+            this.position.x = this.lanes[lane];
+
+            // spider specific adjustments
+            if (this.enemyID == "spider") {
+                this.state.spiderBusyLane = lane;
+            }
         }
         
         if(! this.position.y) {
@@ -28,20 +39,27 @@ class Enemy extends GameObject {
     }
 
     respawn() {
-        var enemyID = this.constructor.name.toLowerCase();
-
-        this.position.x = this.lanes[random(1, 5)];
+        var lane = random(1, 5);
+        this.position.x = this.lanes[lane];
         this.position.y = this.initial.position;
         this.velocity.y = this.initial.velocity;
         this.acceleration.y = this.initial.acceleration;
 
-        switch (enemyID) {
+        switch (this.enemyID) {
             case "booster":
                 this.spawned = false;
                 break;
             case "star":
                 this.spawned = false;
                 this.currentRow = (++this.currentRow) % this.totalRows;
+                break;
+            case "spider":
+                // don't spawn spiders onto same lane
+                if (this.state.spiderBusyLane == lane) {
+                    if ((++lane) > 5) lane = 1;
+                    this.position.x = this.lanes[lane];
+                }
+                this.state.spiderBusyLane = lane;
                 break;
         }
     }
