@@ -26,7 +26,7 @@ class Spider extends Enemy {
     }
 
     increaseVelocity() {
-        this.time = this.time - 5;
+        this.time = this.time - 2.5;
         this.initial.velocity = this.dist / this.time;
         this.accel = this.initial.velocity / this.time;
     }
@@ -36,8 +36,8 @@ class Spider extends Enemy {
 
         // decide velocity increase
         if (this.time > 20) {
-            if (this.prevScoreValue % 100 >= 97 &&
-                this.state.scoreObject.score % 100 <= 2) {
+            if (this.prevScoreValue % 50 >= 47 &&
+                this.state.scoreObject.score % 50 <= 2) {
                 this.increaseVelocity();
             }
             this.prevScoreValue = this.state.scoreObject.score;
