@@ -9,6 +9,8 @@ class MenuState extends GameState {
         this.titleFont = "68px Bebas Neue";
         this.scoreFont = "35px Orbitron";
 
+        this.overridePicture = new OverridePicture();
+
         // fuction pointers
         this.funcPointersMap = {
             "Play": this.switchToPlayState,
@@ -93,7 +95,8 @@ class MenuState extends GameState {
     }
 
     overridePic(button) {
-        button.hintMessage = "Not Ready";
+        button.state.overridePicture.input.click();
+        button.state.overridePicture.overridePicButton = button; // to relay hint messages
     }
 
     redirectToAbout(button) {
