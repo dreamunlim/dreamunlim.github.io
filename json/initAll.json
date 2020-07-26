@@ -134,7 +134,7 @@
                 "sHeight": 240,
                 "dWidth": 100,
                 "dHeight": 100,
-                "collisionCircle": {"center": [50, 44.38], "radius": 34.78}
+                "collisionCircle": {"center": [50, 45], "radius": 34.78}
             },
             {
                 "id": "heart",
@@ -146,7 +146,7 @@
                 "sHeight": 240,
                 "dWidth": 100,
                 "dHeight": 100,
-                "collisionCircle": {"center": [50, 44.38], "radius": 34.78}
+                "collisionCircle": {"center": [50, 45], "radius": 34.78}
             },
             {
                 "id": "spider",
