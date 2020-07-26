@@ -65,3 +65,14 @@ function onVisibilityChange() {
         }
     }
 }
+
+function onResize() {
+    scale = resizeCanvas();
+
+    // redraw PlayState once, since canvas data is reset on resizing
+    var state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
+
+    if (state instanceof PauseState || state instanceof GameoverState) {
+        state.playState.draw();
+    }
+}

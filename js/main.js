@@ -33,7 +33,7 @@ document.addEventListener("keyup", inputHandler.keyUpHandler, false);
 document.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
 // document.addEventListener("pointerup", inputHandler.mouseUpHandler, false);
 document.addEventListener("visibilitychange", onVisibilityChange, false);
-window.addEventListener('resize', () => {scale = resizeCanvas()}, false);
+window.addEventListener('resize', onResize, false);
 
 //create game object factory and register game object types
 var gameObjectFactory = new GameObjectFactory();
