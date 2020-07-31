@@ -10,6 +10,7 @@ class MenuState extends GameState {
         this.scoreFont = "35px Orbitron";
 
         this.overridePicture = new OverridePicture();
+        this.shareScoreObj = new ShareScore();
 
         // fuction pointers
         this.funcPointersMap = {
@@ -91,7 +92,8 @@ class MenuState extends GameState {
             return;
         }
 
-        button.hintMessage = "Not Ready";
+        button.state.shareScoreObj.input.click();
+        button.state.shareScoreObj.shareScoreButton = button; // to relay hint messages
     }
 
     overridePic(button) {

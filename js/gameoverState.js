@@ -6,8 +6,13 @@ class GameoverState extends GameState {
 
         this.textBox = new TextBox();
         this.playState = null; // PlayState reference
-        this.playStateScore = 0;
-        this.playStateTime = 0;
+
+        // FB share data
+        this.dataToShare = {
+            formattedScore: 0,
+            formattedMinutes: 0,
+            formattedSeconds: 0
+        };
 
         // fuction pointers
         this.funcPointersMap = {
@@ -28,13 +33,15 @@ class GameoverState extends GameState {
     onEnter() {
         levelParser.parseLevel(this);
 
-        // get PlayState score and time played
+        // stash FB share data
         this.playState = gameStateMachine.stack[1];
-        this.playStateScore = this.playState.scoreObject.formattedScore;
-        this.playStateTime = this.playState.timerObject.totalTimePassed;
+        this.dataToShare.formattedScore = this.playState.scoreObject.formattedScore;
 
         // pass PlayState unformatted score and time to MenuState
-        gameStateMachine.stack[0].updateTopScore(this.playState.scoreObject.score, this.playStateTime);
+        gameStateMachine.stack[0].updateTopScore(this.playState.scoreObject.score, this.playState.timerObject.totalTimePassed);
+
+        // pass FB share data to MenuState shareScore object
+        gameStateMachine.stack[0].shareScoreObj.dataToShare = this.dataToShare;
         
         return true;
     }
@@ -52,8 +59,7 @@ class GameoverState extends GameState {
         // reset
         this.textBox = new TextBox();
         this.playState = null;
-        this.playStateScore = 0;
-        this.playStateTime = 0;
+        this.dataToShare = {};
     }
 
     //call back functions

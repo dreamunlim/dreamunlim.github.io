@@ -22,6 +22,6 @@ canvas {
   display: block;
 }
 
-h1, p, ul, input {
+h1, p, ul, input, div {
   display: none;
 }
