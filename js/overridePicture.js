@@ -10,6 +10,8 @@ class OverridePicture {
 
         this.replaceableTextureIDs = ["enemy-red", "enemy-purple"];
         this.texturePointer = 0;
+
+        this.overridePicButton = null;
     }
 
     processPicture() {
