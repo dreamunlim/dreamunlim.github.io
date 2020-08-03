@@ -27,10 +27,11 @@ class ShareScore {
     processShare() {
         // assemble description
         this.description = "I scored " + this.dataToShare.formattedScore + " points" +
-        " and lasted " + this.dataToShare.formattedMinutes + " minutes " + this.dataToShare.formattedSeconds +
-        " seconds!" + " Can you beat my high score?";
+        " in " + this.dataToShare.formattedMinutes + " min " + this.dataToShare.formattedSeconds +
+        " sec!" + " Can you beat my achievement?";
 
         // populate FB meta tags
+        // (has no effect on sharing since web page should be saved to server and get new URL)
         document.querySelector('meta[property="og:url"]').setAttribute("content", this.url);
         document.querySelector('meta[property="og:title"]').setAttribute("content", this.title);
         document.querySelector('meta[property="og:description"]').setAttribute("content", this.description);
@@ -40,7 +41,8 @@ class ShareScore {
         FB.ui({
             method: "share",
             href: this.url,
-            // hashtag: "#punlim"
+            hashtag: "#punlim",
+            quote: this.description
         }, (response) => {this.relayResponse(response)});
     }
 
