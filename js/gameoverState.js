@@ -37,11 +37,13 @@ class GameoverState extends GameState {
         this.playState = gameStateMachine.stack[1];
         this.dataToShare.formattedScore = this.playState.scoreObject.formattedScore;
 
+        // pass FB share data to MenuState shareScore object
+        if (this.playState.scoreObject.score > gameStateMachine.stack[0].topScore[0][0]) {
+            gameStateMachine.stack[0].shareScoreObj.dataToShare = this.dataToShare;
+        }
+
         // pass PlayState unformatted score and time to MenuState
         gameStateMachine.stack[0].updateTopScore(this.playState.scoreObject.score, this.playState.timerObject.totalTimePassed);
-
-        // pass FB share data to MenuState shareScore object
-        gameStateMachine.stack[0].shareScoreObj.dataToShare = this.dataToShare;
         
         return true;
     }
