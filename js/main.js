@@ -17,11 +17,8 @@ const FRAME_TIME = 1000 / FPS;
 
 var time = 0; // loop start timestamp
 
-// load game json file
-// and push LoadingState
+//
 var levelParser = new LevelParser();
-
-// 
 var textureManager = new TextureManager();
 var collisionManager = new CollisionManager();
 var soundManager = new SoundManager();
@@ -54,6 +51,7 @@ gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
 gameStateMachine.registerState(StateID.Pause, new PauseState());
 gameStateMachine.registerState(StateID.Gameover, new GameoverState());
+gameStateMachine.requestStackPush(StateID.Loading);
 
 
 // main loop  
@@ -73,4 +71,6 @@ function loop() {
 
 // loop(); // start loop
 
-setInterval(loop, FRAME_TIME);
+// load game json file and start main loop
+var gameJson = {};
+parseJson("json/initAll.json");

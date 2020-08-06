@@ -1,5 +1,32 @@
 'use strict'
 
+function parseJson(jsonPath) {
+
+    fetch(jsonPath)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (json) {
+            gameJson = json;
+        })
+        .then(() => {
+            setInterval(loop, FRAME_TIME);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+    // var request = new XMLHttpRequest();
+
+    // request.open('GET', jsonPath);
+    // request.responseType = 'json';
+    // request.send();
+
+    // request.onload = function () {
+    //     gameJson = request.response;
+    // }
+}
+
 function random(min, max) {
     const num = Math.floor(Math.random() * (max - min + 1)) + min;
     return num;

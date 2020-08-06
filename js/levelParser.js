@@ -1,42 +1,8 @@
 'use strict'
 
-var gameJson;
-
 class LevelParser {
-    // gameJson;
-
     constructor() {
-        this.parseJson("json/initAll.json");
-
         this.stateID;
-    }
-
-    parseJson(jsonPath) {
-
-        fetch(jsonPath)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (json) {
-                gameJson = json;
-            })
-            .then(() => {
-                gameStateMachine.requestStackPush(StateID.Loading);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-
-        // var request = new XMLHttpRequest();
-
-        // request.open('GET', jsonPath);
-        // request.responseType = 'json';
-        // request.send();
-
-        // request.onload = function () {
-        //     // could not store 'request.response' in a global var from here
-        //     gameJson = request.response;
-        // }
     }
 
     parseLevel(state) {
@@ -205,7 +171,6 @@ class LevelParser {
             // store object in layer
             objectLayer.push(object);
         }
-
     }
 
     parseCounters(objectLayer, layerName) {
@@ -229,7 +194,6 @@ class LevelParser {
             // store object in layer
             objectLayer.push(object);
         }
-
     }
 
 }
