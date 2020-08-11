@@ -1,0 +1,130 @@
+'use strict'
+
+class CharacterSelector {
+    constructor() {
+        this.selectorBox = {
+            position: {x: 0, y: 95},
+            width: 257,
+            height: 325,
+            drawArrows: function () {
+                var leftArrowStartX = this.position.x;
+                var leftArrowStartY = this.position.y + this.height / 2;
+                
+                var p1 = {x: leftArrowStartX, y: leftArrowStartY};
+                var p2 = {x: leftArrowStartX + 10, y: leftArrowStartY - 10};
+                var p3 = {x: leftArrowStartX + 10, y: leftArrowStartY + 10};
+
+                drawTriangle(p1, p2, p3);
+
+                var rightArrowStartX = this.position.x + this.width;
+                var rightArrowStartY = this.position.y + this.height / 2;
+
+                p1 = {x: rightArrowStartX, y: rightArrowStartY};
+                p2 = {x: rightArrowStartX - 10, y: rightArrowStartY - 10};
+                p3 = {x: rightArrowStartX - 10, y: rightArrowStartY + 10};
+
+                drawTriangle(p1, p2, p3);
+            }
+        };
+
+        this.charBox = function (that) {
+            var that = that;
+
+            return {
+                t1: 0,
+                hintDelay: 1000,
+
+                position: {x: null, y: null}, // centered
+                width: null, // varies per char
+                height: 256, // constant
+                updateCharBox: function () {
+                    this.width = (this.height * that.playerInitData.sWidth) / that.playerInitData.sHeight;
+                    this.position.x = that.selectorBox.position.x + (that.selectorBox.width - this.width) / 2;
+                    this.position.y = that.selectorBox.position.y + (that.selectorBox.height - this.height) / 2;
+
+                    this.t1 = time;
+                    this.charName = that.charList[that.charPointer].name;
+                },
+                drawChar: function () {
+                    textureManager.drawTexture(that.playerInitData.textureID, 0, 1, that.playerInitData.sWidth, that.playerInitData.sHeight,
+                        this.position.x, this.position.y, this.width, this.height);
+
+                    // char name
+                    if (this.charName) {
+                        var x = that.selectorBox.position.x + that.selectorBox.width / 2;
+                        var y = that.selectorBox.position.y;
+
+                        drawText(this.charName, x + 2, y + 2,
+                            "30px Orbitron", "center", "maroon", "middle", that.selectorBox.width);
+
+                        drawText(this.charName, x, y,
+                            "30px Orbitron", "center", "lightsalmon", "middle", that.selectorBox.width);
+
+                        // remove name
+                        if ((time - this.t1) > this.hintDelay) {
+                            delete this.charName;
+                        }
+                    }
+                }
+            }
+        }(this);
+
+        this.hi = {
+            position: {x: 200, y: 78},
+            sWidth: 120,
+            sHeight: 134,
+            dWidth: 72,
+            dHeight: 80,
+            drawHi: function () {
+                textureManager.drawTexture("hi", 0, 0, this.sWidth, this.sHeight,
+                    this.position.x, this.position.y, this.dWidth, this.dHeight);
+            }
+        };
+
+        this.charList = gameJson["MenuState"]["characters"];
+        this.charPointer = 0;
+
+        this.playerInitData = gameJson["PlayState"]["objects"][1];
+        this.updatePlayerInitData();
+    }
+
+    switchChar() {
+        // mouse
+        if (inputHandler.mouseLeftPressed) {
+            if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this.selectorBox)) {
+                this.charPointer = (++this.charPointer) % this.charList.length;
+                this.updatePlayerInitData();
+            }
+
+            // reset mouse
+            inputHandler.mouseLeftPressed = false;
+        }
+    }
+
+    updatePlayerInitData() {
+        this.playerInitData.position = this.charList[this.charPointer].position;
+        this.playerInitData.textureID = this.charList[this.charPointer].textureID;
+        this.playerInitData.sWidth = this.charList[this.charPointer].sWidth;
+        this.playerInitData.sHeight = this.charList[this.charPointer].sHeight;
+        this.playerInitData.dWidth = this.charList[this.charPointer].dWidth;
+        this.playerInitData.dHeight = this.charList[this.charPointer].dHeight;
+        this.playerInitData.currentFrame = this.charList[this.charPointer].currentFrame;
+        this.playerInitData.currentRow = this.charList[this.charPointer].currentRow;
+        this.playerInitData.numFrames = this.charList[this.charPointer].numFrames;
+        this.playerInitData.animSpeed = this.charList[this.charPointer].animSpeed;
+        this.playerInitData.collisionCircle = this.charList[this.charPointer].collisionCircle;
+
+        this.charBox.updateCharBox();
+    }
+
+    update() {
+        this.switchChar();
+    }
+
+    draw() {
+        this.hi.drawHi();
+        this.charBox.drawChar();
+        this.selectorBox.drawArrows();
+    }
+  
+}

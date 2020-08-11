@@ -6,11 +6,14 @@ class MenuState extends GameState {
 
         this.topScore = [[0,0], [0,0], [0,0]]; // score-time pairs
 
+        this.gameTitle = "Penetrator Unlimited";
+
         this.titleFont = "68px Bebas Neue";
         this.scoreFont = "35px Orbitron";
 
         this.overridePicture = new OverridePicture();
         this.shareScoreObj = new ShareScore();
+        this.characterSelector = null;
 
         // fuction pointers
         this.funcPointersMap = {
@@ -23,10 +26,14 @@ class MenuState extends GameState {
 
     update() {
         this.level.update();
+        
+        this.characterSelector.update();
     }
 
     draw() {
         this.level.draw();
+
+        this.characterSelector.draw();
 
         this.drawTitle();
         this.drawTopScore();
@@ -35,8 +42,8 @@ class MenuState extends GameState {
     drawTitle () {
         var x = 20;
         var y = 0;
-        drawText("Penetrator Unlimited", x + 2, y + 2, this.titleFont, "start", "black");
-        drawText("Penetrator Unlimited", x, y, this.titleFont, "start", "mediumpurple");
+        drawText(this.gameTitle, x + 2, y + 2, this.titleFont, "start", "black");
+        drawText(this.gameTitle, x, y, this.titleFont, "start", "mediumpurple");
     }
 
     drawTopScore () {
@@ -68,6 +75,8 @@ class MenuState extends GameState {
     }
 
     onEnter() {
+        this.characterSelector = new CharacterSelector();
+        
         levelParser.parseLevel(this);
 
         return true;
