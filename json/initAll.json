@@ -25,7 +25,10 @@
         "textures": [
             ["menu-background", "img/menu-background.jpg"],
             ["play-background", "img/play-background.jpg"],
-            ["player", "img/player.png"],
+            ["player-catto", "img/player-catto.png"],
+            ["player-doggo", "img/player-doggo.png"],
+            ["player-penetrator", "img/player-penetrator.png"],
+            ["hi", "img/hi.png"],
             ["booster", "img/booster.png"],
             ["enemy-red", "img/enemy-red.png"],
             ["enemy-purple", "img/enemy-purple.png"],
@@ -81,6 +84,50 @@
                 "height": 110,
                 "url": "https://sites.google.com/view/punlim"
             }
+        ],
+        "characters": [
+            {
+                "name": "Catto",
+                "position": [270, 490],
+                "textureID": "player-catto",
+                "sWidth": 290,
+                "sHeight": 436,
+                "dWidth": 100,
+                "dHeight": 150,
+                "currentFrame": 0,
+                "currentRow": 1,
+                "numFrames": 8,
+                "animSpeed": 75,
+                "collisionCircle": {"center": [50, 64.69], "radius": 37.85}
+            },
+            {
+                "name": "Doggo",
+                "position": [270, 486],
+                "textureID": "player-doggo",
+                "sWidth": 293,
+                "sHeight": 450,
+                "dWidth": 100,
+                "dHeight": 154,
+                "currentFrame": 0,
+                "currentRow": 1,
+                "numFrames": 8,
+                "animSpeed": 75,
+                "collisionCircle": {"center": [50, 69.47], "radius": 37.66}
+            },
+            {
+                "name": "Penetrator",
+                "position": [270, 510],
+                "textureID": "player-penetrator",
+                "sWidth": 329,
+                "sHeight": 427,
+                "dWidth": 100,
+                "dHeight": 130,
+                "currentFrame": 0,
+                "currentRow": 1,
+                "numFrames": 4,
+                "animSpeed": 100,
+                "collisionCircle": {"center": [50, 30.28], "radius": 27.10}
+            }
         ]
     },
     "PlayState": {
@@ -96,19 +143,19 @@
             },
             {
                 "id": "player",
-                "position": [270, 510],
+                "position": [],
                 "velocity": [],
                 "acceleration": [],
-                "textureID": "player",
-                "sWidth": 329,
-                "sHeight": 427,
-                "dWidth": 100,
-                "dHeight": 130,
+                "textureID": "",
+                "sWidth": 0,
+                "sHeight": 0,
+                "dWidth": 0,
+                "dHeight": 0,
                 "currentFrame": 0,
-                "currentRow": 1,
-                "numFrames": 4,
-                "animSpeed": 100,
-                "collisionCircle": {"center": [50, 30.28], "radius": 27.10}
+                "currentRow": 0,
+                "numFrames": 0,
+                "animSpeed": 0,
+                "collisionCircle": {}
             }
         ],
         "enemies": [
