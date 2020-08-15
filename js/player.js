@@ -82,7 +82,7 @@ class Player extends GameObject {
         }
 
         // mouse
-        if (inputHandler.mouseLeftPressed && !this.animate) {
+        if ((inputHandler.documentMouseLeftPressed || inputHandler.mouseLeftPressed) && !this.animate) {
             if (inputHandler.mEvent.clientX < window.innerWidth / 2) {
                 this.targLane = mod(--this.targLane, this.numLanes);
                 this.currentRow = 0;
@@ -121,6 +121,7 @@ class Player extends GameObject {
         inputHandler.leftPressed = false;
         inputHandler.rightPressed = false;
         inputHandler.mouseLeftPressed = false;
+        inputHandler.documentMouseLeftPressed = false;
 
 
         this.checkPlayerEnemyCollision();

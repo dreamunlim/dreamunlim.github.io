@@ -9,6 +9,7 @@ class InputHandler {
     escPressed = false;
 
     mouseLeftPressed = false;
+    documentMouseLeftPressed = false;
     mEvent; // bookkeep mouse event
     
     constructor() {
@@ -56,9 +57,20 @@ class InputHandler {
     }
 
     mouseDownHandler(e) {
+        // don't pass this event on to handlers up and down in the DOM
+        e.stopPropagation();
+
         switch (e.button) {
             case 0: // 0/1/2 - left/middle/right button
                 inputHandler.mouseLeftPressed = true;
+                inputHandler.mEvent = e;
+        }
+    }
+
+    documentMouseDownHandler(e) {
+        switch (e.button) {
+            case 0:
+                inputHandler.documentMouseLeftPressed = true;
                 inputHandler.mEvent = e;
         }
     }
