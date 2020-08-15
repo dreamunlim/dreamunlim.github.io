@@ -3,10 +3,20 @@
 class CharacterSelector {
     constructor() {
         this.selectorBox = {
+            t1: 0,
+            arrowHiddenDelay: 50, // in ms
+
             position: {x: 0, y: 95},
             width: 257,
             height: 325,
-            drawArrows: function () {
+            drawLeftArrow: function () {
+                if (this.skipLeftArrowDraw) {
+                    if ((time - this.t1) > this.arrowHiddenDelay) {
+                        this.skipLeftArrowDraw = false;
+                    }
+                    return;
+                }
+
                 var leftArrowStartX = this.position.x;
                 var leftArrowStartY = this.position.y + this.height / 2;
                 
@@ -15,13 +25,21 @@ class CharacterSelector {
                 var p3 = {x: leftArrowStartX + 10, y: leftArrowStartY + 10};
 
                 drawTriangle(p1, p2, p3);
+            },
+            drawRightArrow: function () {
+                if (this.skipRightArrowDraw) {
+                    if ((time - this.t1) > this.arrowHiddenDelay) {
+                        this.skipRightArrowDraw = false;
+                    }
+                    return;
+                }
 
                 var rightArrowStartX = this.position.x + this.width;
                 var rightArrowStartY = this.position.y + this.height / 2;
 
-                p1 = {x: rightArrowStartX, y: rightArrowStartY};
-                p2 = {x: rightArrowStartX - 10, y: rightArrowStartY - 10};
-                p3 = {x: rightArrowStartX - 10, y: rightArrowStartY + 10};
+                var p1 = {x: rightArrowStartX, y: rightArrowStartY};
+                var p2 = {x: rightArrowStartX - 10, y: rightArrowStartY - 10};
+                var p3 = {x: rightArrowStartX - 10, y: rightArrowStartY + 10};
 
                 drawTriangle(p1, p2, p3);
             }
@@ -32,7 +50,7 @@ class CharacterSelector {
 
             return {
                 t1: 0,
-                hintDelay: 1000,
+                charNameDelay: 1000, // in ms
 
                 position: {x: null, y: null}, // centered
                 width: null, // varies per char
@@ -61,7 +79,7 @@ class CharacterSelector {
                             "30px Orbitron", "center", "lightsalmon", "middle", that.selectorBox.width);
 
                         // remove name
-                        if ((time - this.t1) > this.hintDelay) {
+                        if ((time - this.t1) > this.charNameDelay) {
                             delete this.charName;
                         }
                     }
@@ -92,7 +110,18 @@ class CharacterSelector {
         // mouse
         if (inputHandler.mouseLeftPressed) {
             if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this.selectorBox)) {
-                this.charPointer = (++this.charPointer) % this.charList.length;
+                var x1 = inputHandler.mEvent.offsetX / scale;
+                var x2 = this.selectorBox.width / 2;
+                
+                if (x1 > x2) {
+                    this.charPointer = (++this.charPointer) % this.charList.length;
+                    this.selectorBox.skipRightArrowDraw = true;
+                    this.selectorBox.t1 = time;
+                } else {
+                    this.charPointer = mod(--this.charPointer, this.charList.length);
+                    this.selectorBox.skipLeftArrowDraw = true;
+                    this.selectorBox.t1 = time;
+                }
                 this.updatePlayerInitData();
             }
 
@@ -124,7 +153,8 @@ class CharacterSelector {
     draw() {
         this.hi.drawHi();
         this.charBox.drawChar();
-        this.selectorBox.drawArrows();
+        this.selectorBox.drawLeftArrow();
+        this.selectorBox.drawRightArrow();
     }
   
 }
