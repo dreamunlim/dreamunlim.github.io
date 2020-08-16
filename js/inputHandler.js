@@ -85,4 +85,11 @@ class InputHandler {
         }
     }
     
+    resetInputStates() {
+        inputHandler.leftPressed = false;
+        inputHandler.rightPressed = false;
+        inputHandler.mouseLeftPressed = false;
+        inputHandler.documentMouseLeftPressed = false;
+    }
+    
 }

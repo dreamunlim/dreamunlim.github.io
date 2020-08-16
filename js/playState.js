@@ -33,6 +33,8 @@ class PlayState extends GameState {
     }
 
     onEnter() {
+        inputHandler.resetInputStates();
+
         levelParser.parseLevel(this);
 
         return true;

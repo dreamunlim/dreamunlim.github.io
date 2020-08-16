@@ -72,17 +72,17 @@ class Player extends GameObject {
 
         // keyboard
         // disallow 'targLane' change during animation to avoid lane fly-throughs, especially at edges
-        if (inputHandler.leftPressed && !this.animate) {
+        if (!this.animate && inputHandler.leftPressed) {
             this.targLane = mod(--this.targLane, this.numLanes);
             this.currentRow = 0;
         }
-        if (inputHandler.rightPressed && !this.animate) {
+        if (!this.animate && inputHandler.rightPressed) {
             this.targLane = (++this.targLane) % this.numLanes;
             this.currentRow = 1;
         }
 
         // mouse
-        if ((inputHandler.documentMouseLeftPressed || inputHandler.mouseLeftPressed) && !this.animate) {
+        if (!this.animate && (inputHandler.documentMouseLeftPressed || inputHandler.mouseLeftPressed)) {
             if (inputHandler.mEvent.clientX < window.innerWidth / 2) {
                 this.targLane = mod(--this.targLane, this.numLanes);
                 this.currentRow = 0;
@@ -118,10 +118,7 @@ class Player extends GameObject {
 
 
         // be sure 'player' has indeed had time to update itself
-        inputHandler.leftPressed = false;
-        inputHandler.rightPressed = false;
-        inputHandler.mouseLeftPressed = false;
-        inputHandler.documentMouseLeftPressed = false;
+        inputHandler.resetInputStates();
 
 
         this.checkPlayerEnemyCollision();
