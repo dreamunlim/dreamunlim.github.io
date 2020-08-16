@@ -41,7 +41,7 @@ class ShareScore {
         FB.ui({
             method: "share",
             href: this.url,
-            hashtag: "#punlim",
+            hashtag: "#dream_unlim",
             quote: this.description
         }, (response) => {this.relayResponse(response)});
     }

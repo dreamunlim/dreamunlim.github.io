@@ -6,7 +6,7 @@ class MenuState extends GameState {
 
         this.topScore = [[0,0], [0,0], [0,0]]; // score-time pairs
 
-        this.gameTitle = "Penetrator Unlimited";
+        this.gameTitle = "Dreamer Unlimited";
 
         this.titleFont = "68px Bebas Neue";
         this.scoreFont = "35px Orbitron";
