@@ -104,6 +104,18 @@ function onResize() {
     }
 }
 
+function onStorageChange() {
+    if (localStorage.length) {
+        var menuState = gameStateMachine.stack[0];
+        var storage = JSON.parse(localStorage.getItem("data"));
+        
+        menuState.topScore = storage.score;
+        menuState.characterSelector.charPointer = storage.selectedChar;
+        menuState.characterSelector.updatePlayerInitData();
+        menuState.shareScoreObj.dataToShare = storage.fbShareData;
+    }
+}
+
 function drawTriangle(p1, p2, p3) {
     ctx.beginPath();
     ctx.moveTo(p1.x, p1.y);

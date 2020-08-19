@@ -74,8 +74,20 @@ class MenuState extends GameState {
         this.topScore.pop(); // limit array length to three pairs
     }
 
+    cacheDataToLocalStorage() {
+        var data = {
+            score: this.topScore,
+            selectedChar: this.characterSelector.charPointer,
+            fbShareData: this.shareScoreObj.dataToShare
+        };
+
+        localStorage.setItem("data", JSON.stringify(data));
+    }
+
     onEnter() {
         this.characterSelector = new CharacterSelector();
+        
+        onStorageChange(); // load cached data
         
         levelParser.parseLevel(this);
 

@@ -49,6 +49,9 @@ class GameoverState extends GameState {
     }
 
     onExit() {
+        // cache top score, selected char and FB share data
+        gameStateMachine.stack[0].cacheDataToLocalStorage();
+
         this.clean();
 
         return true;

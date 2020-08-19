@@ -32,6 +32,7 @@ document.addEventListener("pointerdown", inputHandler.documentMouseDownHandler, 
 // document.addEventListener("pointerup", inputHandler.mouseUpHandler, false);
 document.addEventListener("visibilitychange", onVisibilityChange, false);
 window.addEventListener('resize', onResize, false);
+window.addEventListener('storage', onStorageChange, false);
 
 //create game object factory and register game object types
 var gameObjectFactory = new GameObjectFactory();
