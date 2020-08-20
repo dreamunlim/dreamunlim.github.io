@@ -30,12 +30,8 @@ class _Text {
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
-        // stash FB share data and
         // populate lines array missing spots with PlayState data
         var gameoverState = gameStateMachine.stack[2];
-        var playStateTime = gameoverState.playState.timerObject.totalTimePassed;
-        gameoverState.dataToShare.formattedMinutes = Math.floor(playStateTime / 1000 / 60);
-        gameoverState.dataToShare.formattedSeconds = Math.floor((playStateTime / 1000) % 60);
         this.lines[1][1][0] = gameoverState.dataToShare.formattedScore;
         this.lines[2][1][0] = gameoverState.dataToShare.formattedMinutes;
         this.lines[2][3][0] = gameoverState.dataToShare.formattedSeconds;

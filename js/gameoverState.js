@@ -36,6 +36,8 @@ class GameoverState extends GameState {
         // stash FB share data
         this.playState = gameStateMachine.stack[1];
         this.dataToShare.formattedScore = this.playState.scoreObject.formattedScore;
+        this.dataToShare.formattedMinutes = Math.floor(this.playState.timerObject.totalTimePassed / 1000 / 60);
+        this.dataToShare.formattedSeconds = Math.floor((this.playState.timerObject.totalTimePassed / 1000) % 60);
 
         // pass FB share data to MenuState shareScore object
         if (this.playState.scoreObject.score > gameStateMachine.stack[0].topScore[0][0]) {
@@ -45,13 +47,13 @@ class GameoverState extends GameState {
         // pass PlayState unformatted score and time to MenuState
         gameStateMachine.stack[0].updateTopScore(this.playState.scoreObject.score, this.playState.timerObject.totalTimePassed);
         
+        // cache top score, selected char and FB share data
+        gameStateMachine.stack[0].cacheDataToLocalStorage();
+        
         return true;
     }
 
     onExit() {
-        // cache top score, selected char and FB share data
-        gameStateMachine.stack[0].cacheDataToLocalStorage();
-
         this.clean();
 
         return true;
