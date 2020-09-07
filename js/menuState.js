@@ -108,7 +108,6 @@ class MenuState extends GameState {
 
     //call back functions
     switchToPlayState() {
-        adsHandler.adContainerClick();
         gameStateMachine.requestStackPush(StateID.Play);
     }
 

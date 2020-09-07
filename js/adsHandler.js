@@ -5,6 +5,7 @@ class AdsHandler {
         this.mainContainer = document.getElementById("main-container");
         this.videoElement = document.getElementById("video-element");
         this.adContainer = document.getElementById("ad-container");
+        this.playButton = document.getElementById("play-button");
         this.adDisplayContainerInitialized = false;
         this.adDisplayContainer;
         this.adsLoader; // only maintain one instance for the entire lifecycle of a page
@@ -13,20 +14,16 @@ class AdsHandler {
         // On window load
         window.addEventListener("load", function (event) {
             adsHandler.initializeIMA();
-            
-            adsHandler.videoElement.addEventListener("play", function (event) {
-                adsHandler.loadAds(event);
-            });
         });
     }
 
     initializeIMA() {
         console.log("initializing IMA");
 
-        this.adContainer.addEventListener("click", adsHandler.adContainerClick);
-        
+        canvas.addEventListener("pointerdown", adsHandler.initAdDisplayContainer);
+
         this.adDisplayContainer = new google.ima.AdDisplayContainer(this.adContainer, this.videoElement);
-        
+
         this.adsLoader = new google.ima.AdsLoader(this.adDisplayContainer);
        
         this.adsLoader.addEventListener(
@@ -38,6 +35,10 @@ class AdsHandler {
             google.ima.AdErrorEvent.Type.AD_ERROR,
             adsHandler.onAdError,
             false);
+
+        this.videoElement.addEventListener("play", function (event) {
+            adsHandler.startAdsManager();
+        });
 
         // Let the AdsLoader know when the video has ended
         this.videoElement.addEventListener("ended", function () {
@@ -68,16 +69,30 @@ class AdsHandler {
         this.adsLoader.requestAds(adsRequest);
     }
 
-    loadAds(event) {
-        // Initialize the container once
-        // Must be done via a user action on mobile devices
-        if (! this.adDisplayContainerInitialized) {
-            this.adDisplayContainer.initialize();
-            this.adDisplayContainerInitialized = true;
+    initAdDisplayContainer() {
+        if (adsHandler.adDisplayContainerInitialized) {
+            // start after 1 sec delay to avoid user interaction play() error
+            adsHandler.startAdsManager();
+            
+            // allow tapping on adContainer from this point
+            adsHandler.adContainer.addEventListener("pointerdown", adsHandler.adContainerClick);
+
+            // hide ad badge
+            adsHandler.playButton.style.visibility = "hidden";
+
+            return;
         }
 
-        this.videoElement.load();
-        this.startAdsManager();
+        // trigger this function only 2 times
+        canvas.removeEventListener("pointerdown", adsHandler.initAdDisplayContainer);
+
+        // Initialize the container once
+        // Must be done via a user action on mobile devices
+        adsHandler.videoElement.load();
+        adsHandler.adDisplayContainer.initialize();
+        adsHandler.adDisplayContainerInitialized = true;
+
+        setTimeout(adsHandler.initAdDisplayContainer, 1000);
     }
 
     startAdsManager() {
@@ -91,6 +106,9 @@ class AdsHandler {
             // Play the video without ads, if an error occurs
             console.log("AdsManager could not be started");
             this.videoElement.play();
+
+            // show ad badge
+            this.playButton.style.visibility = "visible";
         }
     }
 
@@ -131,6 +149,9 @@ class AdsHandler {
         if (adsHandler.adsManager) {
             adsHandler.adsManager.destroy();
         }
+
+        // show ad badge
+        adsHandler.playButton.style.visibility = "visible";
     }
 
     onContentPauseRequested() {
