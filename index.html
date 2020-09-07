@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Dreamer Unlimited</title>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-155356769-1"></script>
     <script>
@@ -9,10 +14,6 @@
         gtag('js', new Date());
         gtag('config', 'UA-155356769-1');
     </script>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="img/favicon.png">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Dreamer Unlimited</title>
     <!-- FB Open Graph tags -->
     <meta property="og:url" content="">
     <meta property="og:type" content="game">
@@ -26,6 +27,16 @@
     </script>
 </head>
 <body>
+    <!-- Ad Container -->
+    <div id="main-container">
+        <div id="video-container">
+            <video id="video-element">
+                <source src="img/empty_vid.webm"></source>
+            </video>
+            <div id="ad-container"></div>
+        </div>
+    </div>
+
     <canvas></canvas>
 
     <!-- Description for web crawlers -->
@@ -57,6 +68,7 @@
         <a href="https://sites.google.com/view/dreamunlim">How To Play</a>
     </p>
 
+    <script src="js/adsHandler.js"></script>
     <script src="js/characterSelector.js"></script>
     <script src="js/shareScore.js"></script>
     <script src="js/overridePicture.js"></script>

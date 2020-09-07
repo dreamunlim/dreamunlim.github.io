@@ -12,6 +12,7 @@ body {
   overflow: hidden;
   height: inherit;
   touch-action: manipulation;
+  user-select: none;
 }
 
 canvas {
@@ -22,6 +23,34 @@ canvas {
   display: block;
 }
 
-h1, p, ul, input, div {
+h1, p, ul, input {
   display: none;
+}
+
+/* Ads related */
+#main-container {
+  position: relative;
+  min-width: 450px;
+  max-width: 970px;
+  width: 100%;
+  height: 90px;
+  margin: 5px auto;
+}
+
+#video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#video-element, #ad-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+video {
+  background-color: transparent !important;
 }
