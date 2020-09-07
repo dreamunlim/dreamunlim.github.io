@@ -37,6 +37,7 @@ class MenuState extends GameState {
 
         this.drawTitle();
         this.drawTopScore();
+        this.drawAuthor();
     }
 
     drawTitle () {
@@ -72,6 +73,12 @@ class MenuState extends GameState {
         this.topScore.push([score, time]);
         insertionSort(this.topScore);
         this.topScore.pop(); // limit array length to three pairs
+    }
+
+    drawAuthor () {
+        var x = 20;
+        var y = height;
+        drawText("©2020 STANTAL", x, y, "30px Bebas Neue", "start", "rgba(128,0,0, 0.8)", "bottom");
     }
 
     cacheDataToLocalStorage() {
