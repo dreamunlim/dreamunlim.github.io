@@ -27,6 +27,7 @@
             ["play-background", "img/play-background.jpg"],
             ["player-catto", "img/player-catto.png"],
             ["player-doggo", "img/player-doggo.png"],
+            ["player-tiny-ranger", "img/player-tiny-ranger.png"],
             ["player-penetrator", "img/player-penetrator.png"],
             ["hi", "img/hi.png"],
             ["booster", "img/booster.png"],
@@ -113,6 +114,20 @@
                 "numFrames": 8,
                 "animSpeed": 75,
                 "collisionCircle": {"center": [50, 69.47], "radius": 37.66}
+            },
+            {
+                "name": "Tiny Ranger",
+                "position": [270, 510],
+                "textureID": "player-tiny-ranger",
+                "sWidth": 182,
+                "sHeight": 257,
+                "dWidth": 92,
+                "dHeight": 130,
+                "currentFrame": 0,
+                "currentRow": 1,
+                "numFrames": 12,
+                "animSpeed": 40,
+                "collisionCircle": {"center": [46, 43.77], "radius": 38.94}
             },
             {
                 "name": "Penetrator",
