@@ -101,6 +101,7 @@ class CharacterSelector {
 
         this.charList = gameJson["MenuState"]["characters"];
         this.charPointer = 0;
+        this.hiddenChars = 1;
 
         this.playerInitData = gameJson["PlayState"]["objects"][1];
         this.updatePlayerInitData();
@@ -114,11 +115,11 @@ class CharacterSelector {
                 var x2 = this.selectorBox.width / 2;
                 
                 if (x1 > x2) {
-                    this.charPointer = (++this.charPointer) % this.charList.length;
+                    this.charPointer = (++this.charPointer) % (this.charList.length - this.hiddenChars);
                     this.selectorBox.skipRightArrowDraw = true;
                     this.selectorBox.t1 = time;
                 } else {
-                    this.charPointer = mod(--this.charPointer, this.charList.length);
+                    this.charPointer = mod(--this.charPointer, (this.charList.length - this.hiddenChars));
                     this.selectorBox.skipLeftArrowDraw = true;
                     this.selectorBox.t1 = time;
                 }
