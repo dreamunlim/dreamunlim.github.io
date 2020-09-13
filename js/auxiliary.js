@@ -114,10 +114,12 @@ function onStorageChange() {
         var menuState = gameStateMachine.stack[0];
         var storage = JSON.parse(localStorage.getItem("data"));
         
-        menuState.topScore = storage.score;
+        menuState.topScore = storage.topScore;
+        menuState.shareScoreObj.dataToShare = storage.fbShareData;
         menuState.characterSelector.charPointer = storage.selectedChar;
         menuState.characterSelector.updatePlayerInitData();
-        menuState.shareScoreObj.dataToShare = storage.fbShareData;
+        menuState.characterSelector.hiddenChars = storage.hiddenChars;
+        menuState.characterUnlocker.charUnlocked = storage.charUnlocked;
     }
 }
 

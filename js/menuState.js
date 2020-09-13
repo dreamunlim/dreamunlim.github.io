@@ -13,6 +13,7 @@ class MenuState extends GameState {
 
         this.overridePicture = new OverridePicture();
         this.shareScoreObj = new ShareScore();
+        this.characterUnlocker = new CharacterUnlocker();
         this.characterSelector = null;
 
         // fuction pointers
@@ -27,6 +28,7 @@ class MenuState extends GameState {
     update() {
         this.level.update();
         
+        this.characterUnlocker.update();
         this.characterSelector.update();
     }
 
@@ -83,9 +85,11 @@ class MenuState extends GameState {
 
     cacheDataToLocalStorage() {
         var data = {
-            score: this.topScore,
+            topScore: this.topScore,
+            fbShareData: this.shareScoreObj.dataToShare,
             selectedChar: this.characterSelector.charPointer,
-            fbShareData: this.shareScoreObj.dataToShare
+            hiddenChars: this.characterSelector.hiddenChars,
+            charUnlocked: this.characterUnlocker.charUnlocked
         };
 
         localStorage.setItem("data", JSON.stringify(data));
