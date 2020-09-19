@@ -84,15 +84,17 @@ class MenuState extends GameState {
     }
 
     cacheDataToLocalStorage() {
-        var data = {
-            topScore: this.topScore,
-            fbShareData: this.shareScoreObj.dataToShare,
-            selectedChar: this.characterSelector.charPointer,
-            hiddenChars: this.characterSelector.hiddenChars,
-            charUnlocked: this.characterUnlocker.charUnlocked
-        };
+        if (storageAvailable("localStorage")) {
+            var data = {
+                topScore: this.topScore,
+                fbShareData: this.shareScoreObj.dataToShare,
+                selectedChar: this.characterSelector.charPointer,
+                hiddenChars: this.characterSelector.hiddenChars,
+                charUnlocked: this.characterUnlocker.charUnlocked
+            };
 
-        localStorage.setItem("data", JSON.stringify(data));
+            localStorage.setItem("data", JSON.stringify(data));
+        }
     }
 
     onEnter() {
