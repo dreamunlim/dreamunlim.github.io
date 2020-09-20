@@ -135,10 +135,11 @@ function storageAvailable(type) {
 }
 
 function onStorageChange() {
-    if (storageAvailable("localStorage") && localStorage.length) {
-        var menuState = gameStateMachine.stack[0];
+    var menuState = gameStateMachine.stack[0];
+
+    if (menuState.localStorageAvailable && localStorage.length) {
         var storage = JSON.parse(localStorage.getItem("data"));
-        
+
         menuState.topScore = storage.topScore;
         menuState.shareScoreObj.dataToShare = storage.fbShareData;
         menuState.characterSelector.charPointer = storage.selectedChar;

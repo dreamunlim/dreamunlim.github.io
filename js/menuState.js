@@ -16,6 +16,8 @@ class MenuState extends GameState {
         this.characterUnlocker = new CharacterUnlocker();
         this.characterSelector = null;
 
+        this.localStorageAvailable = storageAvailable("localStorage");
+
         // fuction pointers
         this.funcPointersMap = {
             "Play": this.switchToPlayState,
@@ -84,7 +86,7 @@ class MenuState extends GameState {
     }
 
     cacheDataToLocalStorage() {
-        if (storageAvailable("localStorage")) {
+        if (this.localStorageAvailable) {
             var data = {
                 topScore: this.topScore,
                 fbShareData: this.shareScoreObj.dataToShare,
