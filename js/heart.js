@@ -6,10 +6,8 @@ class Heart extends Enemy {
 
         this.t1 = 0;
         this.t2 = 0;
-        this.animate = false;
-        this.delayAnim = random(250, 500); // in ms
         this.beatPattern = [1, .97, .93, .9, .93, .97, 1, 1.03];
-        this.currStep = 0;
+        this.currStep = random(0, this.beatPattern.length - 1);
     }
 
     initObject(initData) {
@@ -22,16 +20,10 @@ class Heart extends Enemy {
     updateObject() {
         super.updateObject();
 
-        // check delay passed
-        if (! this.animate) {
-            var t = Math.floor(time / this.delayAnim);
-            this.animate = t ? true : this.animate;
-        }
-        
         this.t2 = Math.floor(time / this.animSpeed);
 
         // do beat step
-        if ((this.t1 < this.t2) && this.animate) {
+        if (this.t1 < this.t2) {
             // prevent shrinking
             this.dWidth = this.initialWidth;
             this.dHeight = this.initialHeight;
