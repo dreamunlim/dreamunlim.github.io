@@ -50,8 +50,9 @@ class Enemy extends GameObject {
                 this.spawned = false;
                 break;
             case "star":
+            case "diamond":
                 this.spawned = false;
-                this.currentRow = (++this.currentRow) % this.totalRows;
+                this.currentRow = random(0, this.totalRows - 1);
                 break;
             case "spider":
                 // don't spawn spiders onto same lane

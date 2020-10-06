@@ -34,7 +34,8 @@
             ["enemy-red", "img/enemy-red.png"],
             ["enemy-purple", "img/enemy-purple.png"],
             ["enemy-spider", "img/enemy-spider.png"],
-            ["enemy-star", "img/enemy-star.png"]
+            ["enemy-star", "img/enemy-star.png"],
+            ["enemy-diamond", "img/enemy-diamond.png"]
         ],
         "sounds": [
             ["booster", "sound/player-booster.ogg"],
@@ -273,6 +274,22 @@
                 "numFrames": 8,
                 "animSpeed": 100,
                 "collisionCircle": {"center": [50, 47.81], "radius": 33.22}
+            },
+            {
+                "id": "diamond",
+                "position": [],
+                "velocity": [0, 3],
+                "acceleration": [0, 0.4],
+                "textureID": "enemy-diamond",
+                "sWidth": 222,
+                "sHeight": 227,
+                "dWidth": 98,
+                "dHeight": 100,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 8,
+                "animSpeed": 120,
+                "collisionCircle": {"center": [49, 50.56], "radius": 44.82}
             }
         ],
         "buttons": [

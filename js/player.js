@@ -163,8 +163,14 @@ class Player extends GameObject {
             if (collided) {
                 if (enemyID == "booster") {
                     this.state.timerObject.boosterPickUpTime = time;
-                    this.state.scoreObject.score += 3;
+                    this.state.scoreObject.score += 4;
                     this.state.boosterObject.collided = true;
+                    enemy.respawn();
+                    soundManager.playSound(enemyID);
+                }
+
+                if (enemyID == "diamond") {
+                    this.state.scoreObject.score += 3;
                     enemy.respawn();
                     soundManager.playSound(enemyID);
                 }

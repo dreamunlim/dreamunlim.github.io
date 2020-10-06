@@ -45,6 +45,7 @@ gameObjectFactory.registerObject("play-background", PlayBackground);
 gameObjectFactory.registerObject("background", Background);
 gameObjectFactory.registerObject("counter", Counter);
 gameObjectFactory.registerObject("star", Star);
+gameObjectFactory.registerObject("diamond", Diamond);
 
 //create finite state machine and register states
 var gameStateMachine = new GameStateMachine();
