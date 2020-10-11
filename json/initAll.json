@@ -41,7 +41,8 @@
             ["booster", "sound/player-booster.ogg"],
             ["heart", "sound/player-heart.ogg"],
             ["spider", "sound/player-spider.ogg"],
-            ["star", "sound/player-star.ogg"]
+            ["star", "sound/player-star.ogg"],
+            ["diamond", "sound/player-diamond.ogg"]
         ]
     },
     "MenuState": {
