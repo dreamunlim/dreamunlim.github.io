@@ -29,15 +29,10 @@ h1, p, ul, input {
 
 /* Ads related */
 #main-container {
-  position: relative;
-  min-width: 450px;
-  max-width: 970px;
-  width: 100%;
-  height: 50px;
-  margin: 5px auto;
+  position: absolute;
+  left: 50%;
+  visibility: hidden;
 }
-
-@media (min-width:700px) and (min-height:700px) { #main-container { height: 90px; } }
 
 #video-container {
   position: relative;
@@ -56,19 +51,19 @@ h1, p, ul, input {
 #play-button {
   position: absolute;
   margin: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 40px;
-  width: 40px;
+  padding: 0;
+  top: 0;
+  left: 0;
+  height: 28px;
+  width: 28px;
   font-weight: bold;
   font-family: courier, monospace;
-  font-size: 25px;
+  font-size: 16px;
   color: #000;
   opacity: 0.5;
   background-color: #fff;
   border-style: none;
-  border-radius: 25px;
+  border-radius: 5px;
   border: 1px transparent solid;
   cursor: auto;
   line-height: 0;

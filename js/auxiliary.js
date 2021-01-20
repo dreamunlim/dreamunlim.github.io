@@ -44,10 +44,7 @@ function resizeCanvas() {
     if (window.innerWidth < window.innerHeight) {
         scale = window.innerWidth / width;
     } else {
-        var adStyle = window.getComputedStyle(adsHandler.mainContainer);
-        var adHeight = parseInt(adStyle.height) + parseInt(adStyle.marginTop) * 2;
-    
-        scale = (window.innerHeight - adHeight) / height;
+        scale = window.innerHeight / height;
     }
 
     canvas.width = width * scale;
@@ -97,9 +94,10 @@ function onVisibilityChange() {
 }
 
 function onResize() {
-    resizeAd();
-
+    // resize canvas always first to set global scaler
     scale = resizeCanvas();
+
+    adsHandler.centerAndResizeAdBox();
 
     // redraw PlayState once, since canvas data is reset on resizing
     var state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
@@ -156,12 +154,4 @@ function drawTriangle(p1, p2, p3) {
     ctx.lineTo(p3.x, p3.y);
     ctx.closePath();
     ctx.fill();
-}
-
-function resizeAd() {
-    if (adsHandler.adsManager) {
-        var width = adsHandler.videoElement.clientWidth;
-        var height = adsHandler.videoElement.clientHeight;
-        adsHandler.adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
-    }
 }

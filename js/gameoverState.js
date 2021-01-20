@@ -31,6 +31,9 @@ class GameoverState extends GameState {
     }
 
     onEnter() {
+        // start ad
+        adsHandler.startAdsManager();
+
         levelParser.parseLevel(this);
 
         // stash FB share data
@@ -54,6 +57,9 @@ class GameoverState extends GameState {
     }
 
     onExit() {
+        // reset ad
+        adsHandler.onAllAdsCompleted();
+
         this.clean();
 
         return true;

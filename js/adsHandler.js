@@ -2,6 +2,9 @@
 
 class AdsHandler {
     constructor() {
+        this.adBoxWidth = 640;
+        this.adBoxHeight = 180;
+
         this.mainContainer = document.getElementById("main-container");
         this.videoElement = document.getElementById("video-element");
         this.adContainer = document.getElementById("ad-container");
@@ -18,7 +21,15 @@ class AdsHandler {
     }
 
     initializeIMA() {
+        // don't init on connection error
+        if (typeof google === "undefined") {
+            console.log("IMA has not been loaded");
+            return;
+        }
+        
         console.log("initializing IMA");
+
+        this.centerAndResizeAdBox();
 
         canvas.addEventListener("pointerdown", adsHandler.initAdDisplayContainer);
 
@@ -72,13 +83,10 @@ class AdsHandler {
     initAdDisplayContainer() {
         if (adsHandler.adDisplayContainerInitialized) {
             // start after 1 sec delay to avoid user interaction play() error
-            adsHandler.startAdsManager();
+            // adsHandler.startAdsManager();
             
             // allow tapping on adContainer from this point
             adsHandler.adContainer.addEventListener("pointerdown", adsHandler.adContainerClick);
-
-            // hide ad badge
-            adsHandler.playButton.style.visibility = "hidden";
 
             return;
         }
@@ -100,15 +108,18 @@ class AdsHandler {
         var height = this.videoElement.clientHeight;
         
         try {
+            // show ad box
+            this.mainContainer.style.visibility = "visible";
+
             this.adsManager.init(width, height, google.ima.ViewMode.NORMAL);
             this.adsManager.start();
         } catch (adError) {
+            // hide ad box
+            adsHandler.mainContainer.style.visibility = "hidden";
+
             // Play the video without ads, if an error occurs
             console.log("AdsManager could not be started");
             this.videoElement.play();
-
-            // show ad badge
-            this.playButton.style.visibility = "visible";
         }
     }
 
@@ -143,15 +154,15 @@ class AdsHandler {
     }
 
     onAdError(adErrorEvent) {
+        // hide ad box
+        adsHandler.mainContainer.style.visibility = "hidden";
+
         // Handle the error logging
         console.log(adErrorEvent.getError().toString());
 
         if (adsHandler.adsManager) {
             adsHandler.adsManager.destroy();
         }
-
-        // show ad badge
-        adsHandler.playButton.style.visibility = "visible";
     }
 
     onContentPauseRequested() {
@@ -171,10 +182,16 @@ class AdsHandler {
     }
 
     onAllAdsCompleted() {
+        // hide ad box
+        adsHandler.mainContainer.style.visibility = "hidden";
+        
         console.log("all ads completed");
-        adsHandler.adsManager.destroy();
-        adsHandler.adsLoader.contentComplete();
-        adsHandler.requestAd();
+
+        if (adsHandler.adsManager) {
+            adsHandler.adsManager.destroy();
+            adsHandler.adsLoader.contentComplete();
+            adsHandler.requestAd();
+        }
     }
 
     adContainerClick() {
@@ -185,12 +202,29 @@ class AdsHandler {
         }
     }
 
+    centerAndResizeAdBox() {
+        this.mainContainer.style.width = this.adBoxWidth * scale + "px";
+        this.mainContainer.style.height = this.adBoxHeight * scale + "px";
+        this.mainContainer.style.marginLeft = -this.mainContainer.clientWidth / 2 + "px";
+        this.mainContainer.style.top = canvas.height - this.adBoxHeight * scale + "px";
+
+        this.resizeAd();
+    }
+
+    resizeAd() {
+        if (adsHandler.adsManager) {
+            var width = adsHandler.videoElement.clientWidth;
+            var height = adsHandler.videoElement.clientHeight;
+            adsHandler.adsManager.resize(width, height, google.ima.ViewMode.NORMAL);
+        }
+    }
+
 }
 
 // Google Ads SDK
 (() => {
     var script = document.createElement("script");
-    script.src = "//imasdk.googleapis.com/js/sdkloader/ima3.js";
+    script.src = "https://imasdk.googleapis.com/js/sdkloader/ima3.js";
     document.body.insertBefore(script, document.querySelector('script[src="js/adsHandler.js"]'));
 })();
 
