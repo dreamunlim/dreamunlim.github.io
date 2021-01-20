@@ -1,6 +1,9 @@
 html, body {
   margin: 0;
-  background-color: grey;
+  background-color: #7a8aa1;
+  background-image: url("/img/background-image.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 html {
