@@ -25,6 +25,18 @@ class ShareScore {
     }
 
     processShare() {
+        // don't proceed on connection error
+        if (typeof FB === "undefined") {
+            this.shareScoreButton.t1 = time;
+            this.shareScoreButton.hintMessage = "SDK Not Loaded";
+            return;
+        }
+        
+        if (this.shareScoreButton.state.topScore[0][0] === 0) {
+            this.shareScoreButton.hintMessage = "Zero Score";
+            return;
+        }
+
         // assemble description
         this.description = "I scored " + this.dataToShare.formattedScore + " points" +
         " in " + this.dataToShare.formattedMinutes + " min " + this.dataToShare.formattedSeconds +

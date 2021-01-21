@@ -122,19 +122,14 @@ class MenuState extends GameState {
     shareScore(button) {
         // "this" points to "funcPointersMap" from here
         // can't do "this.topScore[0] === 0"
-        
-        if(button.state.topScore[0][0] === 0) {
-            button.hintMessage = "Zero Score";
-            return;
-        }
 
-        button.state.shareScoreObj.input.click();
         button.state.shareScoreObj.shareScoreButton = button; // to relay hint messages
+        button.state.shareScoreObj.input.click();
     }
 
     overridePic(button) {
-        button.state.overridePicture.input.click();
         button.state.overridePicture.overridePicButton = button; // to relay hint messages
+        button.state.overridePicture.input.click();
     }
 
     redirectToAbout(button) {
