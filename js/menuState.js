@@ -115,8 +115,13 @@ class MenuState extends GameState {
     }
 
     //call back functions
-    switchToPlayState() {
+    switchToPlayState(button) {
         gameStateMachine.requestStackPush(StateID.Play);
+
+        // log event
+        gtag("event", "level_start", {
+            "character_name": button.state.characterSelector.charBox.charName
+        });
     }
 
     shareScore(button) {

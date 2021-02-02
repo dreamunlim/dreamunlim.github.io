@@ -51,6 +51,9 @@ class CharacterSelector {
             return {
                 t1: 0,
                 charNameDelay: 1000, // in ms
+                
+                charName: null,
+                displayCharName: false,
 
                 position: {x: null, y: null}, // centered
                 width: null, // varies per char
@@ -62,13 +65,14 @@ class CharacterSelector {
 
                     this.t1 = time;
                     this.charName = that.charList[that.charPointer].name;
+                    this.displayCharName = true;
                 },
                 drawChar: function () {
                     textureManager.drawTexture(that.playerInitData.textureID, 0, 1, that.playerInitData.sWidth, that.playerInitData.sHeight,
                         this.position.x, this.position.y, this.width, this.height);
 
                     // char name
-                    if (this.charName) {
+                    if (this.displayCharName) {
                         var x = that.selectorBox.position.x + that.selectorBox.width / 2;
                         var y = that.selectorBox.position.y;
 
@@ -80,7 +84,7 @@ class CharacterSelector {
 
                         // remove name
                         if ((time - this.t1) > this.charNameDelay) {
-                            delete this.charName;
+                            this.displayCharName = false;
                         }
                     }
                 }

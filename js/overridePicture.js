@@ -43,6 +43,9 @@ class OverridePicture {
 
             // explicitly release file URL
             URL.revokeObjectURL(image.src);
+
+            // log event
+            gtag("event", "override_picture");
         }
 
         image.onerror = () => {

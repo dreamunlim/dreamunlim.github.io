@@ -55,13 +55,21 @@ class ShareScore {
             href: this.url,
             hashtag: "#dream_unlim",
             quote: this.description
-        }, (response) => {this.relayResponse(response)});
+        }, (response) => { this.relayResponse(response) });
     }
 
     relayResponse(response) {
         if (response && !response.error_message) {
             this.shareScoreButton.t1 = time;
             this.shareScoreButton.hintMessage = "Success";
+
+            // log event
+            gtag("event", "share", {
+                "method": "Facebook",
+                "score": this.dataToShare.formattedScore,
+                "minutes": this.dataToShare.formattedMinutes,
+                "seconds": this.dataToShare.formattedSeconds
+            });
         } else {
             // no message on Share Dialog closed either by cancellation or errors
         }
