@@ -4,6 +4,7 @@ const cacheName = "cache-v1";
 const filesToCache = [
     "/",
     "index.html",
+    "index.html?from=homescreen",
     "css/style.css",
     "font/BebasNeue-Regular.woff2",
     "font/Orbitron-SemiBold.woff2",
