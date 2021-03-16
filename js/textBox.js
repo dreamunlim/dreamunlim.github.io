@@ -2,7 +2,17 @@
 
 class _Text {
     constructor() {
-        this.lines = [
+        this.lines = [];
+        this.spacing = 0;
+
+        this.menuStateText = [
+            // format data order: [text, align, font, fontColour]
+            [["By playing you agree to",1,1,1]],
+            [["Terms of Use ",1,1,3], ["and ",1,1,1], ["Privacy Policy",1,1,3]],
+            [["Outlined in the ",1,1,1], ["Help ",1,1,3], ["section",1,1,1]]
+        ];
+
+        this.gameoverStateText = [
             // format data order: [text, align, font, fontColour]
             [["Good Job!",0,0,0]],
             [["You scored ",1,1,1], ["",1,1,2], [" Points",1,1,1]],
@@ -22,7 +32,8 @@ class _Text {
         this.decodeFontColour = {
             0: "brown",
             1: "mediumpurple",
-            2: "darkgoldenrod"
+            2: "darkgoldenrod",
+            3: "#d17586" // strawberry ice cream yogurt
         };
     }
 
@@ -30,11 +41,13 @@ class _Text {
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
 
-        // populate lines array missing spots with PlayState data
-        var gameoverState = gameStateMachine.stack[2];
-        this.lines[1][1][0] = gameoverState.dataToShare.formattedScore;
-        this.lines[2][1][0] = gameoverState.dataToShare.formattedMinutes;
-        this.lines[2][3][0] = gameoverState.dataToShare.formattedSeconds;
+        if (that.state.constructor.name == "GameoverState") {
+            // populate lines array missing spots with PlayState data
+            var gameoverState = gameStateMachine.stack[2];
+            this.lines[1][1][0] = gameoverState.dataToShare.formattedScore;
+            this.lines[2][1][0] = gameoverState.dataToShare.formattedMinutes;
+            this.lines[2][3][0] = gameoverState.dataToShare.formattedSeconds;
+        }
 
         this.drawLines(that);
         
@@ -46,7 +59,6 @@ class _Text {
         // first line position
         var x = that.x + 10;
         var y = that.y + 10;
-        var spacing = 55;
 
         // loop through lines
         for (var i = 0; i != this.lines.length; ++i) {
@@ -91,21 +103,39 @@ class _Text {
             }
 
             // next line y position
-            y += spacing;
+            y += this.spacing;
         }
     }
 
 }
 
 class TextBox {
-    constructor() {
+    constructor(state) {
+        // text box owner
+        this.state = state;
+
         this.text = new _Text();
 
-        this.x = 80;
-        this.y = 185;
-        this.width = 480;
-        this.height = 270;
-        this.colour = "rgba(255,192,203, 0.3)"; // pink
+        // state specific adjustments
+        switch (this.state.constructor.name) {
+            case "MenuState":
+                this.width = 550;
+                this.height = 270;
+                this.colour = "rgba(255,192,203, 1)"; // pink
+                this.text.lines = this.text.menuStateText;
+                this.text.spacing = 55;
+                break;
+            case "GameoverState":
+                this.width = 480;
+                this.height = 270;
+                this.colour = "rgba(255,192,203, 0.3)"; // pink
+                this.text.lines = this.text.gameoverStateText;
+                this.text.spacing = 55;
+                break;
+        }
+
+        this.x = (width - this.width) / 2;
+        this.y = (height - this.height) / 2;
     }
 
     drawTextBox() {

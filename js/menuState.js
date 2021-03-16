@@ -1,15 +1,46 @@
 'use strict'
 
+class ConsentPopup {
+    constructor(state) {
+        this.textBox = new TextBox(state);
+
+        this.okButtonInitData = {
+            text: "OK",
+            pos: {x: 320, y: 320},
+            width: 80,
+            height: 80
+        }
+
+        this.okButton = new (gameObjectFactory.createObject("button"))(this.okButtonInitData);
+
+        this.textBox.alignOkButton(this.okButton);
+    }
+
+    update() {
+        this.okButton.updateObject();
+    }
+
+    draw() {
+        clearCanvas(0, 0, width, height, "rgba(122,138,161, 0.5)");
+        this.textBox.drawTextBox();
+        this.okButton.drawObject();
+    }
+
+}
+
 class MenuState extends GameState {
     constructor() {
         super();
-
-        this.topScore = [[0,0], [0,0], [0,0]]; // score-time pairs
 
         this.gameTitle = "Dreamer Unlimited";
 
         this.titleFont = "68px Bebas Neue";
         this.scoreFont = "35px Orbitron";
+
+        this.consentPopup = null;
+        this.consentGranted = false; // Terms of Use and Privacy Policy
+
+        this.topScore = [[0,0], [0,0], [0,0]]; // score-time pairs
 
         this.overridePicture = new OverridePicture();
         this.shareScoreObj = new ShareScore();
@@ -23,11 +54,18 @@ class MenuState extends GameState {
             "Play": this.switchToPlayState,
             "Share Score": this.shareScore,
             "Override Pic": this.overridePic,
-            "How To": this.redirectToAbout
+            "Help": this.redirectToAbout,
+            "OK": this.removeConsentPopup
         };
     }
 
     update() {
+        // update popup until consent granted
+        if (! this.consentGranted) {
+            this.consentPopup.update();
+            return;
+        }
+
         this.level.update();
         
         this.characterUnlocker.update();
@@ -42,6 +80,11 @@ class MenuState extends GameState {
         this.drawTitle();
         this.drawTopScore();
         this.drawAuthor();
+
+        // draw popup until consent granted
+        if (! this.consentGranted) {
+            this.consentPopup.draw();
+        }
     }
 
     drawTitle () {
@@ -92,7 +135,8 @@ class MenuState extends GameState {
                 fbShareData: this.shareScoreObj.dataToShare,
                 selectedChar: this.characterSelector.charPointer,
                 hiddenChars: this.characterSelector.hiddenChars,
-                charUnlocked: this.characterUnlocker.charUnlocked
+                charUnlocked: this.characterUnlocker.charUnlocked,
+                consentGranted: this.consentGranted,
             };
 
             localStorage.setItem("data", JSON.stringify(data));
@@ -106,6 +150,11 @@ class MenuState extends GameState {
         
         levelParser.parseLevel(this);
 
+        // create consent popup
+        if (! this.consentGranted) {
+            this.consentPopup = new ConsentPopup(this);
+        }
+        
         return true;
     }
 
@@ -143,6 +192,12 @@ class MenuState extends GameState {
         } else {
             window.open(button.url, "_blank"); // avoid losing score
         }
+    }
+
+    removeConsentPopup(button) {
+        button.state.consentGranted = true;
+        button.state.consentPopup = null;
+        button.state.cacheDataToLocalStorage();
     }
 
 }

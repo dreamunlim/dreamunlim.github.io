@@ -144,6 +144,7 @@ function onStorageChange() {
         menuState.characterSelector.updatePlayerInitData();
         menuState.characterSelector.hiddenChars = storage.hiddenChars;
         menuState.characterUnlocker.charUnlocked = storage.charUnlocked;
+        menuState.consentGranted = storage.consentGranted;
     }
 }
 

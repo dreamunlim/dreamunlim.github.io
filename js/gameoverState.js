@@ -4,7 +4,7 @@ class GameoverState extends GameState {
     constructor() {
         super();
 
-        this.textBox = new TextBox();
+        this.textBox = new TextBox(this);
         this.playState = null; // PlayState reference
 
         // FB share data
@@ -70,7 +70,7 @@ class GameoverState extends GameState {
         this.level.layers = new Array();
 
         // reset
-        this.textBox = new TextBox();
+        this.textBox = new TextBox(this);
         this.playState = null;
         this.dataToShare = {};
     }
