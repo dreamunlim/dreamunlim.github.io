@@ -1,6 +1,6 @@
 'use strict'
 
-function parseJson(jsonPath) {
+function parseGameJson(jsonPath) {
 
     fetch(jsonPath)
         .then(function (response) {
@@ -155,4 +155,16 @@ function drawTriangle(p1, p2, p3) {
     ctx.lineTo(p3.x, p3.y);
     ctx.closePath();
     ctx.fill();
+}
+
+function registerServiceWorker() {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js")
+            .then(registration => {
+                console.log("SW registered: ", registration.scope);
+            })
+            .catch(error => {
+                console.error("SW registration failed: ", error);
+            });
+    }
 }

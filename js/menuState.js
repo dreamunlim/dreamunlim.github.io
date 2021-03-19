@@ -155,6 +155,10 @@ class MenuState extends GameState {
             this.consentPopup = new ConsentPopup(this);
         }
         
+        // by this time the browser will have fetched all resources
+        // enabling SW to populate own cache from disk cache firstly
+        registerServiceWorker();
+        
         return true;
     }
 

@@ -76,17 +76,4 @@ function loop() {
 
 // load game json file and start main loop
 var gameJson = {};
-parseJson("json/initAll.json");
-
-// register the service worker
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(registration => {
-        console.log("SW registered: ", registration.scope);
-      })
-      .catch(error => {
-        console.error("SW registration failed: ", error);
-      });
-  });
-}
+parseGameJson("json/initAll.json");
