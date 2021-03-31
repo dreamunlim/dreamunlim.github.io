@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "io.github.dreamunlim.twa",
+                   "sha256_cert_fingerprints": ["F1:89:22:B3:66:37:E6:A3:3D:47:E8:B5:74:44:0F:09:43:0D:4E:AA:AB:44:5D:40:AE:02:CD:79:7E:A4:C0:5E"] }
+}]

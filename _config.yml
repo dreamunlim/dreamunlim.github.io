@@ -1,0 +1,2 @@
+# Include the following folder in website generation
+include: [.well-known]
