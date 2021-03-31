@@ -225,7 +225,7 @@ class AdsHandler {
 (() => {
     var script = document.createElement("script");
     script.src = "https://imasdk.googleapis.com/js/sdkloader/ima3.js";
-    document.body.insertBefore(script, document.querySelector('script[src="js/adsHandler.js"]'));
+    document.body.insertBefore(script, document.querySelector('script[src="js/imaHandler.js"]'));
 })();
 
 var adsHandler = new AdsHandler();
