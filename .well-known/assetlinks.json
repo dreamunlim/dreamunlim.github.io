@@ -1,5 +1,11 @@
 [{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "io.github.dreamunlim.twa",
-                   "sha256_cert_fingerprints": ["F1:89:22:B3:66:37:E6:A3:3D:47:E8:B5:74:44:0F:09:43:0D:4E:AA:AB:44:5D:40:AE:02:CD:79:7E:A4:C0:5E"] }
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.github.dreamunlim.twa",
+    "sha256_cert_fingerprints": [
+      "EF:DD:94:F2:F0:0A:47:3F:8E:56:3F:85:6C:DA:60:5C:82:D0:39:7E:D6:21:A0:39:BE:7F:13:A6:C3:33:76:A9",
+      "F1:89:22:B3:66:37:E6:A3:3D:47:E8:B5:74:44:0F:09:43:0D:4E:AA:AB:44:5D:40:AE:02:CD:79:7E:A4:C0:5E"
+    ]
+  }
 }]
