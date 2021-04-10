@@ -20,5 +20,13 @@
       "sizes": "512x512",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=io.github.dreamunlim.twa",
+      "id": "io.github.dreamunlim.twa"
+    }
+  ],
+  "prefer_related_applications": true
 }
