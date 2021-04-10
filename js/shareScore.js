@@ -53,7 +53,7 @@ class ShareScore {
         FB.ui({
             method: "share",
             href: this.url,
-            hashtag: "#dream_unlim",
+            // hashtag: "#dream_unlim",
             quote: this.description
         }, (response) => { this.relayResponse(response) });
     }
