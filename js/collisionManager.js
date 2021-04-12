@@ -19,10 +19,13 @@ class CollisionManager {
     }
 
     mouseButtonCollision(mEvent, button) {
-        if (mEvent.offsetX/scale > button.position.x &&
-            mEvent.offsetX/scale < button.position.x + button.width &&
-            mEvent.offsetY/scale > button.position.y &&
-            mEvent.offsetY/scale < button.position.y + button.height) {
+        var canvasPosX = (window.innerWidth - canvas.width) / 2;
+        var canvasPosY = 0;
+
+        if (mEvent.clientX - canvasPosX > button.position.x * scale &&
+            mEvent.clientX - canvasPosX < (button.position.x + button.width) * scale &&
+            mEvent.clientY - canvasPosY > button.position.y * scale &&
+            mEvent.clientY - canvasPosY < (button.position.y + button.height) * scale) {
             return true;
         }
 

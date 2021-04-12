@@ -115,8 +115,9 @@ class CharacterSelector {
         // mouse
         if (inputHandler.mouseLeftPressed) {
             if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this.selectorBox)) {
-                var x1 = inputHandler.mEvent.offsetX / scale;
-                var x2 = this.selectorBox.width / 2;
+                var canvasPosX = (window.innerWidth - canvas.width) / 2;
+                var x1 = inputHandler.mEvent.clientX - canvasPosX;
+                var x2 = this.selectorBox.width / 2 * scale;
                 
                 if (x1 > x2) {
                     this.charPointer = (++this.charPointer) % (this.charList.length - this.hiddenChars);
