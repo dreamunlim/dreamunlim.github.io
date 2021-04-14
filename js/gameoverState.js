@@ -32,7 +32,7 @@ class GameoverState extends GameState {
 
     onEnter() {
         // start ad
-        adsHandler.startAdsManager();
+        // adsHandler.startAdsManager();
 
         levelParser.parseLevel(this);
 
@@ -58,7 +58,7 @@ class GameoverState extends GameState {
 
     onExit() {
         // reset ad
-        adsHandler.onAllAdsCompleted();
+        // adsHandler.onAllAdsCompleted();
 
         this.clean();
 
