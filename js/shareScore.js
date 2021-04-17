@@ -14,7 +14,8 @@ class ShareScore {
         document.body.insertBefore(this.div, canvas.nextElementSibling);
 
         // FB Open Graph meta tags to populate
-        this.url = window.location.href;
+        this.url = "https://play.google.com/store/apps/details?id=io.github.dreamunlim.twa";
+        // this.url = window.location.href;
         this.title = document.title;
         this.description = "";
         this.image = this.url + "img/fb-share.jpg";
