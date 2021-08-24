@@ -97,8 +97,6 @@ function onResize() {
     // resize canvas always first to set global scaler
     scale = resizeCanvas();
 
-    adsHandler.centerAndResizeAdBox();
-
     // redraw PlayState once, since canvas data is reset on resizing
     var state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
 

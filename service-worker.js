@@ -18,7 +18,6 @@ const filesToCache = [
     "img/booster.png",
     "img/enemy-spider.png",
     "img/player-doggo.png",
-    // "img/empty_vid.webm", // was causing the SW deletion due to fetch error + noncrucial for offline
     "img/enemy-star.png",
     "img/player-penetrator.png",
     "img/enemy-diamond.png",
@@ -56,7 +55,6 @@ const filesToCache = [
     "js/pauseState.js",
     "js/textureManager.js",
     "js/counter.js",
-    "js/imaHandler.js",
     "js/playBackground.js",
     "js/vector2D.js",
     "js/diamond.js",
