@@ -25,7 +25,9 @@ const filesToCache = [
     "img/player-tiny-ranger.png",
     "img/enemy-purple.png",
     // "img/fb-share-2.jpg", // noncrucial for offline
-    "img/play-background.jpg",
+    "img/play-background-1.jpg",
+    "img/play-background-2.jpg",
+    "img/play-background-3.jpg",
     "js/auxiliary.js",
     "js/enemy.js",
     "js/level.js",

@@ -13,11 +13,14 @@ class PlayBackground extends GameObject {
         this.rumblePattern = [[-1,1], [1,1], [1,-1], [-1,-1]];
         this.rumble = false;
         this.currStep = 0;
+
+        this.textureIDs = ["play-background-1", "play-background-2", "play-background-3"];
     }
 
     initObject(initData) {
         super.initObject(initData);
 
+        this.textureID =  this.textureIDs[random(0, this.textureIDs.length - 1)];
         this.intialPos = new Vector2D(this.position.x, this.position.y);
 
         this.initRumblePattern();

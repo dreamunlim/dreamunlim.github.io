@@ -7,8 +7,8 @@ class Player extends GameObject {
         // player owner
         this.state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
 
-        this.currLane = 3;
-        this.targLane = 3;
+        this.currLane = 4;
+        this.targLane = 4;
         this.numLanes = this.lanes.length;
 
         this.teleport = false;
@@ -59,7 +59,7 @@ class Player extends GameObject {
 
                 // if it was a teleport snap
                 if (this.teleport && snapLeft) {
-                    this.currLane = this.targLane = 5;
+                    this.currLane = this.targLane = 7;
                     this.position.x = this.lanes[this.targLane];
                     this.teleport = false;
                 } else if (this.teleport && snapRight) {
@@ -100,7 +100,7 @@ class Player extends GameObject {
             this.animate = true;
             this.teleport = true;
 
-        } else if (this.targLane == 6 && this.currLane == 5) {
+        } else if (this.targLane == 8 && this.currLane == 7) {
             // right edge teleport
             this.acceleration.x = this.accel;
             this.animate = true;
@@ -132,10 +132,10 @@ class Player extends GameObject {
             var x = this.position.x;
 
             if (this.acceleration.x < 0) {
-                this.position.x = this.position.x + 5 * this.dist;
+                this.position.x = this.position.x + 7 * this.dist;
             }
             else {
-                this.position.x = this.position.x - 5 * this.dist;
+                this.position.x = this.position.x - 7 * this.dist;
             }
 
             super.drawObject();

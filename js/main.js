@@ -7,7 +7,7 @@ const ctx = canvas.getContext('2d');
 // crucial to keep to get proper player-enemy collision
 // since enemy y position was automatically rescaled
 // if collision was checked against canvas resized height
-const width = 640;
+const width = 896;
 const height = 640;
 
 var scale = resizeCanvas();

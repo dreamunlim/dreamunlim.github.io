@@ -17,7 +17,7 @@ class Enemy extends GameObject {
 
         // define position
         if(! this.position.x) {
-            var lane = random(1, 5);
+            var lane = random(1, 7);
             this.position.x = this.lanes[lane];
 
             // spider specific adjustments
@@ -39,7 +39,7 @@ class Enemy extends GameObject {
     }
 
     respawn() {
-        var lane = random(1, 5);
+        var lane = random(1, 7);
         this.position.x = this.lanes[lane];
         this.position.y = this.initial.position;
         this.velocity.y = this.initial.velocity;
@@ -57,7 +57,7 @@ class Enemy extends GameObject {
             case "spider":
                 // don't spawn spiders onto same lane
                 if (this.state.spiderBusyLane == lane) {
-                    if ((++lane) > 5) lane = 1;
+                    if ((++lane) > 7) lane = 1;
                     this.position.x = this.lanes[lane];
                 }
                 this.state.spiderBusyLane = lane;

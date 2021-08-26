@@ -4,7 +4,7 @@ class PlayState extends GameState {
     constructor() {
         super();
 
-        this.lanes = [-114, 14, 142, 270, 398, 526, 654];
+        this.lanes = [-114, 14, 142, 270, 398, 526, 654, 782, 910];
 
         this.pauseButton = null; // to be visible to Player object, Pause state
         this.scoreObject = null; // to be visible to Player object

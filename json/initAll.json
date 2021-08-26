@@ -24,7 +24,9 @@
         ],
         "textures": [
             ["menu-background", "img/menu-background.jpg"],
-            ["play-background", "img/play-background.jpg"],
+            ["play-background-1", "img/play-background-1.jpg"],
+            ["play-background-2", "img/play-background-2.jpg"],
+            ["play-background-3", "img/play-background-3.jpg"],
             ["player-catto", "img/player-catto.png"],
             ["player-doggo", "img/player-doggo.png"],
             ["player-tiny-ranger", "img/player-tiny-ranger.png"],
@@ -53,7 +55,7 @@
                 "velocity": [],
                 "acceleration": [],
                 "textureID": "menu-background",
-                "sWidth": 640,
+                "sWidth": 896,
                 "sHeight": 640
             }
         ],
@@ -61,28 +63,28 @@
             {
                 "id": "button",
                 "text": "Play",
-                "position": [470, 100],
+                "position": [726, 100],
                 "width": 140,
                 "height": 110
             },
             {
                 "id": "button",
                 "text": "Share Score",
-                "position": [470, 230],
+                "position": [726, 230],
                 "width": 140,
                 "height": 110
             },
             {
                 "id": "button",
                 "text": "Override Pic",
-                "position": [470, 360],
+                "position": [726, 360],
                 "width": 140,
                 "height": 110
             },
             {
                 "id": "button",
                 "text": "Help",
-                "position": [470, 490],
+                "position": [726, 490],
                 "width": 140,
                 "height": 110,
                 "url": "https://sites.google.com/view/dreamunlim"
@@ -91,7 +93,7 @@
         "characters": [
             {
                 "name": "Catto",
-                "position": [270, 490],
+                "position": [398, 490],
                 "textureID": "player-catto",
                 "sWidth": 290,
                 "sHeight": 436,
@@ -105,7 +107,7 @@
             },
             {
                 "name": "Doggo",
-                "position": [270, 486],
+                "position": [398, 486],
                 "textureID": "player-doggo",
                 "sWidth": 293,
                 "sHeight": 450,
@@ -119,7 +121,7 @@
             },
             {
                 "name": "Tiny Ranger",
-                "position": [270, 510],
+                "position": [398, 510],
                 "textureID": "player-tiny-ranger",
                 "sWidth": 182,
                 "sHeight": 257,
@@ -133,7 +135,7 @@
             },
             {
                 "name": "Penetrator",
-                "position": [270, 510],
+                "position": [398, 510],
                 "textureID": "player-penetrator",
                 "sWidth": 329,
                 "sHeight": 427,
@@ -154,8 +156,8 @@
                 "position": [-20, -20],
                 "velocity": [],
                 "acceleration": [],
-                "textureID": "play-background",
-                "sWidth": 680,
+                "textureID": "play-background-1",
+                "sWidth": 936,
                 "sHeight": 680
             },
             {
@@ -245,6 +247,22 @@
                 "collisionCircle": {"center": [50, 49], "radius": 32.045}
             },
             {
+                "id": "spider",
+                "position": [0, -742],
+                "velocity": [],
+                "acceleration": [],
+                "textureID": "enemy-spider",
+                "sWidth": 178,
+                "sHeight": 182,
+                "dWidth": 100,
+                "dHeight": 102,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 2,
+                "animSpeed": 250,
+                "collisionCircle": {"center": [50, 49], "radius": 32.045}
+            },
+            {
                 "id": "star",
                 "position": [],
                 "velocity": [0, 7],
@@ -291,13 +309,29 @@
                 "numFrames": 8,
                 "animSpeed": 120,
                 "collisionCircle": {"center": [49, 50.56], "radius": 44.82}
+            },
+            {
+                "id": "diamond",
+                "position": [0, -420],
+                "velocity": [0, 3],
+                "acceleration": [0, 0.2],
+                "textureID": "enemy-diamond",
+                "sWidth": 222,
+                "sHeight": 227,
+                "dWidth": 98,
+                "dHeight": 100,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 8,
+                "animSpeed": 120,
+                "collisionCircle": {"center": [49, 50.56], "radius": 44.82}
             }
         ],
         "buttons": [
             {
                 "id": "button",
                 "text": "II",
-                "position": [570, 4],
+                "position": [826, 4],
                 "width": 65,
                 "height": 65
             }
@@ -326,7 +360,7 @@
             {
                 "id": "button",
                 "text": "OK",
-                "position": [320, 320],
+                "position": [448, 448],
                 "width": 80,
                 "height": 80
             }
