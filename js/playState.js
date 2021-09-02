@@ -6,6 +6,8 @@ class PlayState extends GameState {
 
         this.lanes = [-114, 14, 142, 270, 398, 526, 654, 782, 910];
 
+        this.spiderBusyLanes = [null, 0, 0, 0, 0, 0, 0, 0, null]; // 1 and 0 flags 
+
         this.pauseButton = null; // to be visible to Player object, Pause state
         this.scoreObject = null; // to be visible to Player object
         this.timerObject = null; // to be visible to Booster, Pause state
@@ -53,6 +55,7 @@ class PlayState extends GameState {
         this.level.layers = new Array();
         
         // reset
+        this.spiderBusyLanes = [null, 0, 0, 0, 0, 0, 0, 0, null];
         this.pauseButton = null;
         this.scoreObject = null;
         this.timerObject = null;

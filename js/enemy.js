@@ -22,7 +22,7 @@ class Enemy extends GameObject {
 
             // spider specific adjustments
             if (this.enemyID == "spider") {
-                this.state.spiderBusyLane = lane;
+                this.placeSpider(lane);
             }
         }
         
@@ -55,12 +55,7 @@ class Enemy extends GameObject {
                 this.currentRow = random(0, this.totalRows - 1);
                 break;
             case "spider":
-                // don't spawn spiders onto same lane
-                if (this.state.spiderBusyLane == lane) {
-                    if ((++lane) > 7) lane = 1;
-                    this.position.x = this.lanes[lane];
-                }
-                this.state.spiderBusyLane = lane;
+                this.placeSpider(lane);
                 break;
         }
     }

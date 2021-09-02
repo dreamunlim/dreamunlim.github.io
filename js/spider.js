@@ -10,6 +10,8 @@ class Spider extends Enemy {
 
         this.animate = false;
         this.animDuration = 1000; // in ms
+
+        this.occupiedLane = null;
     }
 
     initObject(initData) {
@@ -65,7 +67,6 @@ class Spider extends Enemy {
         }
     }
 
-
     drawObject() {
         // draw web thread
         ctx.fillStyle = 'rgba(124, 124, 124, 0.5)';
@@ -73,4 +74,33 @@ class Spider extends Enemy {
 
         super.drawObject();
     }
+
+    placeSpider(lane) {
+        // don't spawn spiders onto same lane
+        if (this.state.spiderBusyLanes[lane] == 0) {
+            this.state.spiderBusyLanes[lane] = 1;
+            this.position.x = this.lanes[lane];
+            // release previously occupied lane
+            if (this.occupiedLane != null) {
+                this.state.spiderBusyLanes[this.occupiedLane] = 0;
+            }
+            // store newly occupied lane
+            this.occupiedLane = lane;
+        } else {
+            // loop through lanes [1, 7] to find the very first unoccupied one
+            for (var i = 1; i <= 7; ++i) {
+                if (this.state.spiderBusyLanes[i] == 0) {
+                    this.state.spiderBusyLanes[i] = 1;
+                    this.position.x = this.lanes[i];
+                    // release previously occupied lane
+                    if (this.occupiedLane != null) {
+                        this.state.spiderBusyLanes[this.occupiedLane] = 0;
+                    }
+                    // store newly occupied lane
+                    this.occupiedLane = i;
+                }
+            }
+        }
+    }
+
 }
