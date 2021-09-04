@@ -63,6 +63,8 @@ class Enemy extends GameObject {
     updateObject() {
         super.updateObject();
 
+        this.checkPlayerEnemyCollision();
+
         // respawn condition
         if (this.position.y > height) {
             this.respawn();
@@ -73,5 +75,17 @@ class Enemy extends GameObject {
 
     drawObject() {
         super.drawObject();
+    }
+
+    checkPlayerEnemyCollision() {
+        // skip collision check
+        if (this.position.y + this.dHeight < height / 2) {
+            return;
+        }
+
+        var collided = collisionManager.playerEnemyCollision(this.state.playerObject, this);
+        if (collided) {
+            this.respondToCollision();
+        }
     }
 }

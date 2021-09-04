@@ -103,4 +103,27 @@ class Spider extends Enemy {
         }
     }
 
+    respondToCollision() {
+        // if player-spider-booster collided at the same time
+        if (this.state.boosterObject.collided) {
+            this.state.playerObject.immune = true;
+            this.state.playerObject.immuneStartTime = time;
+        }
+
+        if (this.state.playerObject.immune) {
+            // play sound once per immunity duration
+            if (! this.state.playerObject.soundPlayedOnce) {
+                this.state.playerObject.soundPlayedOnce = true;
+                soundManager.playSound(this.enemyID);
+            }
+        }
+
+        if (! this.state.playerObject.immune) {
+            // avoid GameoverState pushed second time in a row
+            if (! gameStateMachine.pendingList.length) {
+                this.state.switchToGameOverState();
+            }
+            soundManager.playSound(this.enemyID);
+        }
+    }
 }

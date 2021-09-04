@@ -4,6 +4,8 @@ class Star extends Enemy {
     constructor () {
         super();
 
+        this.pointsToAdd = 2;
+
         this.spawned = false;
         this.spawnPeriod = 2; // in sec
         this.totalRows = 4;
@@ -33,7 +35,6 @@ class Star extends Enemy {
         this.animateFrame();
     }
 
-
     drawObject() {
         if(! this.spawned) {
             return;
@@ -49,5 +50,11 @@ class Star extends Enemy {
             this.currentFrame = (++this.currentFrame) % this.numFrames;
             this.t1 = this.t2;
         }
+    }
+
+    respondToCollision() {
+        this.state.scoreObject.score += this.pointsToAdd;
+        this.respawn();
+        soundManager.playSound(this.enemyID);
     }
 }

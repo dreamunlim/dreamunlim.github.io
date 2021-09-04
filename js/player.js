@@ -6,6 +6,8 @@ class Player extends GameObject {
 
         // player owner
         this.state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
+        
+        this.state.playerObject = this;
 
         this.currLane = 4;
         this.targLane = 4;
@@ -18,6 +20,7 @@ class Player extends GameObject {
         this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
 
         this.immune = false;
+        this.immuneStartTime = 0;
         this.immuneDuration = 1000; // in ms
         this.flickerDuration = 30; // in ms
     }
@@ -35,6 +38,7 @@ class Player extends GameObject {
     updateObject() {
         super.updateObject();
         super.animateFrame();
+        this.handleImmunity();
 
         // exit update if pause button tapped
         if (inputHandler.mouseLeftPressed) {
@@ -119,10 +123,6 @@ class Player extends GameObject {
 
         // be sure 'player' has indeed had time to update itself
         inputHandler.resetInputStates();
-
-
-        this.checkPlayerEnemyCollision();
-        this.flickerOnCollision();
     }
 
 
@@ -146,81 +146,13 @@ class Player extends GameObject {
         super.drawObject();
     }
 
-    checkPlayerEnemyCollision() {
-        var enemyLayer = this.state.level.layers[1];
-
-        for (var i = 0; i != enemyLayer.length; ++i) {
-            var enemy = enemyLayer[i];
-            var enemyID = enemy.constructor.name.toLowerCase();
-
-            // skip collision check
-            if (enemy.position.y + enemy.dHeight < height / 2) {
-                continue;
-            }
-
-            var collided = collisionManager.playerEnemyCollision(this, enemy);
-
-            if (collided) {
-                if (enemyID == "booster") {
-                    this.state.timerObject.boosterPickUpTime = time;
-                    this.state.scoreObject.score += 4;
-                    this.state.boosterObject.collided = true;
-                    enemy.respawn();
-                    soundManager.playSound(enemyID);
-                }
-
-                if (enemyID == "diamond") {
-                    this.state.scoreObject.score += 3;
-                    enemy.respawn();
-                    soundManager.playSound(enemyID);
-                }
-
-                if (enemyID == "star") {
-                    this.state.scoreObject.score += 2;
-                    enemy.respawn();
-                    soundManager.playSound(enemyID);
-                }
-
-                if (enemyID == "heart") {
-                    this.state.scoreObject.score += 1;
-                    enemy.respawn();
-                    soundManager.playSound(enemyID);
-                }
-
-                if (enemyID == "spider") {
-                    // if player-spider-booster collided at the same time
-                    if (this.state.boosterObject.collided) {
-                        this.immune = true;
-                        this.t1 = time;
-                    }
-
-                    if (this.immune) {
-                        // play sound once per immunity duration
-                        if (! this.soundPlayedOnce) {
-                            this.soundPlayedOnce = true;
-                            soundManager.playSound(enemyID);
-                        }
-                    }
-
-                    if (! this.immune) {
-                        // avoid GameoverState pushed second time in a row  
-                        if (! gameStateMachine.pendingList.length) {
-                            this.state.switchToGameOverState();
-                        }
-                        soundManager.playSound(enemyID);
-                    }
-                }
-            }
-        }
-
+    handleImmunity() {
         // remove immunity
-        if ((time - this.t1) > this.immuneDuration) {
+        if ((time - this.immuneStartTime) > this.immuneDuration) {
             this.immune = false;
             delete this.soundPlayedOnce;
         }
-    }
 
-    flickerOnCollision() {
         // reset flicker
         this.dWidth = this.initial.dWidth;
         this.dHeight = this.initial.dHeight;

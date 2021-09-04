@@ -4,6 +4,8 @@ class Booster extends Enemy {
     constructor () {
         super();
 
+        this.pointsToAdd = 4;
+
         this.state.boosterObject = this;
         
         this.spawned = false;
@@ -35,12 +37,19 @@ class Booster extends Enemy {
         super.updateObject();
     }
 
-
     drawObject() {
         if(! this.spawned) {
             return;
         }
 
         super.drawObject();
+    }
+
+    respondToCollision() {
+        this.collided = true;
+        this.state.timerObject.boosterPickUpTime = time;
+        this.state.scoreObject.score += this.pointsToAdd;
+        this.respawn();
+        soundManager.playSound(this.enemyID);
     }
 }

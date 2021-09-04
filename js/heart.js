@@ -4,6 +4,8 @@ class Heart extends Enemy {
     constructor () {
         super();
 
+        this.pointsToAdd = 1;
+
         this.t1 = 0;
         this.t2 = 0;
         this.beatPattern = [1, .97, .93, .9, .93, .97, 1, 1.03];
@@ -37,8 +39,13 @@ class Heart extends Enemy {
         }
     }
 
-
     drawObject() {
         super.drawObject();
+    }
+
+    respondToCollision() {
+        this.state.scoreObject.score += this.pointsToAdd;
+        this.respawn();
+        soundManager.playSound(this.enemyID);
     }
 }

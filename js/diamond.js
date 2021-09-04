@@ -4,6 +4,8 @@ class Diamond extends Star {
     constructor () {
         super();
 
+        this.pointsToAdd = 3;
+
         this.spawnPeriod = 3; // in sec
         this.totalRows = 6;
 
@@ -24,5 +26,11 @@ class Diamond extends Star {
 
         this.enemyClass.updateObject.call(this);
         super.animateFrame();
+    }
+
+    respondToCollision() {
+        this.state.scoreObject.score += this.pointsToAdd;
+        this.respawn();
+        soundManager.playSound(this.enemyID);
     }
 }

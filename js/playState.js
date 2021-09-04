@@ -8,10 +8,11 @@ class PlayState extends GameState {
 
         this.spiderBusyLanes = [null, 0, 0, 0, 0, 0, 0, 0, null]; // 1 and 0 flags 
 
-        this.pauseButton = null; // to be visible to Player object, Pause state
-        this.scoreObject = null; // to be visible to Player object
+        this.playerObject = null; // to be visible to Enemies
+        this.pauseButton = null; // to be visible to Player, Pause state
+        this.scoreObject = null; // to be visible to Enemies
         this.timerObject = null; // to be visible to Booster, Pause state
-        this.boosterObject = null; // to be visible to Timer
+        this.boosterObject = null; // to be visible to Timer, Spider
 
         // fuction pointers
         this.funcPointersMap = {
@@ -56,6 +57,7 @@ class PlayState extends GameState {
         
         // reset
         this.spiderBusyLanes = [null, 0, 0, 0, 0, 0, 0, 0, null];
+        this.playerObject = null;
         this.pauseButton = null;
         this.scoreObject = null;
         this.timerObject = null;
