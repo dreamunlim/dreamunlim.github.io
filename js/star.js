@@ -54,7 +54,7 @@ class Star extends Enemy {
 
     respondToCollision() {
         this.state.scoreObject.score += this.pointsToAdd;
-        this.respawn();
+        this.respawnAfterDraw = true;
         soundManager.playSound(this.enemyID);
     }
 }

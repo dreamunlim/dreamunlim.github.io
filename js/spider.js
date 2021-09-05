@@ -12,6 +12,8 @@ class Spider extends Enemy {
         this.animDuration = 1000; // in ms
 
         this.occupiedLane = null;
+
+        delete this.respawnAfterDraw;
     }
 
     initObject(initData) {

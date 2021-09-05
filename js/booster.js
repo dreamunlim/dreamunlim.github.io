@@ -49,7 +49,7 @@ class Booster extends Enemy {
         this.collided = true;
         this.state.timerObject.boosterPickUpTime = time;
         this.state.scoreObject.score += this.pointsToAdd;
-        this.respawn();
+        this.respawnAfterDraw = true;
         soundManager.playSound(this.enemyID);
     }
 }

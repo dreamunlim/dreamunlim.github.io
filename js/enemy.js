@@ -8,8 +8,8 @@ class Enemy extends GameObject {
         this.state = gameStateMachine.stack[1];
 
         this.enemyID = this.constructor.name.toLowerCase();
-
         this.spawned = true;
+        this.respawnAfterDraw = false;
     }
 
     initObject(initData) {
@@ -61,11 +61,16 @@ class Enemy extends GameObject {
     }
 
     updateObject() {
-        super.updateObject();
+        // respawn after collision in previous frame 
+        if (this.respawnAfterDraw) {
+            this.respawn();
+            this.respawnAfterDraw = false;
+        }
 
+        super.updateObject();
         this.checkPlayerEnemyCollision();
 
-        // respawn condition
+        // offscreen respawn condition
         if (this.position.y > height) {
             this.respawn();
         } else if (this.position.y < this.initial.position) {
