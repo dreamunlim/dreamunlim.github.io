@@ -21,7 +21,7 @@ class Booster extends Enemy {
 
     updateObject() {
         // remove collided status
-        if((time - this.state.timerObject.boosterPickUpTime) > this.keepCollidedStatus) {
+        if((frameStartTime - this.state.timerObject.boosterPickUpTime) > this.keepCollidedStatus) {
             this.collided = false;
         }
         
@@ -47,7 +47,7 @@ class Booster extends Enemy {
 
     respondToCollision() {
         this.collided = true;
-        this.state.timerObject.boosterPickUpTime = time;
+        this.state.timerObject.boosterPickUpTime = frameStartTime;
         this.state.scoreObject.score += this.pointsToAdd;
         this.respawnAfterDraw = true;
         soundManager.playSound(this.enemyID);

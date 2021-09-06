@@ -4,20 +4,20 @@ class CharacterUnlocker {
     constructor() {
         this.squares = [
             {
-                width: width / 2, height: height / 2,
+                width: canvasInitialWidth / 2, height: canvasInitialHeight / 2,
                 position: {x: 0, y: 0}
             },
             {
-                width: width / 2, height: height / 2,
-                position: {x: width / 2, y: 0}
+                width: canvasInitialWidth / 2, height: canvasInitialHeight / 2,
+                position: {x: canvasInitialWidth / 2, y: 0}
             },
             {
-                width: width / 2, height: height / 2,
-                position: {x: 0, y: height / 2}
+                width: canvasInitialWidth / 2, height: canvasInitialHeight / 2,
+                position: {x: 0, y: canvasInitialHeight / 2}
             },
             {
-                width: width / 2, height: height / 2,
-                position: {x: width / 2, y: height / 2}
+                width: canvasInitialWidth / 2, height: canvasInitialHeight / 2,
+                position: {x: canvasInitialWidth / 2, y: canvasInitialHeight / 2}
             }
         ];
 
@@ -45,7 +45,7 @@ class CharacterUnlocker {
             // start timer
             if (! this.timerStarted) {
                 this.timerStarted = true;
-                this.t1 = time;
+                this.t1 = frameStartTime;
             }
         }
 
@@ -78,7 +78,7 @@ class CharacterUnlocker {
         }
 
         // reset pattern on timeout
-        if (this.timerStarted && ((time - this.t1) > this.patternResetPeriod)) {
+        if (this.timerStarted && ((frameStartTime - this.t1) > this.patternResetPeriod)) {
             this.currentPattern = [];
             this.timerStarted = false;
             this.t1 = 0;

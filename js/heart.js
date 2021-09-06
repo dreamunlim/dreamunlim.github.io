@@ -22,7 +22,7 @@ class Heart extends Enemy {
     updateObject() {
         super.updateObject();
 
-        this.t2 = Math.floor(time / this.animSpeed);
+        this.t2 = Math.floor(frameStartTime / this.animSpeed);
 
         // do beat step
         if (this.t1 < this.t2) {

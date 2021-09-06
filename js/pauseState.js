@@ -29,7 +29,7 @@ class PauseState extends GameState {
     }
 
     onEnter() {
-        this.pauseStartTime = time;
+        this.pauseStartTime = frameStartTime;
         
         this.playState = gameStateMachine.stack[1];
 
@@ -42,7 +42,7 @@ class PauseState extends GameState {
     }
 
     onExit() {
-        var pauseDuration = time - this.pauseStartTime;
+        var pauseDuration = frameStartTime - this.pauseStartTime;
 
         // correct PlayState time counters
         this.playState.timerObject.actionStartTime += pauseDuration;

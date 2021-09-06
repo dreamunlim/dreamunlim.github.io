@@ -22,10 +22,10 @@ class CollisionManager {
         var canvasPosX = (window.innerWidth - canvas.width) / 2;
         var canvasPosY = 0;
 
-        if (mEvent.clientX - canvasPosX > button.position.x * scale &&
-            mEvent.clientX - canvasPosX < (button.position.x + button.width) * scale &&
-            mEvent.clientY - canvasPosY > button.position.y * scale &&
-            mEvent.clientY - canvasPosY < (button.position.y + button.height) * scale) {
+        if (mEvent.clientX - canvasPosX > button.position.x * canvasScaler &&
+            mEvent.clientX - canvasPosX < (button.position.x + button.width) * canvasScaler &&
+            mEvent.clientY - canvasPosY > button.position.y * canvasScaler &&
+            mEvent.clientY - canvasPosY < (button.position.y + button.height) * canvasScaler) {
             return true;
         }
 

@@ -25,7 +25,7 @@ class OverridePicture {
         image.onload = () => {
             // minimum dimensions check
             if (image.naturalWidth < minWidth || image.naturalHeight < minHeight) {
-                this.overridePicButton.t1 = time;
+                this.overridePicButton.t1 = frameStartTime;
                 this.overridePicButton.hintMessage = "Low Res";
                 return;
             }
@@ -38,7 +38,7 @@ class OverridePicture {
 
             // replace texture
             textureManager.textureMap.set(this.replaceableTextureIDs[this.texturePointer], blendedPic);
-            this.overridePicButton.t1 = time;
+            this.overridePicButton.t1 = frameStartTime;
             this.overridePicButton.hintMessage = "Success";
 
             // explicitly release file URL
@@ -51,7 +51,7 @@ class OverridePicture {
         image.onerror = () => {
             // treat both zero size and file extension substitution as bad format
             if (image.naturalWidth == 0 && image.naturalHeight == 0) {
-                this.overridePicButton.t1 = time;
+                this.overridePicButton.t1 = frameStartTime;
                 this.overridePicButton.hintMessage = "Bad Format";
             }
 

@@ -7,24 +7,26 @@ const ctx = canvas.getContext('2d');
 // crucial to keep to get proper player-enemy collision
 // since enemy y position was automatically rescaled
 // if collision was checked against canvas resized height
-const width = 896;
-const height = 640;
-
-var scale = resizeCanvas();
+const canvasInitialWidth = 896;
+const canvasInitialHeight = 640;
 
 const FPS = 30;
 const FRAME_TIME = 1000 / FPS;
 
-var time = 0; // loop start timestamp
+var canvasScaler = resizeCanvas();
+var frameStartTime = 0;
+var gameJson = {};
 
-//
-var levelParser = new LevelParser();
-var textureManager = new TextureManager();
-var collisionManager = new CollisionManager();
-var soundManager = new SoundManager();
+// singletons
+const levelParser = new LevelParser();
+const textureManager = new TextureManager();
+const collisionManager = new CollisionManager();
+const soundManager = new SoundManager();
+const inputHandler = new InputHandler();
+const gameObjectFactory = new GameObjectFactory();
+const gameStateMachine = new GameStateMachine();
 
-//
-var inputHandler = new InputHandler();
+// event handlers
 document.addEventListener("keydown", inputHandler.keyDownHandler, false);
 document.addEventListener("keyup", inputHandler.keyUpHandler, false);
 canvas.addEventListener("pointerdown", inputHandler.mouseDownHandler, false);
@@ -34,8 +36,7 @@ document.addEventListener("visibilitychange", onVisibilityChange, false);
 window.addEventListener('resize', onResize, false);
 window.addEventListener('storage', onStorageChange, false);
 
-//create game object factory and register game object types
-var gameObjectFactory = new GameObjectFactory();
+// game object types
 gameObjectFactory.registerObject("player", Player);
 gameObjectFactory.registerObject("booster", Booster);
 gameObjectFactory.registerObject("heart", Heart);
@@ -47,8 +48,7 @@ gameObjectFactory.registerObject("counter", Counter);
 gameObjectFactory.registerObject("star", Star);
 gameObjectFactory.registerObject("diamond", Diamond);
 
-//create finite state machine and register states
-var gameStateMachine = new GameStateMachine();
+// finite state machine states
 gameStateMachine.registerState(StateID.Loading, new LoadingState());
 gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
@@ -59,7 +59,7 @@ gameStateMachine.requestStackPush(StateID.Loading);
 
 // main loop  
 function loop() {
-  time = performance.now();
+  frameStartTime = performance.now();
 
   try {
     // getInput(); input events get processed by document  
@@ -75,5 +75,4 @@ function loop() {
 // loop(); // start loop
 
 // load game json file and start main loop
-var gameJson = {};
 parseGameJson("json/initAll.json");

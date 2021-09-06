@@ -28,7 +28,7 @@ class ShareScore {
     processShare() {
         // don't proceed on connection error
         if (typeof FB === "undefined") {
-            this.shareScoreButton.t1 = time;
+            this.shareScoreButton.t1 = frameStartTime;
             this.shareScoreButton.hintMessage = "SDK Not Loaded";
             return;
         }
@@ -61,7 +61,7 @@ class ShareScore {
 
     relayResponse(response) {
         if (response && !response.error_message) {
-            this.shareScoreButton.t1 = time;
+            this.shareScoreButton.t1 = frameStartTime;
             this.shareScoreButton.hintMessage = "Success";
 
             // log event

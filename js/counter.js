@@ -27,9 +27,9 @@ class Counter {
             this.state.timerObject = this;
 
             this.timerResetValue = 10; // in sec
-            this.actionStartTime = time;
+            this.actionStartTime = frameStartTime;
             this.totalTimePassed = 0; // in ms
-            this.boosterPickUpTime = time;
+            this.boosterPickUpTime = frameStartTime;
             this.timerCurrentValue = 0;
             this.formattedTimer = "";
         }
@@ -77,8 +77,8 @@ class Counter {
     }
 
     updateTimer(that) {
-        that.totalTimePassed = time - that.actionStartTime;
-        that.timerCurrentValue = that.timerResetValue - Math.floor((time - that.boosterPickUpTime) / 1000);
+        that.totalTimePassed = frameStartTime - that.actionStartTime;
+        that.timerCurrentValue = that.timerResetValue - Math.floor((frameStartTime - that.boosterPickUpTime) / 1000);
 
         // format number
         if (that.timerCurrentValue < 10) {
@@ -106,7 +106,7 @@ class Counter {
     }
 
     drawTimer(that) {
-        var x = width / 2;
+        var x = canvasInitialWidth / 2;
         var y = 0;
         drawText(that.formattedTimer, x, y - 1, that.fontShadow, "center", that.fontShadowColour);
         drawText(that.formattedTimer, x, y, that.font, "center", that.fontColour);

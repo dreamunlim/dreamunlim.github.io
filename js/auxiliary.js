@@ -42,13 +42,13 @@ function resizeCanvas() {
     var scale = 1;
 
     if (window.innerWidth < window.innerHeight) {
-        scale = window.innerWidth / width;
+        scale = window.innerWidth / canvasInitialWidth;
     } else {
-        scale = window.innerHeight / height;
+        scale = window.innerHeight / canvasInitialHeight;
     }
 
-    canvas.width = width * scale;
-    canvas.height = height * scale;
+    canvas.width = canvasInitialWidth * scale;
+    canvas.height = canvasInitialHeight * scale;
     ctx.scale(scale, scale);
 
     return scale;
@@ -95,7 +95,7 @@ function onVisibilityChange() {
 
 function onResize() {
     // resize canvas always first to set global scaler
-    scale = resizeCanvas();
+    canvasScaler = resizeCanvas();
 
     // redraw PlayState once, since canvas data is reset on resizing
     var state = gameStateMachine.stack[gameStateMachine.stack.length - 1];

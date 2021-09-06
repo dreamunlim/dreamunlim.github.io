@@ -134,8 +134,8 @@ class TextBox {
                 break;
         }
 
-        this.x = (width - this.width) / 2;
-        this.y = (height - this.height) / 2;
+        this.x = (canvasInitialWidth - this.width) / 2;
+        this.y = (canvasInitialHeight - this.height) / 2;
     }
 
     drawTextBox() {

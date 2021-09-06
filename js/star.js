@@ -44,7 +44,7 @@ class Star extends Enemy {
     }
 
     animateFrame() {
-        this.t2 = Math.floor(time / this.animSpeed);
+        this.t2 = Math.floor(frameStartTime / this.animSpeed);
 
         if (this.t1 < this.t2) {
             this.currentFrame = (++this.currentFrame) % this.numFrames;

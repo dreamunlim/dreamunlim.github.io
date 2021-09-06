@@ -14,11 +14,11 @@ class LoadingState extends GameState {
     }
 
     draw() {
-        clearCanvas(0, 0, width, height);
+        clearCanvas(0, 0, canvasInitialWidth, canvasInitialHeight);
         
         if(document.fonts.size) {
-            drawText("Loading Assets", width / 2, height / 2, "68px Bebas Neue", "center", "purple", "middle");
-            drawText("Loading Assets", width / 2, height / 2, "65px Bebas Neue", "center", "mediumpurple", "middle");
+            drawText("Loading Assets", canvasInitialWidth / 2, canvasInitialHeight / 2, "68px Bebas Neue", "center", "purple", "middle");
+            drawText("Loading Assets", canvasInitialWidth / 2, canvasInitialHeight / 2, "65px Bebas Neue", "center", "mediumpurple", "middle");
         }
     }
 

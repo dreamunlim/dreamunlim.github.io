@@ -29,7 +29,7 @@ class GameObject {
     }
     
     animateFrame() {
-        this.currentFrame = Math.floor((time / this.animSpeed) % this.numFrames);
+        this.currentFrame = Math.floor((frameStartTime / this.animSpeed) % this.numFrames);
     }
 
     updateObject() {

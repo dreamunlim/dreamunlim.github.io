@@ -121,7 +121,7 @@ class Player extends GameObject {
         }
 
 
-        // be sure 'player' has indeed had time to update itself
+        // update from input has completed
         inputHandler.resetInputStates();
     }
 
@@ -148,7 +148,7 @@ class Player extends GameObject {
 
     handleImmunity() {
         // remove immunity
-        if ((time - this.immuneStartTime) > this.immuneDuration) {
+        if ((frameStartTime - this.immuneStartTime) > this.immuneDuration) {
             this.immune = false;
             delete this.soundPlayedOnce;
         }
@@ -159,7 +159,7 @@ class Player extends GameObject {
         
         // flicker
         if (this.immune) {
-            if (Math.floor(time / this.flickerDuration) % 2) {
+            if (Math.floor(frameStartTime / this.flickerDuration) % 2) {
                 // draw trasparent pixels
                 this.dWidth = 1;
                 this.dHeight = 1;

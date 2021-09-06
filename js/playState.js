@@ -24,8 +24,7 @@ class PlayState extends GameState {
         this.level.update();
 
         // keyboard
-        // avoid PauseState pushed second time in a row  
-        if (inputHandler.escPressed && !gameStateMachine.pendingList.length) {
+        if (inputHandler.escPressed) {
             inputHandler.escPressed = false;
             this.switchToPauseState();
         }
@@ -66,11 +65,16 @@ class PlayState extends GameState {
 
     //call back functions
     switchToPauseState() {
-        gameStateMachine.requestStackPush(StateID.Pause);
+        if (! gameStateMachine.pendingList.length) {
+            gameStateMachine.requestStackPush(StateID.Pause);
+        }
     }
 
     switchToGameOverState() {
-        gameStateMachine.requestStackPush(StateID.Gameover);
+        // avoid state pushed multiply times in a row
+        if (! gameStateMachine.pendingList.length) {
+            gameStateMachine.requestStackPush(StateID.Gameover);
+        }
     }
 
 }

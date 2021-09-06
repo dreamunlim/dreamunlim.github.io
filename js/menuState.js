@@ -21,7 +21,7 @@ class ConsentPopup {
     }
 
     draw() {
-        clearCanvas(0, 0, width, height, "rgba(122,138,161, 0.5)");
+        clearCanvas(0, 0, canvasInitialWidth, canvasInitialHeight, "rgba(122,138,161, 0.5)");
         this.textBox.drawTextBox();
         this.okButton.drawObject();
     }
@@ -124,7 +124,7 @@ class MenuState extends GameState {
 
     drawAuthor () {
         var x = 20;
-        var y = height;
+        var y = canvasInitialHeight;
         drawText("©2020 STANTAL", x, y, "30px Bebas Neue", "start", "rgba(128,0,0, 0.8)", "bottom");
     }
 

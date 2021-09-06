@@ -11,7 +11,7 @@ class CharacterSelector {
             height: 325,
             drawLeftArrow: function () {
                 if (this.skipLeftArrowDraw) {
-                    if ((time - this.t1) > this.arrowHiddenDelay) {
+                    if ((frameStartTime - this.t1) > this.arrowHiddenDelay) {
                         this.skipLeftArrowDraw = false;
                     }
                     return;
@@ -28,7 +28,7 @@ class CharacterSelector {
             },
             drawRightArrow: function () {
                 if (this.skipRightArrowDraw) {
-                    if ((time - this.t1) > this.arrowHiddenDelay) {
+                    if ((frameStartTime - this.t1) > this.arrowHiddenDelay) {
                         this.skipRightArrowDraw = false;
                     }
                     return;
@@ -63,7 +63,7 @@ class CharacterSelector {
                     this.position.x = that.selectorBox.position.x + (that.selectorBox.width - this.width) / 2;
                     this.position.y = that.selectorBox.position.y + (that.selectorBox.height - this.height) / 2;
 
-                    this.t1 = time;
+                    this.t1 = frameStartTime;
                     this.charName = that.charList[that.charPointer].name;
                     this.displayCharName = true;
                 },
@@ -83,7 +83,7 @@ class CharacterSelector {
                             "30px Orbitron", "center", "lightsalmon", "middle", that.selectorBox.width);
 
                         // remove name
-                        if ((time - this.t1) > this.charNameDelay) {
+                        if ((frameStartTime - this.t1) > this.charNameDelay) {
                             this.displayCharName = false;
                         }
                     }
@@ -117,16 +117,16 @@ class CharacterSelector {
             if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this.selectorBox)) {
                 var canvasPosX = (window.innerWidth - canvas.width) / 2;
                 var x1 = inputHandler.mEvent.clientX - canvasPosX;
-                var x2 = this.selectorBox.width / 2 * scale;
+                var x2 = this.selectorBox.width / 2 * canvasScaler;
                 
                 if (x1 > x2) {
                     this.charPointer = (++this.charPointer) % (this.charList.length - this.hiddenChars);
                     this.selectorBox.skipRightArrowDraw = true;
-                    this.selectorBox.t1 = time;
+                    this.selectorBox.t1 = frameStartTime;
                 } else {
                     this.charPointer = mod(--this.charPointer, (this.charList.length - this.hiddenChars));
                     this.selectorBox.skipLeftArrowDraw = true;
-                    this.selectorBox.t1 = time;
+                    this.selectorBox.t1 = frameStartTime;
                 }
                 this.updatePlayerInitData();
             }

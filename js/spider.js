@@ -55,14 +55,14 @@ class Spider extends Enemy {
         // animate only once
         if ((this.position.y >= this.dist - this.dHeight - 10) && !this.animate) {
             this.animate = true;
-            this.t1 = time;
+            this.t1 = frameStartTime;
         }
 
         if (this.animate) {
             super.animateFrame();
 
             // stop animation
-            if (time - this.t1 > this.animDuration) {
+            if (frameStartTime - this.t1 > this.animDuration) {
                 this.animate = false;
                 this.currentFrame = 0;
             }
@@ -109,7 +109,7 @@ class Spider extends Enemy {
         // if player-spider-booster collided at the same time
         if (this.state.boosterObject.collided) {
             this.state.playerObject.immune = true;
-            this.state.playerObject.immuneStartTime = time;
+            this.state.playerObject.immuneStartTime = frameStartTime;
         }
 
         if (this.state.playerObject.immune) {
@@ -121,10 +121,7 @@ class Spider extends Enemy {
         }
 
         if (! this.state.playerObject.immune) {
-            // avoid GameoverState pushed second time in a row
-            if (! gameStateMachine.pendingList.length) {
-                this.state.switchToGameOverState();
-            }
+            this.state.switchToGameOverState();
             soundManager.playSound(this.enemyID);
         }
     }

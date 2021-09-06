@@ -45,7 +45,7 @@ class PlayBackground extends GameObject {
     }
 
     updateObject() {
-        this.t2 = Math.floor(time / (this.rumblePeriod * 1000));
+        this.t2 = Math.floor(frameStartTime / (this.rumblePeriod * 1000));
 
         // rumble once every n seconds
         // side effect with two rumbles in a row occurs

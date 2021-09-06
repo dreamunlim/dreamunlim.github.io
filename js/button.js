@@ -72,7 +72,7 @@ class Button {
 
     updateObject() {
         // reset dimensions
-        if((time - this.t1) > this.resetDelay) {
+        if((frameStartTime - this.t1) > this.resetDelay) {
             this.position.x = this.initial.position.x;
             this.position.y = this.initial.position.y;
             this.width = this.initial.width;
@@ -80,7 +80,7 @@ class Button {
         }
 
         // resolve callback
-        if(this.resolveCallback && ((time - this.t1) > this.callbackDelay)) {
+        if(this.resolveCallback && ((frameStartTime - this.t1) > this.callbackDelay)) {
             this.state.funcPointersMap[this.text](this);
             this.resolveCallback = false;
         }
@@ -88,7 +88,7 @@ class Button {
         // mouse
         if(inputHandler.mouseLeftPressed) {
             if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this)) {
-                this.t1 = time;
+                this.t1 = frameStartTime;
     
                 var shiftX = this.width * 0.04;
                 var shiftY = this.height * 0.05;
@@ -113,7 +113,7 @@ class Button {
                 "30px Bebas Neue", "center", "seashell", "bottom", this.width);
 
             // remove hint
-            if ((time - this.t1) > this.hintDelay) {
+            if ((frameStartTime - this.t1) > this.hintDelay) {
                 delete this.hintMessage;
             }
         }

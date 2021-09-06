@@ -71,7 +71,7 @@ class Enemy extends GameObject {
         this.checkPlayerEnemyCollision();
 
         // offscreen respawn condition
-        if (this.position.y > height) {
+        if (this.position.y > canvasInitialHeight) {
             this.respawn();
         } else if (this.position.y < this.initial.position) {
             this.respawn();
@@ -84,7 +84,7 @@ class Enemy extends GameObject {
 
     checkPlayerEnemyCollision() {
         // skip collision check
-        if (this.position.y + this.dHeight < height / 2) {
+        if (this.position.y + this.dHeight < canvasInitialHeight / 2) {
             return;
         }
 
