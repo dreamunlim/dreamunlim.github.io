@@ -67,9 +67,8 @@ class ShareScore {
             // log event
             gtag("event", "share", {
                 "method": "Facebook",
-                "score": this.dataToShare.formattedScore,
-                "minutes": this.dataToShare.formattedMinutes,
-                "seconds": this.dataToShare.formattedSeconds
+                "top_score": this.shareScoreButton.state.topScore[0][0],
+                "seconds_played": Math.floor(this.shareScoreButton.state.topScore[0][1] / 1000)
             });
         } else {
             // no message on Share Dialog closed either by cancellation or errors
