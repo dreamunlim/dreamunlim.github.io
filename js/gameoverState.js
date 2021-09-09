@@ -5,7 +5,8 @@ class GameoverState extends GameState {
         super();
 
         this.textBox = new TextBox(this);
-        this.playState = null; // PlayState reference
+        this.menuState = null;
+        this.playState = null;
 
         // FB share data
         this.dataToShare = {
@@ -33,22 +34,24 @@ class GameoverState extends GameState {
     onEnter() {
         levelParser.parseLevel(this);
 
-        // stash FB share data
+        this.menuState = gameStateMachine.stack[0];
         this.playState = gameStateMachine.stack[1];
+
+        // stash FB share data
         this.dataToShare.formattedScore = this.playState.scoreObject.formattedScore;
         this.dataToShare.formattedMinutes = Math.floor(this.playState.timerObject.totalTimePassed / 1000 / 60);
         this.dataToShare.formattedSeconds = Math.floor((this.playState.timerObject.totalTimePassed / 1000) % 60);
 
         // pass FB share data to MenuState shareScore object
-        if (this.playState.scoreObject.score > gameStateMachine.stack[0].topScore[0][0]) {
-            gameStateMachine.stack[0].shareScoreObj.dataToShare = this.dataToShare;
+        if (this.playState.scoreObject.score > this.menuState.topScore[0][0]) {
+            this.menuState.shareScoreObj.dataToShare = this.dataToShare;
         }
 
         // pass PlayState unformatted score and time to MenuState
-        gameStateMachine.stack[0].updateTopScore(this.playState.scoreObject.score, this.playState.timerObject.totalTimePassed);
+        this.menuState.updateTopScore(this.playState.scoreObject.score, this.playState.timerObject.totalTimePassed);
         
         // cache top score, selected char and FB share data
-        gameStateMachine.stack[0].cacheDataToLocalStorage();
+        this.menuState.cacheDataToLocalStorage();
         
         return true;
     }
@@ -65,6 +68,7 @@ class GameoverState extends GameState {
 
         // reset
         this.textBox = new TextBox(this);
+        this.menuState = null;
         this.playState = null;
         this.dataToShare = {};
     }
