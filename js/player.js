@@ -42,7 +42,7 @@ class Player extends GameObject {
 
         // exit update if pause button tapped
         if (inputHandler.mouseLeftPressed) {
-            if (collisionManager.mouseButtonCollision(inputHandler.mEvent, gameStateMachine.stack[gameStateMachine.stack.length - 1].pauseButton)) {
+            if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this.state.pauseButton)) {
                 return;
             }
         }

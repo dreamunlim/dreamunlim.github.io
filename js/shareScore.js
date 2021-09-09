@@ -14,8 +14,11 @@ class ShareScore {
         document.body.insertBefore(this.div, canvas.nextElementSibling);
 
         // FB Open Graph meta tags to populate
-        this.url = "https://play.google.com/store/apps/details?id=io.github.dreamunlim.twa";
-        // this.url = window.location.href;
+        if (navigator.userAgent.indexOf("Android") != -1) {
+            this.url = "https://play.google.com/store/apps/details?id=io.github.dreamunlim.twa";
+        } else {
+            this.url = window.location.href;
+        }
         this.title = document.title;
         this.description = "";
         this.image = this.url + "img/fb-share.jpg";

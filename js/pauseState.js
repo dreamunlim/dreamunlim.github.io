@@ -5,7 +5,7 @@ class PauseState extends GameState {
         super();
 
         this.pauseStartTime = 0;
-        this.playState = null; // PlayState reference
+        this.playState = null;
         
         // fuction pointers
         this.funcPointersMap = {
@@ -17,8 +17,7 @@ class PauseState extends GameState {
         this.playState.pauseButton.updateObject();
 
         // keyboard
-        // avoid two stack pops in a row  
-        if (inputHandler.escPressed && !gameStateMachine.pendingList.length) {
+        if (inputHandler.escPressed) {
             inputHandler.escPressed = false;
             this.switchToPlayState();
         }
@@ -67,7 +66,10 @@ class PauseState extends GameState {
 
     //call back functions
     switchToPlayState() {
-        gameStateMachine.requestStackPop();
+        // avoid two stack pops in a row
+        if (! gameStateMachine.pendingList.length) {
+            gameStateMachine.requestStackPop();
+        }
     }
 
 }
