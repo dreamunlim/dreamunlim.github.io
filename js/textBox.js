@@ -128,7 +128,7 @@ class TextBox {
             case "GameoverState":
                 this.width = 480;
                 this.height = 270;
-                this.colour = "rgba(255,192,203, 0.3)"; // pink
+                this.colour = "rgba(255,192,203, 0.6)"; // pink
                 this.text.lines = this.text.gameoverStateText;
                 this.text.spacing = 55;
                 break;
