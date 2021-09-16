@@ -39,19 +39,15 @@ function mod(n, m) {
 
 // fit canvas to the shortest screen side
 function resizeCanvas() {
-    var scale = 1;
-
     if (window.innerWidth < window.innerHeight) {
-        scale = window.innerWidth / canvasInitialWidth;
+        canvasScaler = window.innerWidth / canvasInitialWidth;
     } else {
-        scale = window.innerHeight / canvasInitialHeight;
+        canvasScaler = window.innerHeight / canvasInitialHeight;
     }
 
-    canvas.width = canvasInitialWidth * scale;
-    canvas.height = canvasInitialHeight * scale;
-    ctx.scale(scale, scale);
-
-    return scale;
+    canvas.width = canvasInitialWidth * canvasScaler;
+    canvas.height = canvasInitialHeight * canvasScaler;
+    ctx.scale(canvasScaler, canvasScaler);
 }
 
 // sort in descending order
@@ -95,7 +91,7 @@ function onVisibilityChange() {
 
 function onResize() {
     // resize canvas always first to set global scaler
-    canvasScaler = resizeCanvas();
+    resizeCanvas();
 
     // redraw PlayState once, since canvas data is reset on resizing
     var state = gameStateMachine.stack[gameStateMachine.stack.length - 1];

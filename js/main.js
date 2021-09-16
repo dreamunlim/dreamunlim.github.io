@@ -13,7 +13,7 @@ const canvasInitialHeight = 640;
 const FPS = 30;
 const FRAME_TIME = 1000 / FPS;
 
-var canvasScaler = resizeCanvas();
+var canvasScaler = 1;
 var frameStartTime = 0;
 var gameJson = {};
 
@@ -35,6 +35,7 @@ document.addEventListener("pointerdown", inputHandler.documentMouseDownHandler, 
 document.addEventListener("visibilitychange", onVisibilityChange, false);
 window.addEventListener('resize', onResize, false);
 window.addEventListener('storage', onStorageChange, false);
+window.addEventListener('DOMContentLoaded', resizeCanvas, false);
 
 // game object types
 gameObjectFactory.registerObject("player", Player);
