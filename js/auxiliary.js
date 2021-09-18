@@ -10,7 +10,7 @@ function parseGameJson(jsonPath) {
             gameJson = json;
         })
         .then(() => {
-            setInterval(loop, FRAME_TIME);
+            requestAnimationFrame(loop);
         })
         .catch(function (error) {
             console.error(error);

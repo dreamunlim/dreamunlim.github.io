@@ -15,6 +15,10 @@ const FRAME_TIME = 1000 / FPS;
 
 var canvasScaler = 1;
 var frameStartTime = 0;
+var thisFrameTime = 0;
+var prevframeStartTime = 0;
+var prevFrameTime = 0;
+var drawFrame = false;
 var gameJson = {};
 
 // singletons
@@ -58,22 +62,34 @@ gameStateMachine.registerState(StateID.Gameover, new GameoverState());
 gameStateMachine.requestStackPush(StateID.Loading);
 
 
-// main loop  
-function loop() {
-  frameStartTime = performance.now();
+// main loop
+function loop(functionStartTime) {
+  prevframeStartTime = frameStartTime;
+  frameStartTime = functionStartTime; // supplied 'performance.now()'
+  prevFrameTime = frameStartTime - prevframeStartTime;
+  thisFrameTime = thisFrameTime + prevFrameTime; // remainder + estimated
 
   try {
-    // getInput(); input events get processed by document  
-    gameStateMachine.updateCurrentState();
-    gameStateMachine.drawCurrentState();
+    // update-draw at fixed timesteps
+    while (thisFrameTime >= FRAME_TIME) {
+      // getInput(); input events get processed by document
+      gameStateMachine.updateCurrentState();
+
+      thisFrameTime = thisFrameTime - FRAME_TIME;
+      drawFrame = true;
+    }
+    if (drawFrame) {
+      gameStateMachine.drawCurrentState();
+      drawFrame = false;
+    }
+
   } catch (error) {
     console.error(error);
   }
 
-  // requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 }
 
-// loop(); // start loop
 
 // load game json file and start main loop
 parseGameJson("json/initAll.json");
