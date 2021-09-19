@@ -28,7 +28,7 @@ class PauseState extends GameState {
     }
 
     onEnter() {
-        this.pauseStartTime = frameStartTime;
+        this.pauseStartTime = prevframeStartTime;
         
         this.playState = gameStateMachine.stack[1];
 
