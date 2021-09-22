@@ -10,7 +10,7 @@ const ctx = canvas.getContext('2d');
 const canvasInitialWidth = 896;
 const canvasInitialHeight = 640;
 
-const FPS = 30;
+const FPS = 60;
 const FRAME_TIME = 1000 / FPS;
 
 var canvasScaler = 1;
