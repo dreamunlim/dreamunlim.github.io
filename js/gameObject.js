@@ -6,25 +6,20 @@ class GameObject {
     }
 
     initObject(initData) {
+        this.rescaleVelocAccel(initData);
+
         this.position = initData.position;
         this.velocity = initData.velocity;
         this.acceleration = initData.acceleration;
-        
         this.textureID = initData.textureID;
-
         this.sWidth = initData.sWidth;
         this.sHeight = initData.sHeight;
-
         this.dWidth = initData.dWidth;
         this.dHeight = initData.dHeight;
-
         this.currentFrame = initData.currentFrame;
         this.currentRow = initData.currentRow;
-
         this.numFrames = initData.numFrames;
-
         this.animSpeed = initData.animSpeed;
-
         this.collisionCircle = initData.collisionCircle;
     }
     
@@ -40,5 +35,16 @@ class GameObject {
     drawObject() {
         textureManager.drawTexture(this.textureID, this.currentFrame, this.currentRow, 
             this.sWidth, this.sHeight, this.position.x, this.position.y, this.dWidth, this.dHeight);        
+    }
+
+    rescaleVelocAccel(initData) {
+        // approximate initial 30FPS motion with doubled FPS
+        if (initData.velocity.y) {
+            initData.velocity = initData.velocity.divide(FPS / 30);
+        }
+
+        if (initData.acceleration.y) {
+            initData.acceleration = initData.acceleration.divide(3);
+        }
     }
 }

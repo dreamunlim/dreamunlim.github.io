@@ -15,7 +15,7 @@ class Player extends GameObject {
 
         this.teleport = false;
         this.animate = false;
-        this.time = 5; // in frames
+        this.time = 10; // in frames
         this.dist = this.lanes[1] - this.lanes[0]; // constant
         this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
 
