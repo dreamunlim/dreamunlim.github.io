@@ -5,7 +5,7 @@ class Spider extends Enemy {
         super();
 
         this.threadWidth = 2;
-        this.time = 75; // in frames
+        this.time = 70; // in frames
         this.dist = 640;
 
         this.animate = false;
