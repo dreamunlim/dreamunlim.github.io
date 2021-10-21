@@ -48,6 +48,9 @@ class PlayBackground extends GameObject {
         this.rumblePattern = [[-1,1], [1,1], [1,-1], [-1,-1]];
         this.rumble = false;
         this.currStep = 0;
+        this.stepTime = 25; // in ms
+        this.stepT1 = 0;
+        this.stepT2 = 0;
 
         this.textureIDs = ["play-background-1", "play-background-2", "play-background-3"];
 
@@ -92,6 +95,7 @@ class PlayBackground extends GameObject {
 
     updateObject() {
         this.t2 = Math.floor(frameStartTime / (this.rumblePeriod * 1000));
+        this.stepT2 = frameStartTime;
 
         // rumble once every n seconds
         // side effect with two rumbles in a row occurs
@@ -105,7 +109,7 @@ class PlayBackground extends GameObject {
         this.t1 = this.t2;
 
 
-        if (this.rumble) {
+        if (this.rumble && (this.stepT2 - this.stepT1 > this.stepTime)) {
             // return to initial position
             if (this.currStep == this.rumblePattern.length) {
                 if (this.returnVec == null) {
@@ -121,6 +125,8 @@ class PlayBackground extends GameObject {
                 this.position = this.position.add(vec);
                 ++this.currStep;
             }
+
+            this.stepT1 = this.stepT2;
         }
     }
 
