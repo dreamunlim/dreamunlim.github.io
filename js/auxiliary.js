@@ -52,17 +52,16 @@ function resizeCanvas() {
 
 // sort in descending order
 function insertionSort(array) {
-    for (var i = 1; i < array.length; ++i) {
-        // insert part
-        var j = i - 1; // rightIndex
-        var value = array[i];
+    for (var j = 1; j < array.length; ++j) {
+        var value = array[j];
 
-        while (j >= 0 && array[j][0] < value[0]) {
-            array[j + 1] = array[j];
-            --j;
+        var i = j - 1;
+        while (i >= 0 && array[i][0] < value[0]) {
+            array[i + 1] = array[i];
+            --i;
         }
 
-        array[j + 1] = value;
+        array[i + 1] = value;
     }
 }
 
