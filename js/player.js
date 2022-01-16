@@ -19,6 +19,7 @@ class Player extends GameObject {
         this.dist = this.lanes[1] - this.lanes[0]; // constant
         this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
 
+        this.revive = false;
         this.immune = false;
         this.immuneStartTime = 0;
         this.immuneDuration = 1000; // in ms
@@ -38,6 +39,7 @@ class Player extends GameObject {
     updateObject() {
         super.updateObject();
         super.animateFrame();
+        this.handleRevive();
         this.handleImmunity();
 
         // exit update if pause button tapped
@@ -144,6 +146,18 @@ class Player extends GameObject {
         }
 
         super.drawObject();
+    }
+
+    handleRevive() {
+        if (this.revive) {
+            this.revive = false;
+            this.immune = true;
+            this.immuneStartTime = frameStartTime;
+            this.soundPlayedOnce = true;
+
+            // log event
+            gtag("event", "player_revive");
+        }
     }
 
     handleImmunity() {

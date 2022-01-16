@@ -363,6 +363,13 @@
                 "position": [448, 448],
                 "width": 80,
                 "height": 80
+            },
+            {
+                "id": "button",
+                "text": "Revive",
+                "position": [448, 448],
+                "width": 135,
+                "height": 80
             }
         ]
     }

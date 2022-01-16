@@ -149,13 +149,28 @@ class TextBox {
         this.text.drawText(this);
     }
 
-    alignOkButton(button) {
-        // amend button position to TextBox bottom center
-        button.position.x = this.x + (this.width / 2 - button.width / 2);
+    alignButton(button) {
+        // state specific alignment
+        switch (this.state.constructor.name) {
+            case "MenuState":
+                if (button.text == "OK") {
+                    // amend button position to TextBox bottom center
+                    button.position.x = this.x + (this.width / 2 - button.width / 2);
+                }
+                break;
+            case "GameoverState":
+                if (button.text == "OK") {
+                    // amend button position to the TextBox bottom left
+                    button.position.x = this.x + (this.width / 4);
+                } else if (button.text == "Revive") {
+                    // amend button position to the TextBox bottom right
+                    button.position.x = this.x + (this.width / 2);
+                }
+                break;
+        }
         button.position.y = this.y + (this.height - button.height) - 10;
         // amend button initial position
         button.initial.position.x = button.position.x;
         button.initial.position.y = button.position.y;
     }
-
 }

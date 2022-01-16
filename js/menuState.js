@@ -12,8 +12,7 @@ class ConsentPopup {
         }
 
         this.okButton = new (gameObjectFactory.createObject("button"))(this.okButtonInitData);
-
-        this.textBox.alignOkButton(this.okButton);
+        this.textBox.alignButton(this.okButton);
     }
 
     update() {

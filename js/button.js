@@ -36,7 +36,7 @@ class Button {
                 this.callbackDelay = 0;
                 break;
             case "GameoverState":
-                this.state.textBox.alignOkButton(this);
+                this.state.textBox.alignButton(this);
                 break;
         }
     }
@@ -70,7 +70,20 @@ class Button {
         }
     }
 
+    deactivateButton() {
+        switch (this.text) {
+            case "Revive":
+                if (this.state.playState.timerObject.timerCurrentValue <= 0) {
+                    this.resolveCallback = false;
+                    this.inactive = true;
+                }
+                break;
+        }
+    }
+
     updateObject() {
+        this.deactivateButton();
+
         // reset dimensions
         if((frameStartTime - this.t1) > this.resetDelay) {
             this.position.x = this.initial.position.x;
@@ -102,21 +115,10 @@ class Button {
                 inputHandler.mouseLeftPressed = false;
             }
         }
-
     }
 
     drawObject() {
         this.drawButton(this.position.x, this.position.y, this.width, this.height);
-
-        if(this.hintMessage) {
-            drawText(this.hintMessage, this.position.x + this.width/2, this.position.y + this.height,
-                "30px Bebas Neue", "center", "seashell", "bottom", this.width);
-
-            // remove hint
-            if ((frameStartTime - this.t1) > this.hintDelay) {
-                delete this.hintMessage;
-            }
-        }
     }
 
     drawButton(x, y, width, height) {
@@ -126,6 +128,33 @@ class Button {
         clearCanvas(x, y, width, height, this.fillColour);
         drawText(this.text, x + 2 + width/2, y + 2 + height/2, this.titleFont, "center", this.fontShadowColour, "middle", width);
         drawText(this.text, x + width/2, y + height/2, this.titleFont, "center", this.fontColour, "middle", width);
+
+        this.showHintMessage(x, y, width, height);
+        this.shadeButton(x, y, width, height);
+    }
+
+    showHintMessage(x, y, width, height) {
+        if (this.hintMessage) {
+            drawText(this.hintMessage, x + width / 2, y + height,
+                "30px Bebas Neue", "center", "seashell", "bottom", width);
+
+            // remove hint
+            if ((frameStartTime - this.t1) > this.hintDelay) {
+                delete this.hintMessage;
+            }
+        }
+    }
+
+    shadeButton(x, y, width, height) {
+        if (this.inactive) {
+            switch (this.text) {
+                case "Revive":
+                    this.shadeColour = ctx.strokeStyle = "rgba(255,192,203, 0.6)"; //pink
+                    break;
+            }
+            ctx.strokeRect(x, y, width, height);
+            clearCanvas(x, y, width, height, this.shadeColour);
+        }
     }
 
 }
