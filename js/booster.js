@@ -1,4 +1,6 @@
-'use strict'
+import { Enemy } from "./enemy.js";
+import { FRAME_TIME, frameStartTime } from "./main.js";
+import { soundManager } from "./soundManager.js";
 
 class Booster extends Enemy {
     constructor () {
@@ -53,3 +55,5 @@ class Booster extends Enemy {
         soundManager.playSound(this.enemyID);
     }
 }
+
+export { Booster };

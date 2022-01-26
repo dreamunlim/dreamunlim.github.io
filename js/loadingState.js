@@ -1,4 +1,11 @@
-'use strict'
+import { GameState } from "./gameState.js";
+import { gameJson } from "./main.js";
+import { drawText } from "./auxiliary.js";
+import { canvasInitialHeight, canvasInitialWidth, clearCanvas } from "./canvas.js";
+import { levelParser } from "./levelParser.js";
+import { soundManager } from "./soundManager.js";
+import { textureManager } from "./textureManager.js";
+import { gameStateMachine, StateID } from "./gameStateMachine.js";
 
 class LoadingState extends GameState {
     constructor() {
@@ -43,5 +50,6 @@ class LoadingState extends GameState {
     switchToMenuState() {
         gameStateMachine.requestStackChange(StateID.Menu);
     }
-
 }
+
+export { LoadingState };

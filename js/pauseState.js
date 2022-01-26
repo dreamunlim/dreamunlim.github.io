@@ -1,4 +1,8 @@
-'use strict'
+import { GameState } from "./gameState.js";
+import { frameStartTime, prevframeStartTime } from "./main.js";
+import { levelParser } from "./levelParser.js";
+import { inputHandler } from "./inputHandler.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class PauseState extends GameState {
     constructor() {
@@ -71,5 +75,6 @@ class PauseState extends GameState {
             gameStateMachine.requestStackPop();
         }
     }
-
 }
+
+export { PauseState };

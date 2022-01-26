@@ -1,4 +1,9 @@
-'use strict'
+import { canvas, canvasScaler } from "./canvas.js";
+import { frameStartTime, gameJson } from "./main.js";
+import { drawText, drawTriangle, mod } from "./auxiliary.js";
+import { inputHandler } from "./inputHandler.js";
+import { textureManager } from "./textureManager.js";
+import { collisionManager } from "./collisionManager.js";
 
 class CharacterSelector {
     constructor() {
@@ -162,5 +167,6 @@ class CharacterSelector {
         this.selectorBox.drawLeftArrow();
         this.selectorBox.drawRightArrow();
     }
-  
 }
+
+export { CharacterSelector };

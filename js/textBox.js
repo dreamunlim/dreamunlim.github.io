@@ -1,4 +1,6 @@
-'use strict'
+import { drawText } from "./auxiliary.js";
+import { ctx, canvasInitialHeight, canvasInitialWidth, clearCanvas } from "./canvas.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class _Text {
     constructor() {
@@ -174,3 +176,5 @@ class TextBox {
         button.initial.position.y = button.position.y;
     }
 }
+
+export { TextBox };

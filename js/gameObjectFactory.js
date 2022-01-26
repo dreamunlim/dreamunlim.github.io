@@ -1,4 +1,13 @@
-'use strict'
+import { Player } from "./player.js";
+import { Booster } from "./booster.js";
+import { Heart } from "./heart.js";
+import { Spider } from "./spider.js";
+import { Button } from "./button.js";
+import { PlayBackground } from "./playBackground.js";
+import { Background } from "./background.js";
+import { Counter } from "./counter.js";
+import { Star } from "./star.js";
+import { Diamond } from "./diamond.js";
 
 class GameObjectFactory {
     constructor() {
@@ -22,5 +31,19 @@ class GameObjectFactory {
 
         return this.objectFactory.get(id);
     }
-
 }
+
+const gameObjectFactory = new GameObjectFactory();
+
+gameObjectFactory.registerObject("player", Player);
+gameObjectFactory.registerObject("booster", Booster);
+gameObjectFactory.registerObject("heart", Heart);
+gameObjectFactory.registerObject("spider", Spider);
+gameObjectFactory.registerObject("button", Button);
+gameObjectFactory.registerObject("play-background", PlayBackground);
+gameObjectFactory.registerObject("background", Background);
+gameObjectFactory.registerObject("counter", Counter);
+gameObjectFactory.registerObject("star", Star);
+gameObjectFactory.registerObject("diamond", Diamond);
+
+export { gameObjectFactory };

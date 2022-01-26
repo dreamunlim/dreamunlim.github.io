@@ -1,4 +1,14 @@
-'use strict'
+import { GameState } from "./gameState.js";
+import { ctx, canvasInitialHeight, canvasInitialWidth, clearCanvas } from "./canvas.js";
+import { storageAvailable, onStorageChange, registerServiceWorker, drawText, insertionSort } from "./auxiliary.js";
+import { TextBox } from "./textBox.js";
+import { ShareScore } from "./shareScore.js";
+import { OverridePicture } from "./overridePicture.js";
+import { CharacterUnlocker } from "./characterUnlocker.js";
+import { CharacterSelector } from "./characterSelector.js";
+import { levelParser } from "./levelParser.js";
+import { gameObjectFactory } from "./gameObjectFactory.js";
+import { gameStateMachine, StateID } from "./gameStateMachine.js";
 
 class ConsentPopup {
     constructor(state) {
@@ -202,5 +212,6 @@ class MenuState extends GameState {
         button.state.consentPopup = null;
         button.state.cacheDataToLocalStorage();
     }
-
 }
+
+export { MenuState };

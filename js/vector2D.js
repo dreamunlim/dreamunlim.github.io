@@ -1,5 +1,3 @@
-'use strict'
-
 class Vector2D {
     // default initialisation
     constructor (x = 0, y = 0) {
@@ -48,5 +46,6 @@ class Vector2D {
             this.y = this.y / length;
         }
     }
-
 }
+
+export { Vector2D };

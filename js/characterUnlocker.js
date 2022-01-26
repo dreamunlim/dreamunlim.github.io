@@ -1,4 +1,8 @@
-'use strict'
+import { frameStartTime } from "./main.js";
+import { canvasInitialHeight, canvasInitialWidth } from "./canvas.js";
+import { inputHandler } from "./inputHandler.js";
+import { collisionManager } from "./collisionManager.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class CharacterUnlocker {
     constructor() {
@@ -84,5 +88,6 @@ class CharacterUnlocker {
             this.t1 = 0;
         }
     }
-
 }
+
+export { CharacterUnlocker };

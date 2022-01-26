@@ -1,4 +1,9 @@
-'use strict'
+import { GameObject } from "./gameObject.js";
+import { mod } from "./auxiliary.js";
+import { frameStartTime } from "./main.js";
+import { inputHandler } from "./inputHandler.js";
+import { collisionManager } from "./collisionManager.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class Player extends GameObject {
     constructor() {
@@ -182,3 +187,5 @@ class Player extends GameObject {
     }
 
 }
+
+export { Player };

@@ -1,11 +1,13 @@
-'use strict'
+import { canvas } from "./canvas.js";
+import { frameStartTime } from "./main.js";
+import { textureManager } from "./textureManager.js";
 
 class OverridePicture {
     constructor() {
         this.input = document.createElement("input");
         this.input.setAttribute("type", "file");
         this.input.setAttribute("accept", ".jpg, .jpeg, .png, .gif, .bmp");
-        this.input.addEventListener("change", () => {this.processPicture()}, false);
+        this.input.addEventListener("change", () => { this.processPicture() }, false);
         document.body.insertBefore(this.input, canvas.nextElementSibling);
 
         this.replaceableTextureIDs = ["enemy-red", "enemy-purple"];
@@ -114,5 +116,6 @@ class OverridePicture {
 
         return image;
     }
-
 }
+
+export { OverridePicture };

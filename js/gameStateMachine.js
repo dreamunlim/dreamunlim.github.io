@@ -1,10 +1,13 @@
-'use strict'
+import { LoadingState } from "./loadingState.js";
+import { MenuState } from "./menuState.js";
+import { PlayState } from "./playState.js";
+import { PauseState } from "./pauseState.js";
+import { GameoverState } from "./gameoverState.js";
 
 // enums
 const Action = Object.freeze({"Push": 0, "Pop": 1, "Change": 2});
 const StateID = Object.freeze({"Loading": 0, "Menu": 1, "Play": 2, "Pause": 3, "Gameover": 4});
 
-//
 class PendingChange {
     constructor(action, stateID) {
         this.action = action;
@@ -121,3 +124,15 @@ class GameStateMachine {
         }
     }
 }
+
+const gameStateMachine = new GameStateMachine();
+
+// finite state machine states
+gameStateMachine.registerState(StateID.Loading, new LoadingState());
+gameStateMachine.registerState(StateID.Menu, new MenuState());
+gameStateMachine.registerState(StateID.Play, new PlayState());
+gameStateMachine.registerState(StateID.Pause, new PauseState());
+gameStateMachine.registerState(StateID.Gameover, new GameoverState());
+gameStateMachine.requestStackPush(StateID.Loading);
+
+export { gameStateMachine, StateID };

@@ -1,4 +1,7 @@
-'use strict'
+import { Enemy } from "./enemy.js";
+import { ctx } from "./canvas.js";
+import { frameStartTime } from "./main.js";
+import { soundManager } from "./soundManager.js";
 
 class Spider extends Enemy {
     constructor() {
@@ -126,3 +129,5 @@ class Spider extends Enemy {
         }
     }
 }
+
+export { Spider };

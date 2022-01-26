@@ -1,4 +1,6 @@
-'use strict'
+import { FPS, frameStartTime } from "./main.js";
+import { textureManager } from "./textureManager.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class GameObject {
     constructor () {
@@ -48,3 +50,5 @@ class GameObject {
         }
     }
 }
+
+export { GameObject };

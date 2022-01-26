@@ -1,4 +1,7 @@
-'use strict'
+import { drawText } from "./auxiliary.js";
+import { frameStartTime } from "./main.js";
+import { canvasInitialWidth } from "./canvas.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class Counter {
     constructor (initData) {
@@ -111,5 +114,6 @@ class Counter {
         drawText(that.formattedTimer, x, y - 1, that.fontShadow, "center", that.fontShadowColour);
         drawText(that.formattedTimer, x, y, that.font, "center", that.fontColour);
     }
-
 }
+
+export { Counter };

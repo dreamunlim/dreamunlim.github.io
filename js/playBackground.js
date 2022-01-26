@@ -1,4 +1,9 @@
-'use strict'
+import { GameObject } from "./gameObject.js";
+import { ctx } from "./canvas.js";
+import { random } from "./auxiliary.js";
+import { FPS, frameStartTime } from "./main.js";
+import { Vector2D } from "./vector2D.js";
+import { textureManager } from "./textureManager.js";
 
 class PendingPlayBackground {
     static previousTextureID = ""; // keep value on destruction 
@@ -138,3 +143,5 @@ class PlayBackground extends GameObject {
         }
     }
 }
+
+export { PlayBackground };

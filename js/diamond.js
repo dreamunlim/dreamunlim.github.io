@@ -1,4 +1,5 @@
-'use strict'
+import { Star } from "./star.js";
+import { soundManager } from "./soundManager.js";
 
 class Diamond extends Star {
     constructor () {
@@ -34,3 +35,5 @@ class Diamond extends Star {
         soundManager.playSound(this.enemyID);
     }
 }
+
+export { Diamond };

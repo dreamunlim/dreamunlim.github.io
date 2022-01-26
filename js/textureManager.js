@@ -1,4 +1,4 @@
-'use strict'
+import { ctx } from "./canvas.js";
 
 class TextureManager {
     constructor() {
@@ -25,3 +25,7 @@ class TextureManager {
         ctx.drawImage(texture, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
     }
 }
+
+const textureManager = new TextureManager();
+
+export { textureManager };

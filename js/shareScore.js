@@ -1,11 +1,12 @@
-'use strict'
+import { canvas } from "./canvas.js";
+import { frameStartTime } from "./main.js";
 
 class ShareScore {
     constructor() {
         this.input = document.createElement("input");
         this.input.setAttribute("type", "button");
         this.input.setAttribute("value", "Share");
-        this.input.addEventListener("click", () => {this.processShare()}, false);
+        this.input.addEventListener("click", () => { this.processShare() }, false);
         document.body.insertBefore(this.input, canvas.nextElementSibling);
 
         // add FB JS SDK specific div
@@ -77,5 +78,6 @@ class ShareScore {
             // no message on Share Dialog closed either by cancellation or errors
         }
     }
-
 }
+
+export { ShareScore };

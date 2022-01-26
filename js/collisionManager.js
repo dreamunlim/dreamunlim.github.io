@@ -1,4 +1,4 @@
-'use strict'
+import { canvas, canvasScaler } from "./canvas.js";
 
 class CollisionManager {
     constructor() {
@@ -32,3 +32,7 @@ class CollisionManager {
         return false;
     }
 }
+
+const collisionManager = new CollisionManager();
+
+export { collisionManager };

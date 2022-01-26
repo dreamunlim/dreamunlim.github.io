@@ -1,4 +1,4 @@
-'use strict'
+import { GameObject } from "./gameObject.js";
 
 class Background extends GameObject {
     constructor() {
@@ -25,3 +25,5 @@ class Background extends GameObject {
         super.drawObject();
     }
 }
+
+export { Background };

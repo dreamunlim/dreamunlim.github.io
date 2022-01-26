@@ -1,5 +1,3 @@
-'use strict'
-
 class Level {
     constructor() {
         // this.tilesets = new Array();
@@ -28,3 +26,5 @@ class Level {
         }
     }
 }
+
+export { Level };

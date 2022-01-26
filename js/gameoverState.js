@@ -1,4 +1,8 @@
-'use strict'
+import { GameState } from "./gameState.js";
+import { frameStartTime } from "./main.js";
+import { TextBox } from "./textBox.js";
+import { levelParser } from "./levelParser.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class GameoverState extends GameState {
     constructor() {
@@ -95,3 +99,5 @@ class GameoverState extends GameState {
         gameStateMachine.requestStackPop();
     }
 }
+
+export { GameoverState };

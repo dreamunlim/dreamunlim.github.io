@@ -1,4 +1,7 @@
-'use strict'
+import { Enemy } from "./enemy.js";
+import { random } from "./auxiliary.js";
+import { frameStartTime } from "./main.js";
+import { soundManager } from "./soundManager.js";
 
 class Star extends Enemy {
     constructor () {
@@ -58,3 +61,5 @@ class Star extends Enemy {
         soundManager.playSound(this.enemyID);
     }
 }
+
+export { Star };

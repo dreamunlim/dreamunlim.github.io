@@ -1,5 +1,3 @@
-'use strict'
-
 class InputHandler {
     leftPressed = false;
     rightPressed = false;
@@ -91,5 +89,8 @@ class InputHandler {
         inputHandler.mouseLeftPressed = false;
         inputHandler.documentMouseLeftPressed = false;
     }
-    
 }
+
+const inputHandler = new InputHandler();
+
+export { inputHandler };

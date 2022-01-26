@@ -1,30 +1,20 @@
-'use strict'
+import { setGameJson, loop } from "./main.js";
+import { canvas, ctx, resizeCanvas } from "./canvas.js";
+import { gameStateMachine } from "./gameStateMachine.js";
+import { PlayState } from "./playState.js";
+import { PauseState } from "./pauseState.js";
+import { GameoverState } from "./gameoverState.js";
 
-function parseGameJson(jsonPath) {
+async function parseGameJson(jsonPath) {
+    try {
+        const response = await fetch(jsonPath);
+        const json = await response.json();
+        setGameJson(json);
+        requestAnimationFrame(loop);
 
-    fetch(jsonPath)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (json) {
-            gameJson = json;
-        })
-        .then(() => {
-            requestAnimationFrame(loop);
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
-
-    // var request = new XMLHttpRequest();
-
-    // request.open('GET', jsonPath);
-    // request.responseType = 'json';
-    // request.send();
-
-    // request.onload = function () {
-    //     gameJson = request.response;
-    // }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function random(min, max) {
@@ -35,19 +25,6 @@ function random(min, max) {
 // to yield positive mod on negative numbers
 function mod(n, m) {
     return ((n % m) + m) % m;
-}
-
-// fit canvas to the shortest screen side
-function resizeCanvas() {
-    if (window.innerWidth < window.innerHeight) {
-        canvasScaler = window.innerWidth / canvasInitialWidth;
-    } else {
-        canvasScaler = window.innerHeight / canvasInitialHeight;
-    }
-
-    canvas.width = canvasInitialWidth * canvasScaler;
-    canvas.height = canvasInitialHeight * canvasScaler;
-    ctx.scale(canvasScaler, canvasScaler);
 }
 
 // sort in descending order
@@ -71,11 +48,6 @@ function drawText(text, x, y, font, align, colour, baseline = "top", width = can
     ctx.fillStyle = colour;
     ctx.textBaseline = baseline;
     ctx.fillText(text, x, y, width);
-}
-
-function clearCanvas(x = 0, y = 0, width = canvas.width, height = canvas.height, colour = "rgba(0, 0, 0, 1)") {
-    ctx.fillStyle = colour; // 0.5 to create trail effect
-    ctx.fillRect(x, y, width, height);
 }
 
 function onVisibilityChange() {
@@ -161,3 +133,8 @@ function registerServiceWorker() {
             });
     }
 }
+
+export {
+    parseGameJson, random, mod, insertionSort, drawText, onVisibilityChange,
+    onResize, storageAvailable, onStorageChange, drawTriangle, registerServiceWorker
+};

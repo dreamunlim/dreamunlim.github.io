@@ -1,4 +1,9 @@
-'use strict'
+import { drawText } from "./auxiliary.js";
+import { frameStartTime } from "./main.js";
+import { ctx, clearCanvas } from "./canvas.js";
+import { inputHandler } from "./inputHandler.js";
+import { collisionManager } from "./collisionManager.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class Button {
     constructor (initData) {
@@ -158,3 +163,5 @@ class Button {
     }
 
 }
+
+export { Button };

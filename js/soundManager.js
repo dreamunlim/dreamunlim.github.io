@@ -1,5 +1,3 @@
-'use strict'
-
 const audioCtx = new AudioContext();
 
 class SoundManager {
@@ -50,3 +48,7 @@ class SoundManager {
         trackSource.start();
     }
 }
+
+const soundManager = new SoundManager();
+
+export { soundManager };

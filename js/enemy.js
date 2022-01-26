@@ -1,4 +1,8 @@
-'use strict'
+import { GameObject } from "./gameObject.js";
+import { random } from "./auxiliary.js";
+import { canvasInitialHeight } from "./canvas.js";
+import { collisionManager } from "./collisionManager.js";
+import { gameStateMachine } from "./gameStateMachine.js";
 
 class Enemy extends GameObject {
     constructor () {
@@ -94,3 +98,5 @@ class Enemy extends GameObject {
         }
     }
 }
+
+export { Enemy };

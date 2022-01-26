@@ -1,4 +1,7 @@
-'use strict'
+import { GameState } from "./gameState.js";
+import { levelParser } from "./levelParser.js";
+import { inputHandler } from "./inputHandler.js";
+import { gameStateMachine, StateID } from "./gameStateMachine.js";
 
 class PlayState extends GameState {
     constructor() {
@@ -76,5 +79,6 @@ class PlayState extends GameState {
             gameStateMachine.requestStackPush(StateID.Gameover);
         }
     }
-
 }
+
+export { PlayState };

@@ -1,5 +1,7 @@
 'use strict'
 
+// 27.01.2022
+
 const cacheName = "cache-v1";
 const filesToCache = [
     "/",
@@ -8,67 +10,69 @@ const filesToCache = [
     "css/style.css",
     "font/BebasNeue-Regular.woff2",
     "font/Orbitron-SemiBold.woff2",
+    "img/background-image.png",
+    "img/booster.png",
+    "img/enemy-diamond.png",
+    "img/enemy-purple.png",
+    "img/enemy-red.png",
+    "img/enemy-spider.png",
+    "img/enemy-star.png",
     // "img/favicon.png", // noncrucial for offline
+    // "img/fb-share-4.jpg", // noncrucial for offline
+    "img/hi.png",
     "img/icon-192x192.png",
     "img/icon-512x512.png",
-    "img/background-image.png",
-    "img/enemy-red.png",
-    "img/hi.png",
-    "img/player-catto.png",
-    "img/booster.png",
-    "img/enemy-spider.png",
-    "img/player-doggo.png",
-    "img/enemy-star.png",
-    "img/player-penetrator.png",
-    "img/enemy-diamond.png",
     "img/menu-background.jpg",
-    "img/player-tiny-ranger.png",
-    "img/enemy-purple.png",
-    // "img/fb-share-2.jpg", // noncrucial for offline
     "img/play-background-1.jpg",
     "img/play-background-2.jpg",
     "img/play-background-3.jpg",
+    "img/player-catto.png",
+    "img/player-doggo.png",
+    "img/player-penetrator.png",
+    "img/player-tiny-ranger.png",
     "js/auxiliary.js",
-    "js/enemy.js",
-    "js/level.js",
-    "js/playState.js",
     "js/background.js",
-    "js/gameObject.js",
-    "js/levelParser.js",
-    "js/shareScore.js",
     "js/booster.js",
-    "js/gameObjectFactory.js",
-    "js/loadingState.js",
-    "js/soundManager.js",
     "js/button.js",
-    "js/gameoverState.js",
-    "js/main.js",
-    "js/spider.js",
+    "js/canvas.js",
     "js/characterSelector.js",
-    "js/gameState.js",
-    "js/menuState.js",
-    "js/star.js",
     "js/characterUnlocker.js",
-    "js/gameStateMachine.js",
-    "js/overridePicture.js",
-    "js/textBox.js",
     "js/collisionManager.js",
-    "js/heart.js",
-    "js/pauseState.js",
-    "js/textureManager.js",
     "js/counter.js",
-    "js/playBackground.js",
-    "js/vector2D.js",
     "js/diamond.js",
+    "js/enemy.js",
+    "js/eventHandlers.js",
+    "js/gameObject.js",
+    "js/gameObjectFactory.js",
+    "js/gameoverState.js",
+    "js/gameState.js",
+    "js/gameStateMachine.js",
+    "js/heart.js",
     "js/inputHandler.js",
+    "js/level.js",
+    "js/levelParser.js",
+    "js/loadingState.js",
+    "js/main.js",
+    "js/menuState.js",
+    "js/overridePicture.js",
+    "js/pauseState.js",
+    "js/playBackground.js",
     "js/player.js",
+    "js/playState.js",
+    "js/shareScore.js",
+    "js/soundManager.js",
+    "js/spider.js",
+    "js/star.js",
+    "js/textBox.js",
+    "js/textureManager.js",
+    "js/vector2D.js",
     "json/initAll.json",
     "sound/player-booster.ogg",
     "sound/player-diamond.ogg",
     "sound/player-heart.ogg",
     "sound/player-spider.ogg",
     "sound/player-star.ogg"
-  ];
+];
 
 self.addEventListener("install", (event) => {
     console.log("SW installation");
@@ -92,7 +96,7 @@ self.addEventListener("fetch", (event) => {
     // ignore the "?from=homescreen" query parameter from navigation request
     // to get the SW cache match for "index.html"
     if (event.request.mode === "navigate") {
-        matchOptions = {ignoreSearch: true};
+        matchOptions = { ignoreSearch: true };
     }
 
     event.respondWith(

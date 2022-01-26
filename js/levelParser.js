@@ -1,4 +1,8 @@
-'use strict'
+import { gameJson } from "./main.js";
+import { Vector2D } from "./vector2D.js";
+import { soundManager } from "./soundManager.js";
+import { textureManager } from "./textureManager.js";
+import { gameObjectFactory } from "./gameObjectFactory.js";
 
 class LevelParser {
     constructor() {
@@ -197,3 +201,7 @@ class LevelParser {
     }
 
 }
+
+const levelParser = new LevelParser();
+
+export { levelParser };
