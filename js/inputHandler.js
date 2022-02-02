@@ -1,17 +1,14 @@
 class InputHandler {
-    leftPressed = false;
-    rightPressed = false;
-    upPressed = false;
-    downPressed = false;
-        
-    escPressed = false;
-
-    mouseLeftPressed = false;
-    documentMouseLeftPressed = false;
-    mEvent; // bookkeep mouse event
-    
     constructor() {
-        // defining vars here seemed to create constants 
+        this.leftPressed = false;
+        this.rightPressed = false;
+        this.upPressed = false;
+        this.downPressed = false;
+
+        this.escPressed = false;
+
+        this.mouseLeftPressed = false;
+        this.mEvent; // bookkeep mouse event 
     }
 
     keyDownHandler(e) {
@@ -55,20 +52,9 @@ class InputHandler {
     }
 
     mouseDownHandler(e) {
-        // don't pass this event on to handlers up and down in the DOM
-        e.stopPropagation();
-
         switch (e.button) {
             case 0: // 0/1/2 - left/middle/right button
                 inputHandler.mouseLeftPressed = true;
-                inputHandler.mEvent = e;
-        }
-    }
-
-    documentMouseDownHandler(e) {
-        switch (e.button) {
-            case 0:
-                inputHandler.documentMouseLeftPressed = true;
                 inputHandler.mEvent = e;
         }
     }
@@ -81,13 +67,6 @@ class InputHandler {
                 // gets to update itself
                 // inputHandler.mouseLeftPressed = false;
         }
-    }
-    
-    resetInputStates() {
-        inputHandler.leftPressed = false;
-        inputHandler.rightPressed = false;
-        inputHandler.mouseLeftPressed = false;
-        inputHandler.documentMouseLeftPressed = false;
     }
 }
 

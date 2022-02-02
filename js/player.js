@@ -93,7 +93,7 @@ class Player extends GameObject {
         }
 
         // mouse
-        if (!this.animate && (inputHandler.documentMouseLeftPressed || inputHandler.mouseLeftPressed)) {
+        if (!this.animate && inputHandler.mouseLeftPressed) {
             if (inputHandler.mEvent.clientX < window.innerWidth / 2) {
                 this.targLane = mod(--this.targLane, this.numLanes);
                 this.currentRow = 0;
@@ -102,6 +102,9 @@ class Player extends GameObject {
                 this.targLane = (++this.targLane) % this.numLanes;
                 this.currentRow = 1;
             }
+
+            // stop auto movement
+            inputHandler.mouseLeftPressed = false;
         }
 
         // decide movement direction
@@ -126,12 +129,7 @@ class Player extends GameObject {
             this.animate = true;
 
         }
-
-
-        // update from input has completed
-        inputHandler.resetInputStates();
     }
-
 
     drawObject() {
         if (this.teleport) {
