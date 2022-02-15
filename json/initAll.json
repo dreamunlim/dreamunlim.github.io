@@ -37,7 +37,8 @@
             ["enemy-purple", "img/enemy-purple.png"],
             ["enemy-spider", "img/enemy-spider.png"],
             ["enemy-star", "img/enemy-star.png"],
-            ["enemy-diamond", "img/enemy-diamond.png"]
+            ["enemy-diamond", "img/enemy-diamond.png"],
+            ["watermelon", "img/watermelon.png"]
         ],
         "sounds": [
             ["booster", "sound/player-booster.ogg"],
@@ -325,6 +326,22 @@
                 "numFrames": 8,
                 "animSpeed": 120,
                 "collisionCircle": {"center": [49, 50.56], "radius": 44.82}
+            },
+            {
+                "id": "watermelon",
+                "position": [0, -198],
+                "velocity": [0, 7],
+                "acceleration": [0, 0.2],
+                "textureID": "watermelon",
+                "sWidth": 200,
+                "sHeight": 148,
+                "dWidth": 119,
+                "dHeight": 88,
+                "currentFrame": 0,
+                "currentRow": 0,
+                "numFrames": 8,
+                "animSpeed": 120,
+                "collisionCircle": {"center": [59.5, 44], "radius": 40.5}
             }
         ],
         "buttons": [

@@ -51,6 +51,7 @@ class Enemy extends GameObject {
 
         switch (this.enemyID) {
             case "booster":
+            case "watermelon":
                 this.spawned = false;
                 break;
             case "star":

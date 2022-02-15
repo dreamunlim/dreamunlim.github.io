@@ -1,6 +1,6 @@
 'use strict'
 
-// 27.01.2022
+// 15.02.2022
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -30,6 +30,7 @@ const filesToCache = [
     "img/player-doggo.png",
     "img/player-penetrator.png",
     "img/player-tiny-ranger.png",
+    "img/watermelon.png",
     "js/auxiliary.js",
     "js/background.js",
     "js/booster.js",
@@ -66,6 +67,7 @@ const filesToCache = [
     "js/textBox.js",
     "js/textureManager.js",
     "js/vector2D.js",
+    "js/watermelon.js",
     "json/initAll.json",
     "sound/player-booster.ogg",
     "sound/player-diamond.ogg",
