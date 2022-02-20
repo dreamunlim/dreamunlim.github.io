@@ -7,7 +7,7 @@ class Star extends Enemy {
     constructor () {
         super();
 
-        this.pointsToAdd = 2;
+        this.pointsToAdd = 3;
 
         this.spawned = false;
         this.spawnPeriod = 2; // in sec

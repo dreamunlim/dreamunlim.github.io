@@ -6,7 +6,7 @@ class Booster extends Enemy {
     constructor () {
         super();
 
-        this.pointsToAdd = 4;
+        this.pointsToAdd = 5;
 
         this.state.boosterObject = this;
         

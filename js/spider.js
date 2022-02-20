@@ -43,8 +43,8 @@ class Spider extends Enemy {
 
         // decide velocity increase
         if (this.time > 40) {
-            if (this.prevScoreValue % 50 >= 46 &&
-                this.state.scoreObject.score % 50 <= 3) {
+            if (this.prevScoreValue % 50 >= 44 &&
+                this.state.scoreObject.score % 50 <= 5) {
                 this.increaseVelocity();
             }
             this.prevScoreValue = this.state.scoreObject.score;

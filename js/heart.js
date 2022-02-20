@@ -7,7 +7,7 @@ class Heart extends Enemy {
     constructor () {
         super();
 
-        this.pointsToAdd = 1;
+        this.pointsToAdd = 2;
 
         this.t1 = 0;
         this.t2 = 0;
