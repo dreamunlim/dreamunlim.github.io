@@ -78,7 +78,8 @@ class Button {
     deactivateButton() {
         switch (this.text) {
             case "Revive":
-                if (this.state.playState.timerObject.timerCurrentValue <= 0) {
+                if (this.state.playState.timerObject.timerCurrentValue <= 0 ||
+                    this.state.playState.playerObject.lives == 0) {
                     this.resolveCallback = false;
                     this.inactive = true;
                 }

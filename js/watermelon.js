@@ -40,6 +40,7 @@ class Watermelon extends Enemy {
     }
 
     respondToCollision() {
+        this.state.playerObject.lives += 1;
         this.state.scoreObject.score += this.pointsToAdd;
         this.respawnAfterDraw = true;
         soundManager.playSound("heart");

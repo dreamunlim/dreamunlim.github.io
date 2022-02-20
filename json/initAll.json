@@ -329,9 +329,9 @@
             },
             {
                 "id": "watermelon",
-                "position": [0, -198],
+                "position": [0, -220],
                 "velocity": [0, 7],
-                "acceleration": [0, 0.2],
+                "acceleration": [0, 0.25],
                 "textureID": "watermelon",
                 "sWidth": 200,
                 "sHeight": 148,
@@ -368,6 +368,13 @@
                 "fontShadow": "68px Orbitron",
                 "fontColour": "mediumpurple",
                 "fontShadowColour": "purple"
+            },
+            {
+                "id": "counter",
+                "counterID": "lives",
+                "font": "35px Orbitron",
+                "fontColour": "olivedrab",
+                "fontShadowColour": "darkolivegreen"
             }
         ]
     },

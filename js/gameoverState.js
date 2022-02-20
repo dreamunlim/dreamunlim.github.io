@@ -95,6 +95,7 @@ class GameoverState extends GameState {
     }
 
     popGameoverState(button) {
+        button.state.playState.playerObject.lives -= 1;
         button.state.playState.playerObject.revive = true;
         gameStateMachine.requestStackPop();
     }

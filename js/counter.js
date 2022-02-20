@@ -1,6 +1,7 @@
 import { drawText } from "./auxiliary.js";
 import { frameStartTime } from "./main.js";
-import { canvasInitialWidth } from "./canvas.js";
+import { ctx, canvasInitialWidth } from "./canvas.js";
+import { textureManager } from "./textureManager.js";
 import { gameStateMachine } from "./gameStateMachine.js";
 
 class Counter {
@@ -37,14 +38,27 @@ class Counter {
             this.formattedTimer = "";
         }
 
+        if (this.counterID == "lives") {
+            // watermelon icon
+            this.textureID = "watermelon";
+            this.sWidth = 200;
+            this.sHeight = 148;
+            this.dWidth = 43;
+            this.dHeight = 32;
+            this.currentFrame = 0;
+            this.currentRow = 0;
+        }
+
         this.updateMap = {
             "score": this.updateScore,
-            "timer": this.updateTimer
+            "timer": this.updateTimer,
+            "lives": this.updateLives
         }
 
         this.drawMap = {
             "score": this.drawScore,
-            "timer": this.drawTimer            
+            "timer": this.drawTimer,
+            "lives": this.drawLives            
         }
     }
 
@@ -101,6 +115,10 @@ class Counter {
         }
     }
 
+    updateLives(that) {
+
+    }
+
     drawScore(that) {
         var x = 0;
         var y = 0;
@@ -113,6 +131,16 @@ class Counter {
         var y = 0;
         drawText(that.formattedTimer, x, y - 1, that.fontShadow, "center", that.fontShadowColour);
         drawText(that.formattedTimer, x, y, that.font, "center", that.fontColour);
+    }
+
+    drawLives(that) {
+        var x = 150;
+        var y = 0;
+        textureManager.drawTexture(that.textureID, that.currentFrame, that.currentRow,
+            that.sWidth, that.sHeight, x, y + 2, that.dWidth, that.dHeight);
+        
+        drawText(that.state.playerObject.lives, x + 38, y + 2, that.font, "start", that.fontShadowColour);
+        drawText(that.state.playerObject.lives, x + 38, y, that.font, "start", that.fontColour);
     }
 }
 

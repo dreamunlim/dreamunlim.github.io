@@ -24,6 +24,7 @@ class Player extends GameObject {
         this.dist = this.lanes[1] - this.lanes[0]; // constant
         this.accel = 2 * this.dist / (this.time * this.time); // a = 2d/t^2 when initial velocity == 0
 
+        this.lives = 0;
         this.revive = false;
         this.immune = false;
         this.immuneStartTime = 0;
