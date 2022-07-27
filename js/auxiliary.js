@@ -17,9 +17,14 @@ async function parseGameJson(jsonPath) {
     }
 }
 
-function random(min, max) {
-    const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    return num;
+function random(min, max, returnType = "integer") {
+    if(returnType == "integer") {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    if(returnType == "float") {
+        return Math.random() * (max - min) + min;
+    }
 }
 
 // to yield positive mod on negative numbers
