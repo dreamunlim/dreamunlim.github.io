@@ -9,6 +9,7 @@ const canvasInitialWidth = 896;
 const canvasInitialHeight = 640;
 
 let canvasScaler = 1;
+let initialTransform = null;
 
 // fit canvas to the shortest screen side
 function resizeCanvas() {
@@ -21,6 +22,7 @@ function resizeCanvas() {
     canvas.width = canvasInitialWidth * canvasScaler;
     canvas.height = canvasInitialHeight * canvasScaler;
     ctx.scale(canvasScaler, canvasScaler);
+    initialTransform = ctx.getTransform();
 }
 
 function clearCanvas(x = 0, y = 0, width = canvas.width, height = canvas.height, colour = "rgba(0, 0, 0, 1)") {
@@ -29,6 +31,6 @@ function clearCanvas(x = 0, y = 0, width = canvas.width, height = canvas.height,
 }
 
 export {
-    canvas, ctx, canvasInitialHeight, canvasInitialWidth, canvasScaler, resizeCanvas,
-    clearCanvas
+    canvas, ctx, canvasInitialWidth, canvasInitialHeight, canvasScaler, initialTransform,
+    resizeCanvas, clearCanvas
 };

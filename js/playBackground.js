@@ -1,9 +1,56 @@
 import { GameObject } from "./gameObject.js";
-import { ctx } from "./canvas.js";
+import { ctx, canvasInitialWidth, canvasInitialHeight, initialTransform } from "./canvas.js";
 import { random } from "./auxiliary.js";
 import { FPS, frameStartTime } from "./main.js";
-import { Vector2D } from "./vector2D.js";
 import { textureManager } from "./textureManager.js";
+
+class BackgroundShake {
+    constructor(that) {
+        this.playBackground = that;
+
+        this.t1 = 0;
+        this.t2 = 0;
+        this.period = 5; // in sec
+        this.animate = false;
+        this.maxAngle = 4; // in degrees (non-clipping max for +-10px offset is 1.29°)
+        this.maxOffset = 10; // in px (available margin is +-20px)
+        this.duration = FPS; // in frames
+        this.initialIntesity = 1;
+        this.currentIntensity = this.initialIntesity;
+        this.intensityDecreaseValue = this.initialIntesity / this.duration;
+        this.centerX = canvasInitialWidth / 2;
+        this.centerY = canvasInitialHeight / 2;
+        this.angle = 0;
+        this.offsetX = 0;
+        this.offsetY = 0;
+    }
+
+    intensitySquared() {
+        return this.currentIntensity * this.currentIntensity;
+    }
+
+    undoTranslateRotate() {
+        ctx.setTransform(initialTransform);
+    }
+    
+    update() {
+        if (this.currentIntensity > 0) {
+            this.angle = this.maxAngle * this.intensitySquared() * random(-1, 1, "float");
+            this.offsetX = this.maxOffset * this.intensitySquared() * random(-1, 1, "float");
+            this.offsetY = this.maxOffset * this.intensitySquared() * random(-1, 1, "float");
+            this.currentIntensity -= this.intensityDecreaseValue;
+        } else {
+            this.animate = false;
+            this.currentIntensity = this.initialIntesity;
+        }
+    }
+
+    draw() {
+        ctx.translate(this.centerX, this.centerY);
+        ctx.rotate(this.angle * Math.PI / 180);
+        ctx.translate(-this.centerX + this.offsetX, -this.centerY + this.offsetY);
+    }
+}
 
 class PendingPlayBackground {
     static previousTextureID = ""; // keep value on destruction 
@@ -19,12 +66,11 @@ class PendingPlayBackground {
     }
 
     drawWithAlpha(alpha) {
-        ctx.save();
         ctx.globalAlpha = alpha;
         textureManager.drawTexture(this.newTextureID, this.playBackground.currentFrame, this.playBackground.currentRow,
             this.playBackground.sWidth, this.playBackground.sHeight, this.playBackground.position.x, this.playBackground.position.y,
             this.playBackground.dWidth, this.playBackground.dHeight);
-        ctx.restore();
+        ctx.globalAlpha = 1; // restore default value
     }
 
     drawObject() {
@@ -44,29 +90,14 @@ class PlayBackground extends GameObject {
     constructor() {
         super();
 
-        this.t1 = 0;
-        this.t2 = 0;
-        this.rumblePeriod = 5; // in sec
-
-        this.intialPos = null;
-        this.returnVec = null;
-        this.rumblePattern = [[-1,1], [1,1], [1,-1], [-1,-1]];
-        this.rumble = false;
-        this.currStep = 0;
-        this.stepTime = 25; // in ms
-        this.stepT1 = 0;
-        this.stepT2 = 0;
-
         this.textureIDs = ["play-background-1", "play-background-2", "play-background-3"];
 
         this.pendingPlayBackground = new PendingPlayBackground(this);
+        this.backgroundShake = new BackgroundShake(this);
     }
 
     initObject(initData) {
         super.initObject(initData);
-
-        this.intialPos = new Vector2D(this.position.x, this.position.y);
-        this.initRumblePattern();
 
         // define textureID
         if (this.pendingPlayBackground.constructor.previousTextureID.length == 0) {
@@ -88,58 +119,38 @@ class PlayBackground extends GameObject {
         delete this.collisionCircle;
     }
 
-    initRumblePattern() {
-        for (var i = 0; i < this.rumblePattern.length; ++i) {
-            // distance range. max is 10 to stay within +-20px boundaries
-            var scale = random(5, 10);
-
-            // substitute rumble pattern pair with a vector
-            this.rumblePattern[i] = new Vector2D(this.rumblePattern[i][0] * scale, this.rumblePattern[i][1] * scale);
-        }
-    }
-
     updateObject() {
-        this.t2 = Math.floor(frameStartTime / (this.rumblePeriod * 1000));
-        this.stepT2 = frameStartTime;
+        this.backgroundShake.t2 = Math.floor(frameStartTime / (this.backgroundShake.period * 1000));
 
         // rumble once every n seconds
         // side effect with two rumbles in a row occurs
-        if (this.t1 < this.t2) {
-            // console.log(this.t1,this.t2);
-            this.rumble = true;
-            this.rumblePeriod = random(5, 6); // define next call period
+        if (this.backgroundShake.t1 < this.backgroundShake.t2) {
+            // console.log(this.backgroundShake.t1, this.backgroundShake.t2);
+            this.backgroundShake.animate = true;
+            this.backgroundShake.period = random(5, 6); // define next call period
         }
 
-        // avoid t2 < t1, which occurs often on rumblePeriod increased 
-        this.t1 = this.t2;
+        // avoid t2 < t1, which occurs often on rumble period increased 
+        this.backgroundShake.t1 = this.backgroundShake.t2;
 
-
-        if (this.rumble && (this.stepT2 - this.stepT1 > this.stepTime)) {
-            // return to initial position
-            if (this.currStep == this.rumblePattern.length) {
-                if (this.returnVec == null) {
-                    this.returnVec = this.intialPos.subtract(this.position);
-                }
-
-                this.position = this.position.add(this.returnVec);
-                this.currStep = 0;
-                this.rumble = false;
-
-            } else {
-                var vec = this.rumblePattern[this.currStep];
-                this.position = this.position.add(vec);
-                ++this.currStep;
-            }
-
-            this.stepT1 = this.stepT2;
+        if (this.backgroundShake.animate) {
+            this.backgroundShake.update();            
         }
     }
 
     drawObject() {
+        if (this.backgroundShake.animate) {
+            this.backgroundShake.draw();            
+        }
+
         super.drawObject();
 
         if (this.pendingPlayBackground.transition) {
             this.pendingPlayBackground.drawObject();
+        }
+
+        if (this.backgroundShake.animate) {
+            this.backgroundShake.undoTranslateRotate();
         }
     }
 }
