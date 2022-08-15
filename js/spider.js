@@ -8,7 +8,10 @@ class Spider extends Enemy {
         super();
 
         this.threadWidth = 2;
-        this.time = 70; // in frames
+        this.time = 60; // in frames
+        this.timeLowestBoundary = 37.5;
+        this.timeDecreaseSteps = 6;
+        this.timeDecreaseValue = ((this.time - this.timeLowestBoundary) / this.timeDecreaseSteps).toFixed(3) * 1;
         this.dist = 640;
 
         this.animate = false;
@@ -33,7 +36,7 @@ class Spider extends Enemy {
     }
 
     increaseVelocity() {
-        this.time = this.time - 5;
+        this.time = this.time - this.timeDecreaseValue;
         this.initial.velocity = this.dist / this.time;
         this.accel = this.initial.velocity / this.time;
     }
@@ -42,7 +45,7 @@ class Spider extends Enemy {
         super.updateObject();
 
         // decide velocity increase
-        if (this.time > 40) {
+        if (this.time > this.timeLowestBoundary) {
             if (this.prevScoreValue % 50 >= 44 &&
                 this.state.scoreObject.score % 50 <= 5) {
                 this.increaseVelocity();
