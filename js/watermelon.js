@@ -5,7 +5,7 @@ class Watermelon extends Enemy {
     constructor () {
         super();
 
-        this.pointsToAdd = 6;
+        this.pointsToAdd = 7;
 
         this.spawned = false;
         this.spawnPeriod = 4; // in sec

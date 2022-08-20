@@ -5,7 +5,7 @@ class Diamond extends Star {
     constructor () {
         super();
 
-        this.pointsToAdd = 4;
+        this.pointsToAdd = 5;
 
         this.spawnPeriod = 3; // in sec
         this.totalRows = 6;
