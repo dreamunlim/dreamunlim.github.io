@@ -139,6 +139,11 @@ class Button {
         this.shadeButton(x, y, width, height);
     }
 
+    setHintMessage(hintMessage) {
+        this.t1 = frameStartTime;
+        this.hintMessage = hintMessage;
+    }
+
     showHintMessage(x, y, width, height) {
         if (this.hintMessage) {
             drawText(this.hintMessage, x + width / 2, y + height,
@@ -162,7 +167,6 @@ class Button {
             clearCanvas(x, y, width, height, this.shadeColour);
         }
     }
-
 }
 
 export { Button };
