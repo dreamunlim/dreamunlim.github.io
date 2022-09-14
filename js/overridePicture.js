@@ -1,5 +1,4 @@
 import { canvas } from "./canvas.js";
-import { frameStartTime } from "./main.js";
 import { textureManager } from "./textureManager.js";
 
 class OverridePicture {
@@ -27,8 +26,7 @@ class OverridePicture {
         image.onload = () => {
             // minimum dimensions check
             if (image.naturalWidth < minWidth || image.naturalHeight < minHeight) {
-                this.overridePicButton.t1 = frameStartTime;
-                this.overridePicButton.hintMessage = "Low Res";
+                this.overridePicButton.setHintMessage("Low Res");
                 return;
             }
 
@@ -40,8 +38,7 @@ class OverridePicture {
 
             // replace texture
             textureManager.textureMap.set(this.replaceableTextureIDs[this.texturePointer], blendedPic);
-            this.overridePicButton.t1 = frameStartTime;
-            this.overridePicButton.hintMessage = "Success";
+            this.overridePicButton.setHintMessage("Success");
 
             // explicitly release file URL
             URL.revokeObjectURL(image.src);
@@ -53,8 +50,7 @@ class OverridePicture {
         image.onerror = () => {
             // treat both zero size and file extension substitution as bad format
             if (image.naturalWidth == 0 && image.naturalHeight == 0) {
-                this.overridePicButton.t1 = frameStartTime;
-                this.overridePicButton.hintMessage = "Bad Format";
+                this.overridePicButton.setHintMessage("Bad Format");
             }
 
             // explicitly release file URL

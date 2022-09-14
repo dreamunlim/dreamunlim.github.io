@@ -32,13 +32,12 @@ class ShareScore {
     processShare() {
         // don't proceed on connection error
         if (typeof FB === "undefined") {
-            this.shareScoreButton.t1 = frameStartTime;
-            this.shareScoreButton.hintMessage = "SDK Not Loaded";
+            this.shareScoreButton.setHintMessage("SDK Not Loaded");
             return;
         }
         
         if (this.shareScoreButton.state.topScore[0][0] === 0) {
-            this.shareScoreButton.hintMessage = "Zero Score";
+            this.shareScoreButton.setHintMessage("Zero Score");
             return;
         }
 
@@ -65,8 +64,7 @@ class ShareScore {
 
     relayResponse(response) {
         if (response && !response.error_message) {
-            this.shareScoreButton.t1 = frameStartTime;
-            this.shareScoreButton.hintMessage = "Success";
+            this.shareScoreButton.setHintMessage("Success");
 
             // log event
             gtag("event", "share", {
