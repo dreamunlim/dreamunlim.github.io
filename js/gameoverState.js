@@ -1,5 +1,6 @@
 import { GameState } from "./gameState.js";
 import { frameStartTime } from "./main.js";
+import { canvas } from "./canvas.js";
 import { TextBox } from "./textBox.js";
 import { levelParser } from "./levelParser.js";
 import { gameStateMachine } from "./gameStateMachine.js";
@@ -17,7 +18,9 @@ class GameoverState extends GameState {
         this.dataToShare = {
             formattedScore: 0,
             formattedMinutes: 0,
-            formattedSeconds: 0
+            formattedSeconds: 0,
+            canvasScreenshot: null,
+            alreadyPosted: false
         };
 
         // fuction pointers
@@ -50,11 +53,6 @@ class GameoverState extends GameState {
         this.dataToShare.formattedMinutes = Math.floor(this.playState.timerObject.totalTimePassed / 1000 / 60);
         this.dataToShare.formattedSeconds = Math.floor(this.playState.timerObject.totalTimePassed / 1000 % 60);
 
-        // pass FB share data to MenuState shareScore object
-        if (this.playState.scoreObject.score > this.menuState.topScore[0][0]) {
-            this.menuState.shareScoreObj.dataToShare = this.dataToShare;
-        }
-        
         return true;
     }
 
@@ -84,19 +82,30 @@ class GameoverState extends GameState {
 
     //call back functions
     switchToMenuState(button) {
+        const gameoverState = button.state;
+
+        // pass FB share data to MenuState shareScore object
+        if (gameoverState.playState.scoreObject.score > gameoverState.menuState.topScore[0][0]) {
+            gameoverState.dataToShare.alreadyPosted = false;
+            gameoverState.dataToShare.canvasScreenshot = canvas.toDataURL("image/jpeg", 0.95);
+            gameoverState.menuState.shareScoreObj.dataToShare = gameoverState.dataToShare;
+        }
+
         // pass PlayState unformatted score and time to MenuState
-        button.state.menuState.updateTopScore(button.state.playState.scoreObject.score, button.state.playState.timerObject.totalTimePassed);
+        gameoverState.menuState.updateTopScore(gameoverState.playState.scoreObject.score, button.state.playState.timerObject.totalTimePassed);
 
         // cache top score, selected char and FB share data
-        button.state.menuState.cacheDataToLocalStorage();
+        gameoverState.menuState.cacheDataToLocalStorage();
 
         gameStateMachine.requestStackPop(); // GameoverState
         gameStateMachine.requestStackPop(); // PlayState
     }
 
     popGameoverState(button) {
-        button.state.playState.playerObject.lives -= 1;
-        button.state.playState.playerObject.revive = true;
+        const gameoverState = button.state;
+
+        gameoverState.playState.playerObject.lives -= 1;
+        gameoverState.playState.playerObject.revive = true;
         gameStateMachine.requestStackPop();
     }
 }
