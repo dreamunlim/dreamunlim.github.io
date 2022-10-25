@@ -118,17 +118,23 @@ class Spider extends Enemy {
             this.state.playerObject.immuneStartTime = frameStartTime;
         }
 
+        if (! this.state.playerObject.immune) {
+            if (this.state.playerObject.lives > 0) {
+                this.state.playerObject.lives -= 1;
+                this.state.playerObject.immune = true;
+                this.state.playerObject.immuneStartTime = frameStartTime;
+            } else {
+                this.state.switchToGameOverState();
+                soundManager.playSound(this.enemyID);
+            }
+        }
+
         if (this.state.playerObject.immune) {
             // play sound once per immunity duration
             if (! this.state.playerObject.soundPlayedOnce) {
                 this.state.playerObject.soundPlayedOnce = true;
                 soundManager.playSound(this.enemyID);
             }
-        }
-
-        if (! this.state.playerObject.immune) {
-            this.state.switchToGameOverState();
-            soundManager.playSound(this.enemyID);
         }
     }
 }
