@@ -20,6 +20,11 @@ class ShareScore {
         this.androidBrowser = (navigator.userAgent.indexOf("Android") != -1) ? true : false;
         this.shareInProcess = false;
 
+        // login params
+        this.requestedPermissions = "pages_manage_posts, pages_read_engagement, pages_show_list";
+        this.rerequestPermissions = false;
+        this.authType = null; // "rerequest" to re-ask for declined permissions without user logout
+
         // post params
         this.pageID = "106658495514253";
         this.albumID = "112951878233608";
@@ -82,7 +87,7 @@ class ShareScore {
                 this.loginUser();
             } else {
                 this.assembleMessage(response.authResponse.userID);
-                this.getPageAcessToken(response.authResponse.accessToken);
+                this.checkGrantedPermissions(response.authResponse.userID, response.authResponse.accessToken);
             }
         });
     }
@@ -91,24 +96,89 @@ class ShareScore {
         FB.login((response) => {
             if (response.status === "connected") {
                 this.assembleMessage(response.authResponse.userID);
-                this.getPageAcessToken(response.authResponse.accessToken);
+                this.checkGrantedPermissions(response.authResponse.userID, response.authResponse.accessToken);
             } else {
                 this.shareInProcess = false;
                 this.shareScoreButton.setHintMessage("Login Error");
             }
-        }, { scope: "pages_manage_posts, pages_read_engagement, pages_show_list" });
+        }, { scope: this.requestedPermissions, auth_type: this.authType });
     }
 
-    getPageAcessToken(userAccessToken) {
-        let endpoint = `/${this.pageID}`;
+    checkGrantedPermissions(userID, userAccessToken) {
+        let endpoint = `/${userID}/permissions`;
         let method = "GET";
         let params = {
-            fields: "access_token",
             access_token: userAccessToken
         };
         let callback = (response) => {
             if (response && !response.error) {
-                this.uploadPicture(response.access_token);
+                const targetPermissions = this.requestedPermissions.split(", ");
+                const returnedPermissions = response["data"];
+                // find declined permissions
+                for (let i = 0; i < targetPermissions.length; ++i) {
+                    const targetPerm = targetPermissions[i];
+                    for (let j = 0; j < returnedPermissions.length; ++j) {
+                        const returnedPerm = returnedPermissions[j];
+                        const returnedPermName = returnedPerm["permission"];
+                        const returnedPermStatus = returnedPerm["status"];
+                        if (targetPerm === returnedPermName) {
+                            if (returnedPermStatus === "declined") {
+                                this.rerequestPermissions = true;
+                                this.shareScoreButton.setHintMessage("No Permissions");
+                            }
+                        }
+                    }
+                }
+                // logout user
+                if (this.rerequestPermissions) {
+                    FB.logout((response) => {
+                        this.shareInProcess = false;
+                        this.rerequestPermissions = false;
+                        setTimeout(() => {
+                            this.shareScoreButton.setHintMessage("Repeat Login");
+                        }, 1000);
+                    });
+                // continue flow
+                } else {
+                    this.getPageAccessToken(userID, userAccessToken);
+                }
+            } else {
+                this.shareInProcess = false;
+                this.shareScoreButton.setHintMessage("Perm Chck Error");
+            }
+        };
+
+        FB.api(endpoint, method, params, callback);
+    }
+
+    getPageAccessToken(userID, userAccessToken) {
+        let endpoint = `/${userID}/accounts`;
+        let method = "GET";
+        let params = {
+            fields: "id, access_token",
+            access_token: userAccessToken
+        };
+        let callback = (response) => {
+            if (response && !response.error) {
+                let pageAccessToken = null;
+                const returnedPages = response["data"];
+                // find target page access token
+                for (let i = 0; i < returnedPages.length; ++i) {
+                    const returnedPage = returnedPages[i];
+                    const returnedPageID = returnedPage["id"];
+                    if (returnedPageID === this.pageID) {
+                        pageAccessToken = returnedPage["access_token"];
+                    }
+                }
+                // continue flow
+                if (pageAccessToken !== null) {
+                    this.uploadPicture(pageAccessToken);
+                } else {
+                    FB.logout((response) => {
+                        this.shareInProcess = false;
+                        this.shareScoreButton.setHintMessage("No Page ID");
+                    });
+                }
             } else {
                 this.shareInProcess = false;
                 this.shareScoreButton.setHintMessage("Token Error");
@@ -118,19 +188,19 @@ class ShareScore {
         FB.api(endpoint, method, params, callback);
     }
 
-    async uploadPicture(pageAcessToken) {
+    async uploadPicture(pageAccessToken) {
         let picResponse = await fetch(this.dataToShare.canvasScreenshot);
         let picBlob = await picResponse.blob();
 
         let formData = new FormData();
         formData.append("published", false);
         formData.append("picture", picBlob);
-        formData.append("access_token", pageAcessToken);
+        formData.append("access_token", pageAccessToken);
 
         let endpoint = `https://graph.facebook.com/v15.0/${this.albumID}/photos`;
         let callback = (response) => {
             if (response && !response.error) {
-                this.postToPage(pageAcessToken, response.id);
+                this.postToPage(pageAccessToken, response.id);
             } else {
                 this.shareInProcess = false;
                 this.shareScoreButton.setHintMessage("Pic Upload Error");
@@ -143,7 +213,7 @@ class ShareScore {
             .then(json => callback(json));
     }
 
-    postToPage(pageAcessToken, photoID) {
+    postToPage(pageAccessToken, photoID) {
         let endpoint = `/${this.pageID}/feed`;
         let method = "POST";
         let params = {
@@ -152,7 +222,7 @@ class ShareScore {
             message: this.message,
             attached_media: [{ media_fbid: photoID }],
             // call_to_action: { type: this.callToActionType, value: { link: this.postLink } }, // requires link ownership verification
-            access_token: pageAcessToken
+            access_token: pageAccessToken
         };
         let callback = (response) => {
             if (response && !response.error) {
