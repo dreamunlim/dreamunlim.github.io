@@ -16,6 +16,7 @@ class PlayState extends GameState {
         this.scoreObject = null; // to be visible to Enemies
         this.timerObject = null; // to be visible to Booster, Pause state
         this.boosterObject = null; // to be visible to Timer, Spider
+        this.pointsMultiplier = null; // to be visible to Enemies
 
         // fuction pointers
         this.funcPointersMap = {

@@ -46,11 +46,12 @@ class Spider extends Enemy {
 
         // decide velocity increase
         if (this.time > this.timeLowestBoundary) {
-            if (this.prevScoreValue % 50 >= 43 &&
-                this.state.scoreObject.score % 50 <= 6) {
+            const pointsToCollect = 50;
+            const currentPointsBatch = this.state.scoreObject.score / pointsToCollect | 0;
+            if (currentPointsBatch > this.previousPointsBatch) {
                 this.increaseVelocity();
             }
-            this.prevScoreValue = this.state.scoreObject.score;
+            this.previousPointsBatch = currentPointsBatch;
         }
 
         // stop at bottom boundary

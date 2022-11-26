@@ -1,6 +1,6 @@
-import { drawText } from "./auxiliary.js";
+import { random, drawText } from "./auxiliary.js";
 import { frameStartTime } from "./main.js";
-import { ctx, canvasInitialWidth } from "./canvas.js";
+import { canvasInitialWidth } from "./canvas.js";
 import { textureManager } from "./textureManager.js";
 import { gameStateMachine } from "./gameStateMachine.js";
 
@@ -21,13 +21,12 @@ class Counter {
         // object specific variables
         if (this.counterID == "score") {
             this.state.scoreObject = this;
-            
+
             this.score = 0;
             this.zeroesToShow = 3;
             this.formattedScore = "";
         }
-
-        if (this.counterID == "timer") {
+        else if (this.counterID == "timer") {
             this.state.timerObject = this;
 
             this.timerResetValue = 10; // in sec
@@ -37,8 +36,7 @@ class Counter {
             this.timerCurrentValue = 0;
             this.formattedTimer = "";
         }
-
-        if (this.counterID == "lives") {
+        else if (this.counterID == "lives") {
             // watermelon icon
             this.textureID = "watermelon";
             this.sWidth = 200;
@@ -48,17 +46,32 @@ class Counter {
             this.currentFrame = 0;
             this.currentRow = 0;
         }
+        else if (this.counterID == "multiplier") {
+            this.state.pointsMultiplier = this;
+
+            this.active = false;
+            this.duration = 0; // in ms
+            this.activeMultiplier = 1;
+
+            this.activate = () => {
+                this.active = true;
+                this.duration = random(3, 5) * 1000;
+                this.activeMultiplier = random(3, 7);
+            }
+        }
 
         this.updateMap = {
             "score": this.updateScore,
             "timer": this.updateTimer,
-            "lives": this.updateLives
+            "lives": this.updateLives,
+            "multiplier": this.updateMultiplier
         }
 
         this.drawMap = {
             "score": this.drawScore,
             "timer": this.drawTimer,
-            "lives": this.drawLives            
+            "lives": this.drawLives,
+            "multiplier": this.drawMultiplier
         }
     }
 
@@ -119,6 +132,13 @@ class Counter {
 
     }
 
+    updateMultiplier(that) {
+        if ((frameStartTime - that.state.timerObject.boosterPickUpTime) > that.duration) {
+            that.active = false;
+            that.activeMultiplier = 1;
+        }
+    }
+
     drawScore(that) {
         var x = 0;
         var y = 0;
@@ -141,6 +161,15 @@ class Counter {
         
         drawText(that.state.playerObject.lives, x + 38, y + 2, that.font, "start", that.fontShadowColour);
         drawText(that.state.playerObject.lives, x + 38, y, that.font, "start", that.fontColour);
+    }
+
+    drawMultiplier(that) {
+        if (that.active) {
+            let x = 319;
+            let y = 0;
+            drawText("x" + that.activeMultiplier, x + 2, y + 2, that.font, "center", that.fontShadowColour);
+            drawText("x" + that.activeMultiplier, x, y, that.font, "center", that.fontColour);
+        }
     }
 }
 

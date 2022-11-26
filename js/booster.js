@@ -49,8 +49,9 @@ class Booster extends Enemy {
 
     respondToCollision() {
         this.collided = true;
+        this.state.pointsMultiplier.activate();
         this.state.timerObject.boosterPickUpTime = frameStartTime;
-        this.state.scoreObject.score += this.pointsToAdd;
+        this.state.scoreObject.score += this.pointsToAdd * this.state.pointsMultiplier.activeMultiplier;
         this.respawnAfterDraw = true;
         soundManager.playSound(this.enemyID);
     }
