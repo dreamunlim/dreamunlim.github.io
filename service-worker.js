@@ -1,6 +1,6 @@
 'use strict'
 
-// 15.02.2022
+// 27.11.2022
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -69,11 +69,11 @@ const filesToCache = [
     "js/vector2D.js",
     "js/watermelon.js",
     "json/initAll.json",
-    "sound/player-booster.ogg",
-    "sound/player-diamond.ogg",
-    "sound/player-heart.ogg",
-    "sound/player-spider.ogg",
-    "sound/player-star.ogg"
+    "sound/player-booster.mp3",
+    "sound/player-diamond.mp3",
+    "sound/player-heart.mp3",
+    "sound/player-spider.mp3",
+    "sound/player-star.mp3"
 ];
 
 self.addEventListener("install", (event) => {

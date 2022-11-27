@@ -41,11 +41,11 @@
             ["watermelon", "img/watermelon.png"]
         ],
         "sounds": [
-            ["booster", "sound/player-booster.ogg"],
-            ["heart", "sound/player-heart.ogg"],
-            ["spider", "sound/player-spider.ogg"],
-            ["star", "sound/player-star.ogg"],
-            ["diamond", "sound/player-diamond.ogg"]
+            ["booster", "sound/player-booster.mp3"],
+            ["heart", "sound/player-heart.mp3"],
+            ["spider", "sound/player-spider.mp3"],
+            ["star", "sound/player-star.mp3"],
+            ["diamond", "sound/player-diamond.mp3"]
         ]
     },
     "MenuState": {
