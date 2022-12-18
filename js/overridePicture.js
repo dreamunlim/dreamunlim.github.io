@@ -9,108 +9,114 @@ class OverridePicture {
         this.input.addEventListener("change", () => { this.processPicture() }, false);
         document.body.insertBefore(this.input, canvas.nextElementSibling);
 
-        this.replaceableTextureIDs = ["enemy-red", "enemy-purple"];
         this.texturePointer = 0;
+        this.replaceableTextureIDs = ["enemy-red", "enemy-purple"];
 
         this.overridePicButton = null;
     }
 
     processPicture() {
-        const minWidth = 240;
-        const minHeight = 240;
+        // pop-up closed without file selected
+        if (! this.input.files.length) {
+            return;
+        }
 
         const file = this.input.files[0];
-        const image = new Image();
-        image.src = URL.createObjectURL(file);
+        const userImage = new Image();
+        userImage.src = URL.createObjectURL(file);
 
-        image.onload = () => {
+        userImage.onload = () => {
+            // explicitly release file URL
+            URL.revokeObjectURL(userImage.src);
+
+            const minWidth = 240;
+            const minHeight = 240;
+
             // minimum dimensions check
-            if (image.naturalWidth < minWidth || image.naturalHeight < minHeight) {
+            if (userImage.naturalWidth < minWidth || userImage.naturalHeight < minHeight) {
                 this.overridePicButton.setHintMessage("Low Res");
                 return;
             }
 
+            // scratchpad
+            const tempCanvas = document.createElement("canvas");
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = tempCanvas.height = minWidth;
+
+            this.resizePicture(minWidth, minHeight, userImage, tempCtx);
+            this.blendPicture(tempCtx);
+
+            const modifiedImage = new Image();
+            modifiedImage.src = tempCanvas.toDataURL("image/png");
+
             // cycle texture IDs
             this.texturePointer = (++this.texturePointer) % this.replaceableTextureIDs.length;
-
-            const resizedPic = this.resizePicture(minWidth, minHeight, image);
-            const blendedPic = this.blendPicture(resizedPic);
-
+            
             // replace texture
-            textureManager.textureMap.set(this.replaceableTextureIDs[this.texturePointer], blendedPic);
+            textureManager.textureMap.set(this.replaceableTextureIDs[this.texturePointer], modifiedImage);
             this.overridePicButton.setHintMessage("Success");
-
-            // explicitly release file URL
-            URL.revokeObjectURL(image.src);
 
             // log event
             gtag("event", "override_picture");
         }
 
-        image.onerror = () => {
+        userImage.onerror = () => {
+            // explicitly release file URL
+            URL.revokeObjectURL(userImage.src);
+
             // treat both zero size and file extension substitution as bad format
-            if (image.naturalWidth == 0 && image.naturalHeight == 0) {
+            if (userImage.naturalWidth == 0 && userImage.naturalHeight == 0) {
                 this.overridePicButton.setHintMessage("Bad Format");
             }
-
-            // explicitly release file URL
-            URL.revokeObjectURL(image.src);
         }
     }
 
-    resizePicture(minWidth, minHeight, image) {
-        // scratchpad
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext('2d');
-        canvas.width = canvas.height = minWidth;
-
+    resizePicture(minWidth, minHeight, userImage, tempCtx) {
         // obtain clipping box
-        var scale = 1,
-        sWidth = 1,
-        sHeight = 1;
+        let scale = 1,
+            sWidth = 1,
+            sHeight = 1;
 
-        if (image.naturalWidth < image.naturalHeight) {
-            scale = image.naturalWidth / minWidth;
+        if (userImage.naturalWidth < userImage.naturalHeight) {
+            scale = userImage.naturalWidth / minWidth;
         } else {
-            scale = image.naturalHeight / minHeight;
+            scale = userImage.naturalHeight / minHeight;
         }
 
         sWidth = sHeight = minWidth * scale;
 
         // center clipping box within source image
-        var sx = 0,
-        sy = 0;
+        let sx = 0,
+            sy = 0;
 
-        if (image.naturalWidth < image.naturalHeight) {
-            sy = (image.naturalHeight - sHeight) / 2;
+        if (userImage.naturalWidth < userImage.naturalHeight) {
+            sy = (userImage.naturalHeight - sHeight) / 2;
         } else {
-            sx = (image.naturalWidth - sWidth) / 2;
+            sx = (userImage.naturalWidth - sWidth) / 2;
         }
 
         // downsize
-        ctx.drawImage(image, sx, sy, sWidth, sHeight, 0, 0, canvas.width, canvas.height);
-
-        return ctx;
+        tempCtx.drawImage(userImage, sx, sy, sWidth, sHeight, 0, 0, minWidth, minHeight);
     }
 
-    blendPicture(ctx) {
-        // blending mode
-        ctx.globalCompositeOperation = "destination-in";
-
+    blendPicture(tempCtx) {
         // overlay circle mask
-        var x = ctx.canvas.width / 2;
-        var y = ctx.canvas.height / 2;
-        var radius = ctx.canvas.width / 2;
-        var startAngle = 0;
-        var endAngle = 2 * Math.PI;
-        ctx.arc(x, y, radius, startAngle, endAngle);
-        ctx.fill();
+        tempCtx.globalCompositeOperation = "destination-in";
+        let x = tempCtx.canvas.width / 2;
+        let y = tempCtx.canvas.height / 2;
+        let radius = tempCtx.canvas.width / 2;
+        let startAngle = 0;
+        let endAngle = 2 * Math.PI;
+        tempCtx.arc(x, y, radius, startAngle, endAngle);
+        tempCtx.fill();
 
-        //
-        const image = new Image();
-        image.src = ctx.canvas.toDataURL("image/png");
-
-        return image;
+        // overlay contour frame
+        tempCtx.globalCompositeOperation = "source-over";
+        tempCtx.lineWidth = 9;
+        radius = radius - tempCtx.lineWidth / 2;
+        tempCtx.beginPath();
+        tempCtx.arc(x, y, radius, startAngle, endAngle);
+        tempCtx.stroke();
     }
 }
 
