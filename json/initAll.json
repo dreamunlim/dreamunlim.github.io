@@ -353,10 +353,11 @@
                 "height": 65
             }
         ],
-        "counters": [
+        "info": [
             {
                 "id": "counter",
                 "counterID": "score",
+                "position": [0, 0],
                 "font": "35px Orbitron",
                 "fontColour": "indianred",
                 "fontShadowColour": "brown"
@@ -364,6 +365,7 @@
             {
                 "id": "counter",
                 "counterID": "timer",
+                "position": [448, 0],
                 "font": "65px Orbitron",
                 "fontShadow": "68px Orbitron",
                 "fontColour": "mediumpurple",
@@ -372,13 +374,14 @@
             {
                 "id": "counter",
                 "counterID": "lives",
+                "position": [150, 0],
                 "font": "35px Orbitron",
                 "fontColour": "olivedrab",
                 "fontShadowColour": "darkolivegreen"
             },
             {
-                "id": "counter",
-                "counterID": "multiplier",
+                "id": "points-multiplier",
+                "position": [319, 0],
                 "font": "40px Orbitron",
                 "fontColour": "gold",
                 "fontShadowColour": "brown"

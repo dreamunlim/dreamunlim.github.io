@@ -9,6 +9,7 @@ import { Counter } from "./counter.js";
 import { Star } from "./star.js";
 import { Diamond } from "./diamond.js";
 import { Watermelon } from "./watermelon.js";
+import { PointsMultiplier } from "./pointsMultiplier.js";
 
 class GameObjectFactory {
     constructor() {
@@ -47,5 +48,6 @@ gameObjectFactory.registerObject("counter", Counter);
 gameObjectFactory.registerObject("star", Star);
 gameObjectFactory.registerObject("diamond", Diamond);
 gameObjectFactory.registerObject("watermelon", Watermelon);
+gameObjectFactory.registerObject("points-multiplier", PointsMultiplier);
 
 export { gameObjectFactory };

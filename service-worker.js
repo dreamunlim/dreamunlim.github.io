@@ -1,6 +1,6 @@
 'use strict'
 
-// 27.11.2022
+// 10.03.2023
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -49,6 +49,7 @@ const filesToCache = [
     "js/gameState.js",
     "js/gameStateMachine.js",
     "js/heart.js",
+    "js/info.js",
     "js/inputHandler.js",
     "js/level.js",
     "js/levelParser.js",
@@ -60,6 +61,7 @@ const filesToCache = [
     "js/playBackground.js",
     "js/player.js",
     "js/playState.js",
+    "js/pointsMultiplier.js",
     "js/shareScore.js",
     "js/soundManager.js",
     "js/spider.js",

@@ -26,7 +26,7 @@ class LevelParser {
                 this.parseObjectLayer(state, "objects");
                 this.parseObjectLayer(state, "enemies");
                 this.parseObjectLayer(state, "buttons");
-                this.parseObjectLayer(state, "counters");
+                this.parseObjectLayer(state, "info");
                 break;
             case "PauseState":
                 break;
@@ -98,8 +98,8 @@ class LevelParser {
             case "buttons":
                 this.parseButtons(objectLayer, layerName);
                 break;
-            case "counters":
-                this.parseCounters(objectLayer, layerName);
+            case "info":
+                this.parseInfo(objectLayer, layerName);
                 break;
         }
 
@@ -114,7 +114,6 @@ class LevelParser {
             var currObject = objects[i];
 
             var id = currObject["id"];
-            var path = currObject["path"];
             var position = new Vector2D(currObject["position"][0], currObject["position"][1]);
             var velocity = new Vector2D(currObject["velocity"][0], currObject["velocity"][1]);
             var acceleration = new Vector2D(currObject["acceleration"][0], currObject["acceleration"][1]);
@@ -128,7 +127,6 @@ class LevelParser {
             var numFrames = currObject["numFrames"] || 1;
             var animSpeed = currObject["animSpeed"] || 100;
             var collisionCircle = currObject["collisionCircle"] || null;
-            var soundPath = currObject["soundPath"] || null;
             
             // convert literal object to vector
             if (collisionCircle != null) {
@@ -177,23 +175,27 @@ class LevelParser {
         }
     }
 
-    parseCounters(objectLayer, layerName) {
+    parseInfo(objectLayer, layerName) {
         const objects = gameJson[this.stateID][layerName];
 
-        for (var i = 0; i < objects.length; ++i) {
-            var currObject = objects[i];
+        for (let i = 0; i < objects.length; ++i) {
+            let currObject = objects[i];
 
-            var id = currObject["id"];
-            var counterID = currObject["counterID"];
-            var font = currObject["font"];
-            var fontColour = currObject["fontColour"];
-            var fontShadow = currObject["fontShadow"] || null;
-            var fontShadowColour = currObject["fontShadowColour"];
+            let id = currObject["id"];
+            let counterID = currObject["counterID"] || null;
+            let position = {
+                x: currObject["position"][0],
+                y: currObject["position"][1]
+            };
+            let font = currObject["font"];
+            let fontColour = currObject["fontColour"];
+            let fontShadow = currObject["fontShadow"] || null;
+            let fontShadowColour = currObject["fontShadowColour"];
 
-            var initData = {counterID, font, fontColour, fontShadow, fontShadowColour};
+            let initData = {counterID, position, font, fontColour, fontShadow, fontShadowColour};
             
             // create object
-            var object = new (gameObjectFactory.createObject(id))(initData);
+            let object = new (gameObjectFactory.createObject(id))(initData);
 
             // store object in layer
             objectLayer.push(object);

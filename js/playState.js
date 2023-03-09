@@ -63,6 +63,7 @@ class PlayState extends GameState {
         this.scoreObject = null;
         this.timerObject = null;
         this.boosterObject = null;
+        this.pointsMultiplier = null;
     }
 
     //call back functions

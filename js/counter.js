@@ -1,22 +1,13 @@
-import { random, drawText } from "./auxiliary.js";
+import { Info } from "./info.js";
+import { drawText } from "./auxiliary.js";
 import { frameStartTime } from "./main.js";
-import { canvasInitialWidth } from "./canvas.js";
 import { textureManager } from "./textureManager.js";
-import { gameStateMachine } from "./gameStateMachine.js";
 
-class Counter {
+class Counter extends Info {
     constructor (initData) {
-        // counter owner
-        this.state = gameStateMachine.stack[gameStateMachine.stack.length - 1];
+        super(initData);
 
         this.counterID = initData.counterID;
-        this.font = initData.font;
-        this.fontColour = initData.fontColour;
-        this.fontShadowColour = initData.fontShadowColour;
-
-        if(initData.fontShadow != null) {
-            this.fontShadow = initData.fontShadow;
-        }
 
         // object specific variables
         if (this.counterID == "score") {
@@ -46,32 +37,17 @@ class Counter {
             this.currentFrame = 0;
             this.currentRow = 0;
         }
-        else if (this.counterID == "multiplier") {
-            this.state.pointsMultiplier = this;
-
-            this.active = false;
-            this.duration = 0; // in ms
-            this.activeMultiplier = 1;
-
-            this.activate = () => {
-                this.active = true;
-                this.duration = random(3, 5) * 1000;
-                this.activeMultiplier = random(3, 7);
-            }
-        }
 
         this.updateMap = {
             "score": this.updateScore,
             "timer": this.updateTimer,
-            "lives": this.updateLives,
-            "multiplier": this.updateMultiplier
+            "lives": this.updateLives
         }
 
         this.drawMap = {
             "score": this.drawScore,
             "timer": this.drawTimer,
-            "lives": this.drawLives,
-            "multiplier": this.drawMultiplier
+            "lives": this.drawLives
         }
     }
 
@@ -84,8 +60,8 @@ class Counter {
     }
 
     updateScore(that) {
-        var zeroesPresent = Math.floor(Math.log10(that.score));
-        var zeroesToAdd = that.zeroesToShow - zeroesPresent;
+        let zeroesPresent = Math.floor(Math.log10(that.score));
+        let zeroesToAdd = that.zeroesToShow - zeroesPresent;
         
         if (that.score == 0) {
             that.formattedScore = "0000";
@@ -93,8 +69,8 @@ class Counter {
         }
 
         if (zeroesToAdd > 0) {
-            var str = "";
-            var i = 0;
+            let str = "";
+            let i = 0;
             while (i != zeroesToAdd) {
                 str += "0";
                 ++i;
@@ -132,44 +108,22 @@ class Counter {
 
     }
 
-    updateMultiplier(that) {
-        if ((frameStartTime - that.state.timerObject.boosterPickUpTime) > that.duration) {
-            that.active = false;
-            that.activeMultiplier = 1;
-        }
-    }
-
     drawScore(that) {
-        var x = 0;
-        var y = 0;
-        drawText(that.formattedScore, x + 2, y + 2, that.font, "start", that.fontShadowColour);
-        drawText(that.formattedScore, x, y, that.font, "start", that.fontColour);
+        drawText(that.formattedScore, that.position.x + 2, that.position.y + 2, that.font, "start", that.fontShadowColour);
+        drawText(that.formattedScore, that.position.x, that.position.y, that.font, "start", that.fontColour);
     }
 
     drawTimer(that) {
-        var x = canvasInitialWidth / 2;
-        var y = 0;
-        drawText(that.formattedTimer, x, y - 1, that.fontShadow, "center", that.fontShadowColour);
-        drawText(that.formattedTimer, x, y, that.font, "center", that.fontColour);
+        drawText(that.formattedTimer, that.position.x, that.position.y - 1, that.fontShadow, "center", that.fontShadowColour);
+        drawText(that.formattedTimer, that.position.x, that.position.y, that.font, "center", that.fontColour);
     }
 
     drawLives(that) {
-        var x = 150;
-        var y = 0;
         textureManager.drawTexture(that.textureID, that.currentFrame, that.currentRow,
-            that.sWidth, that.sHeight, x, y + 2, that.dWidth, that.dHeight);
+            that.sWidth, that.sHeight, that.position.x, that.position.y + 2, that.dWidth, that.dHeight);
         
-        drawText(that.state.playerObject.lives, x + 38, y + 2, that.font, "start", that.fontShadowColour);
-        drawText(that.state.playerObject.lives, x + 38, y, that.font, "start", that.fontColour);
-    }
-
-    drawMultiplier(that) {
-        if (that.active) {
-            let x = 319;
-            let y = 0;
-            drawText("x" + that.activeMultiplier, x + 2, y + 2, that.font, "center", that.fontShadowColour);
-            drawText("x" + that.activeMultiplier, x, y, that.font, "center", that.fontColour);
-        }
+        drawText(that.state.playerObject.lives, that.position.x + 38, that.position.y + 2, that.font, "start", that.fontShadowColour);
+        drawText(that.state.playerObject.lives, that.position.x + 38, that.position.y, that.font, "start", that.fontColour);
     }
 }
 
