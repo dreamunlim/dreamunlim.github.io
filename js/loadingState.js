@@ -23,7 +23,7 @@ class LoadingState extends GameState {
     draw() {
         clearCanvas(0, 0, canvasInitialWidth, canvasInitialHeight);
         
-        if(document.fonts.size) {
+        if(document.fonts.check("1px Bebas Neue")) {
             drawText("Loading Assets", canvasInitialWidth / 2, canvasInitialHeight / 2, "68px Bebas Neue", "center", "purple", "middle");
             drawText("Loading Assets", canvasInitialWidth / 2, canvasInitialHeight / 2, "65px Bebas Neue", "center", "mediumpurple", "middle");
         }
