@@ -1,6 +1,6 @@
 'use strict'
 
-// 10.03.2023
+// 09.04.2023
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -9,6 +9,7 @@ const filesToCache = [
     "manifest.json",
     "css/style.css",
     "font/BebasNeue-Regular.woff2",
+    "font/Coiny-Regular.woff2",
     "font/Orbitron-SemiBold.woff2",
     "img/background-image.png",
     "img/booster.png",
