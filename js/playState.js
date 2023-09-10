@@ -45,6 +45,9 @@ class PlayState extends GameState {
     }
 
     onExit() {
+        // default html body colour
+        document.body.className = "";
+        
         this.clean();
 
         return true;

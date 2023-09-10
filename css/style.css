@@ -1,6 +1,6 @@
 html, body {
   margin: 0;
-  background-color: #7a8aa1;
+  background-color: #039595;
   background-image: url("/img/background-image.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -16,6 +16,18 @@ body {
   height: inherit;
   touch-action: manipulation;
   user-select: none;
+}
+
+body.blue-play-bg {
+  background-image: url("/img/background-image.png"), linear-gradient(90deg, #67d7ff, #a6e4f9);
+}
+
+body.green-play-bg {
+  background-color: #91d3c5;
+}
+
+body.purple-play-bg {
+  background-color: #b2b3df;
 }
 
 canvas {

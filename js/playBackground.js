@@ -90,8 +90,21 @@ class PlayBackground extends GameObject {
     constructor() {
         super();
 
-        this.textureIDs = ["play-background-1", "play-background-2", "play-background-3"];
-
+        this.backgrounds = {
+            blue: {
+                "css-class": "blue-play-bg",
+                "textureID": "play-background-1"
+            },
+            green: {
+                "css-class": "green-play-bg",
+                "textureID": "play-background-2"
+            },
+            purple: {
+                "css-class": "purple-play-bg",
+                "textureID": "play-background-3"
+            }
+        }
+        
         this.pendingPlayBackground = new PendingPlayBackground(this);
         this.backgroundShake = new BackgroundShake(this);
     }
@@ -99,13 +112,19 @@ class PlayBackground extends GameObject {
     initObject(initData) {
         super.initObject(initData);
 
+        const backgroundsArray = Object.keys(this.backgrounds);
+        const randomBackground = backgroundsArray[random(0, backgroundsArray.length - 1)];
+
+        // define html body colour
+        document.body.className = this.backgrounds[randomBackground]["css-class"];
+        
         // define textureID
         if (this.pendingPlayBackground.constructor.previousTextureID.length == 0) {
-            this.textureID = this.textureIDs[random(0, this.textureIDs.length - 1)];
+            this.textureID = this.backgrounds[randomBackground]["textureID"];
             this.pendingPlayBackground.constructor.previousTextureID = this.textureID;
         } else {
             this.pendingPlayBackground.transition = true;
-            this.pendingPlayBackground.newTextureID = this.textureIDs[random(0, this.textureIDs.length - 1)];
+            this.pendingPlayBackground.newTextureID = this.backgrounds[randomBackground]["textureID"];
             this.textureID = this.pendingPlayBackground.constructor.previousTextureID;
             this.pendingPlayBackground.constructor.previousTextureID = this.pendingPlayBackground.newTextureID;
         }

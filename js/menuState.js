@@ -30,7 +30,7 @@ class ConsentPopup {
     }
 
     draw() {
-        clearCanvas(0, 0, canvasInitialWidth, canvasInitialHeight, "rgba(122,138,161, 0.5)");
+        clearCanvas(0, 0, canvasInitialWidth, canvasInitialHeight, "rgba(3,149,149, 0.5)");
         this.textBox.drawTextBox();
         this.okButton.drawObject();
     }
