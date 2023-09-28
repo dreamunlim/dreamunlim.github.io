@@ -10,6 +10,25 @@ import { levelParser } from "./levelParser.js";
 import { gameObjectFactory } from "./gameObjectFactory.js";
 import { gameStateMachine, StateID } from "./gameStateMachine.js";
 
+class UpdatingPopup {
+    constructor(state) {
+        this.text = "Updating";
+        this.titleFont = state.titleFont;
+        this.fontShadowColour = "#009091"; // dark green
+        this.fontColour = "seashell";
+
+        window.location.reload(); // reload with updated files
+    }
+
+    draw() {
+        let x = canvasInitialWidth / 2;
+        let y = canvasInitialHeight / 2;
+        clearCanvas(0, 0, canvasInitialWidth, canvasInitialHeight, "rgba(3,149,149, 0.5)");
+        drawText(this.text, x + 2, y + 2, this.titleFont, "center", this.fontShadowColour, "middle");
+        drawText(this.text, x, y, this.titleFont, "center", this.fontColour, "middle");
+    }
+}
+
 class ConsentPopup {
     constructor(state) {
         this.textBox = new TextBox(state);
@@ -46,6 +65,9 @@ class MenuState extends GameState {
         this.titleFont = "68px Bebas Neue";
         this.scoreFont = "35px Orbitron";
 
+        this.reloadGame = false;
+        this.updatingPopup = null;
+
         this.consentPopup = null;
         this.consentGranted = false; // Terms of Use and Privacy Policy
 
@@ -69,6 +91,13 @@ class MenuState extends GameState {
     }
 
     update() {
+        if (this.reloadGame) {
+            if (! this.updatingPopup) {
+                this.updatingPopup = new UpdatingPopup(this);
+            }
+            return;
+        }
+
         // update popup until consent granted
         if (! this.consentGranted) {
             this.consentPopup.update();
@@ -93,6 +122,10 @@ class MenuState extends GameState {
         // draw popup until consent granted
         if (! this.consentGranted) {
             this.consentPopup.draw();
+        }
+
+        if (this.reloadGame) {
+            this.updatingPopup.draw();
         }
     }
 

@@ -136,6 +136,12 @@ function registerServiceWorker() {
             .catch(error => {
                 console.error("SW registration failed: ", error);
             });
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            // fires when a new worker has skipped waiting and become the new active worker
+            let menuState = gameStateMachine.stack[0];
+            menuState.reloadGame = true;
+        })
     }
 }
 

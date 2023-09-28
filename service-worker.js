@@ -1,6 +1,6 @@
 'use strict'
 
-// 09.04.2023
+// 28.09.2023
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -81,6 +81,9 @@ const filesToCache = [
 
 self.addEventListener("install", (event) => {
     console.log("SW installation");
+
+    self.skipWaiting(); // activate worker right after installation
+
     event.waitUntil(
         caches.open(cacheName)
             .then(cache => {
