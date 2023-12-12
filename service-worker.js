@@ -1,6 +1,6 @@
 'use strict'
 
-// 28.09.2023
+// 12.12.2023
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -69,6 +69,7 @@ const filesToCache = [
     "js/star.js",
     "js/textBox.js",
     "js/textureManager.js",
+    "js/updatingState.js",
     "js/vector2D.js",
     "js/watermelon.js",
     "json/initAll.json",

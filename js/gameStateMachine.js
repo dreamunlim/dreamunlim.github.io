@@ -3,10 +3,11 @@ import { MenuState } from "./menuState.js";
 import { PlayState } from "./playState.js";
 import { PauseState } from "./pauseState.js";
 import { GameoverState } from "./gameoverState.js";
+import { UpdatingState } from "./updatingState.js";
 
 // enums
 const Action = Object.freeze({"Push": 0, "Pop": 1, "Change": 2});
-const StateID = Object.freeze({"Loading": 0, "Menu": 1, "Play": 2, "Pause": 3, "Gameover": 4});
+const StateID = Object.freeze({"Loading": 0, "Menu": 1, "Play": 2, "Pause": 3, "Gameover": 4, "Updating": 5});
 
 class PendingChange {
     constructor(action, stateID) {
@@ -133,6 +134,7 @@ gameStateMachine.registerState(StateID.Menu, new MenuState());
 gameStateMachine.registerState(StateID.Play, new PlayState());
 gameStateMachine.registerState(StateID.Pause, new PauseState());
 gameStateMachine.registerState(StateID.Gameover, new GameoverState());
+gameStateMachine.registerState(StateID.Updating, new UpdatingState());
 gameStateMachine.requestStackPush(StateID.Loading);
 
 export { gameStateMachine, StateID };
