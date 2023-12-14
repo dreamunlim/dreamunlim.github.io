@@ -42,21 +42,21 @@ class LevelParser {
     parseFonts() {
         const fonts = gameJson[this.stateID]["fonts"];
 
-        for (var i = 0; i < fonts.length; ++i) {
-            var currFont = fonts[i];
+        for (let i = 0; i < fonts.length; ++i) {
+            let currFont = fonts[i];
 
-            var family = currFont["font-family"];
-            var source = currFont["source"];
-            var descriptors = {
+            let family = currFont["font-family"];
+            let source = currFont["source"];
+            let descriptors = {
                 "style": currFont["descriptors"]["font-style"],
                 "weight": currFont["descriptors"]["font-weight"],
                 "display": currFont["descriptors"]["font-display"],
                 "unicodeRange": currFont["descriptors"]["unicode-range"]
             };
 
-            var font = new FontFace(family, "url(" + source + ")", descriptors);
-            
-            font.load().then(loadedFont => document.fonts.add(loadedFont));
+            let font = new FontFace(family, "url(" + source + ")", descriptors);
+            document.fonts.add(font);
+            font.load();
         }
     }
     
