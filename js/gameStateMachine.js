@@ -17,6 +17,7 @@ class PendingChange {
 }
 
 class GameStateMachine {
+    // public:
     constructor() {
         this.stack = new Array();
         this.stateFactory = new Map();
@@ -33,47 +34,23 @@ class GameStateMachine {
         this.stateFactory.set(id, type);
     }
 
-    createState(id) {
-        // if type does not exist
-        if (! this.stateFactory.has(id)) {
-            throw new Error("Game state not in factory");
-        }
-
-        return this.stateFactory.get(id);
-    }
-
     // stack actions
-    pushState(state) {
-        this.stack.push(state);
-        this.stack[this.stack.length - 1].onEnter();
+    requestStackPush(stateID) {
+        this.pendingList.push(new PendingChange(Action.Push, stateID));
     }
 
-    popState() {
-        if (this.stack.length) {
-            if (this.stack[this.stack.length - 1].onExit()) {
-                this.stack.pop();
-            }
-        }
+    requestStackPop() {
+        this.pendingList.push(new PendingChange(Action.Pop));
     }
 
-    //remove all and add a state
-    changeState(state) {
-        //empty the stack
-        while (this.stack.length) {
-            if (this.stack[this.stack.length - 1].onExit()) {
-                this.stack.pop();
-            }
-        }
-
-        //add new state
-        this.stack.push(state);
-        this.stack[this.stack.length - 1].onEnter();
+    requestStackChange(stateID) {
+        this.pendingList.push(new PendingChange(Action.Change, stateID));
     }
 
     // state machine actions
     updateCurrentState() {
         if (this.pendingList.length) {
-            this.applyPendingChanges();
+            this.#applyPendingChanges();
         }
 
         if (this.stack.length) {
@@ -87,34 +64,60 @@ class GameStateMachine {
         }
     }
 
-    // pending list actions
-    requestStackPush(stateID) {
-        this.pendingList.push(new PendingChange(Action.Push, stateID));
+    // private:
+    // factory actions
+    #createState(id) {
+        // if type does not exist
+        if (! this.stateFactory.has(id)) {
+            throw new Error("Game state not in factory");
+        }
+
+        return this.stateFactory.get(id);
     }
 
-    requestStackPop() {
-        this.pendingList.push(new PendingChange(Action.Pop));
+    // stack actions
+    #pushState(state) {
+        this.stack.push(state);
+        this.stack[this.stack.length - 1].onEnter();
     }
 
-    requestStackChange(stateID) {
-        this.pendingList.push(new PendingChange(Action.Change, stateID));
+    #popState() {
+        if (this.stack.length) {
+            if (this.stack[this.stack.length - 1].onExit()) {
+                this.stack.pop();
+            }
+        }
     }
 
-    applyPendingChanges() {
-        for (var i = 0; i != this.pendingList.length; ++i) {
-            var pendingChange = this.pendingList[i];
+    //remove all and add a state
+    #changeState(state) {
+        //empty the stack
+        while (this.stack.length) {
+            if (this.stack[this.stack.length - 1].onExit()) {
+                this.stack.pop();
+            }
+        }
+
+        //add new state
+        this.stack.push(state);
+        this.stack[this.stack.length - 1].onEnter();
+    }
+
+    #applyPendingChanges() {
+        for (let i = 0; i != this.pendingList.length; ++i) {
+            const pendingChange = this.pendingList[i];
 
             switch (pendingChange.action) {
                 case Action.Push:
-                    this.pushState(this.createState(pendingChange.stateID));
+                    this.#pushState(this.#createState(pendingChange.stateID));
                     break;
 
                 case Action.Pop:
-                    this.popState();
+                    this.#popState();
                     break;
 
                 case Action.Change:
-                    this.changeState(this.createState(pendingChange.stateID));
+                    this.#changeState(this.#createState(pendingChange.stateID));
                     break;
             }
         }
