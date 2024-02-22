@@ -1,5 +1,5 @@
-import { drawText } from "./auxiliary.js";
-import { ctx, canvasInitialHeight, canvasInitialWidth, clearCanvas } from "./canvas.js";
+import { drawText, drawRoundRectangle } from "./auxiliary.js";
+import { ctx, canvasInitialHeight, canvasInitialWidth } from "./canvas.js";
 import { gameStateMachine } from "./gameStateMachine.js";
 
 class _Text {
@@ -123,14 +123,20 @@ class TextBox {
             case "MenuState":
                 this.width = 550;
                 this.height = 270;
-                this.colour = "rgba(255,192,203, 1)"; // pink
+                this.strokeWidth = 5;
+                this.strokeColour = "brown";
+                this.fillColour = "rgba(255,192,203, 1)"; // pink
+                this.cornerRadius = 12;
                 this.text.lines = this.text.menuStateText;
                 this.text.spacing = 55;
                 break;
             case "GameoverState":
                 this.width = 480;
                 this.height = 270;
-                this.colour = "rgba(255,192,203, 0.6)"; // pink
+                this.strokeWidth = 5;
+                this.strokeColour = "brown";
+                this.fillColour = "rgba(255,192,203, 0.6)"; // pink
+                this.cornerRadius = 12;
                 this.text.lines = this.text.gameoverStateText;
                 this.text.spacing = 55;
                 break;
@@ -141,13 +147,7 @@ class TextBox {
     }
 
     drawTextBox() {
-        clearCanvas(this.x, this.y, this.width, this.height, this.colour);
-        ctx.lineWidth = 5;
-        ctx.lineJoin = "round";
-        ctx.strokeStyle = "brown";
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
-        // ctx.lineJoin = "miter";
-
+        drawRoundRectangle(this.x, this.y, this.width, this.height, this.strokeWidth, this.strokeColour, this.fillColour, this.cornerRadius, false);
         this.text.drawText(this);
     }
 
@@ -156,7 +156,7 @@ class TextBox {
         switch (this.state.constructor.name) {
             case "MenuState":
                 if (button.text == "OK") {
-                    // amend button position to TextBox bottom center
+                    // amend button position to the TextBox bottom center
                     button.position.x = this.x + (this.width / 2 - button.width / 2);
                 }
                 break;
