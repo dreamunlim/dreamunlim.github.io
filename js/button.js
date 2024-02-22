@@ -1,6 +1,5 @@
-import { drawText } from "./auxiliary.js";
+import { drawText, drawRoundRectangle } from "./auxiliary.js";
 import { frameStartTime } from "./main.js";
-import { ctx, clearCanvas } from "./canvas.js";
 import { inputHandler } from "./inputHandler.js";
 import { collisionManager } from "./collisionManager.js";
 import { gameStateMachine } from "./gameStateMachine.js";
@@ -73,6 +72,7 @@ class Button {
                 this.fontColour = "indianred";
                 break;
         }
+        this.cornerRadius = 12;
     }
 
     deactivateButton() {
@@ -124,14 +124,10 @@ class Button {
     }
 
     drawObject() {
-        this.drawButton(this.position.x, this.position.y, this.width, this.height);
-    }
-
-    drawButton(x, y, width, height) {
-        ctx.lineWidth = this.strokeWidth;
-        ctx.strokeStyle = this.strokeColour;
-        ctx.strokeRect(x, y, width, height);
-        clearCanvas(x, y, width, height, this.fillColour);
+        // shortened aliases
+        const [x, y, width, height] = [this.position.x, this.position.y, this.width, this.height];
+        
+        drawRoundRectangle(x, y, width, height, this.strokeWidth, this.strokeColour, this.fillColour, this.cornerRadius);
         drawText(this.text, x + 2 + width/2, y + 2 + height/2, this.titleFont, "center", this.fontShadowColour, "middle", width);
         drawText(this.text, x + width/2, y + height/2, this.titleFont, "center", this.fontColour, "middle", width);
 
@@ -160,11 +156,11 @@ class Button {
         if (this.inactive) {
             switch (this.text) {
                 case "Revive":
-                    this.shadeColour = ctx.strokeStyle = "rgba(255,192,203, 0.6)"; //pink
+                    this.shadeColour = "rgba(255,192,203, 0.6)"; //pink
                     break;
             }
-            ctx.strokeRect(x, y, width, height);
-            clearCanvas(x, y, width, height, this.shadeColour);
+
+            drawRoundRectangle(x, y, width, height, this.strokeWidth, this.shadeColour, this.shadeColour, this.cornerRadius);
         }
     }
 }

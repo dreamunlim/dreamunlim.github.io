@@ -127,6 +127,22 @@ function drawTriangle(p1, p2, p3) {
     ctx.fill();
 }
 
+function drawRoundRectangle(x, y, width, height, strokeWidth, strokeColour, fillColour, cornerRadius = 0, strokeThenFill = true) {
+    ctx.lineWidth = strokeWidth;
+    ctx.strokeStyle = strokeColour;
+    ctx.fillStyle = fillColour;
+    ctx.beginPath();
+    ctx.roundRect(x, y, width, height, cornerRadius);
+
+    if (strokeThenFill) {
+        ctx.stroke();
+        ctx.fill();
+    } else {
+        ctx.fill();
+        ctx.stroke();
+    }
+}
+
 function registerServiceWorker() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("service-worker.js")
@@ -147,5 +163,6 @@ function registerServiceWorker() {
 
 export {
     parseGameJson, random, mod, insertionSort, drawText, onVisibilityChange,
-    onResize, storageAvailable, onStorageChange, drawTriangle, registerServiceWorker
+    onResize, storageAvailable, onStorageChange, drawTriangle, drawRoundRectangle,
+    registerServiceWorker
 };
