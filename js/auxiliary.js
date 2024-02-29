@@ -1,5 +1,5 @@
 import { setGameJson, loop } from "./main.js";
-import { canvas, ctx, resizeCanvas } from "./canvas.js";
+import { ctx, canvasInitialWidth, resizeCanvas } from "./canvas.js";
 import { gameStateMachine } from "./gameStateMachine.js";
 import { PlayState } from "./playState.js";
 import { PauseState } from "./pauseState.js";
@@ -47,7 +47,7 @@ function insertionSort(array) {
     }
 }
 
-function drawText(text, x, y, font, align, colour, baseline = "top", width = canvas.width) {
+function drawText(text, x, y, font, align, colour, baseline = "top", width = canvasInitialWidth) {
     ctx.font = font;
     ctx.textAlign = align;
     ctx.fillStyle = colour;
