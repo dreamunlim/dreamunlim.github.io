@@ -44,7 +44,7 @@ class MenuState extends GameState {
         this.gameTitle = "Dreamer Unlimited".toUpperCase();
 
         this.titleFont = "67px Coiny";
-        this.scoreFont = "35px Orbitron";
+        this.scoreFont = "37px Orbitron";
 
         this.reloadGame = false;
 
@@ -112,19 +112,19 @@ class MenuState extends GameState {
         drawText(this.gameTitle, x, y, this.titleFont, "start", "mediumpurple", "top", width);
     }
 
-    drawTopScore () {
-        var x = 20;
-        var y = 420;
-        var spacing = 35;
-        var charWidth = ctx.measureText("A").width;
-        
+    drawTopScore() {
+        let x = 20;
+        let y = 420;
+        let spacing = 38;
+
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 0;
         ctx.shadowColor = "coral";
         
         drawText("TOP SCORE", x, y, this.scoreFont, "start", "darkgoldenrod");
+        let charWidth = ctx.measureText("TO").width / 2;
 
-        for (var i = 0; i != this.topScore.length; ++i) {
+        for (let i = 0; i != this.topScore.length; ++i) {
             y = y + spacing;
             drawText((i+1), x + charWidth, y, this.scoreFont, "right", "darkgoldenrod");
             drawText(this.topScore[i][0], x + charWidth * 2, y, this.scoreFont, "start", "darkgoldenrod");
@@ -196,9 +196,6 @@ class MenuState extends GameState {
     }
 
     shareScore(button) {
-        // "this" points to "funcPointersMap" from here
-        // can't do "this.topScore[0] === 0"
-
         button.state.shareScoreObj.shareScoreButton = button; // to relay hint messages
         button.state.shareScoreObj.input.click();
     }
@@ -209,6 +206,9 @@ class MenuState extends GameState {
     }
 
     redirectToAbout(button) {
+        // "this" points to "funcPointersMap" from here
+        // can't do "this.topScore[0][0] === 0"
+
         if(button.state.topScore[0][0] === 0) {
             window.open(button.url, "_self");
         } else {
