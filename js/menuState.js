@@ -41,9 +41,9 @@ class MenuState extends GameState {
     constructor() {
         super();
 
-        this.gameTitle = "Dreamer Unlimited";
+        this.gameTitle = "Dreamer Unlimited".toUpperCase();
 
-        this.titleFont = "68px Bebas Neue";
+        this.titleFont = "67px Coiny";
         this.scoreFont = "35px Orbitron";
 
         this.reloadGame = false;
@@ -104,11 +104,12 @@ class MenuState extends GameState {
         }
     }
 
-    drawTitle () {
-        var x = 20;
-        var y = 0;
-        drawText(this.gameTitle, x + 2, y + 2, this.titleFont, "start", "black");
-        drawText(this.gameTitle, x, y, this.titleFont, "start", "mediumpurple");
+    drawTitle() {
+        let x = 20;
+        let y = 0;
+        let width = canvasInitialWidth * 0.65;
+        drawText(this.gameTitle, x + 2, y + 2, this.titleFont, "start", "black", "top", width);
+        drawText(this.gameTitle, x, y, this.titleFont, "start", "mediumpurple", "top", width);
     }
 
     drawTopScore () {
