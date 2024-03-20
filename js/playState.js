@@ -28,9 +28,10 @@ class PlayState extends GameState {
         this.level.update();
 
         // keyboard
-        if (inputHandler.escPressed) {
+        if ((inputHandler.enterPressed || inputHandler.escPressed) && !inputHandler.keyEvent.repeat) {
             inputHandler.escPressed = false;
-            this.switchToPauseState();
+            inputHandler.enterPressed = false;
+            this.pauseButton.handleClick();
         }
     }
 
@@ -67,6 +68,7 @@ class PlayState extends GameState {
         this.timerObject = null;
         this.boosterObject = null;
         this.pointsMultiplier = null;
+        this.buttonsArray = null;
     }
 
     //call back functions

@@ -96,7 +96,7 @@ class LevelParser {
                 this.parseObjects(objectLayer, layerName);
                 break;
             case "buttons":
-                this.parseButtons(objectLayer, layerName);
+                this.parseButtons(state, objectLayer, layerName);
                 break;
             case "info":
                 this.parseInfo(objectLayer, layerName);
@@ -148,7 +148,7 @@ class LevelParser {
         }
     }
 
-    parseButtons(objectLayer, layerName) {
+    parseButtons(state, objectLayer, layerName) {
         const objects = gameJson[this.stateID][layerName];
 
         for (var i = 0; i < objects.length; ++i) {
@@ -173,6 +173,8 @@ class LevelParser {
             // store object in layer
             objectLayer.push(object);
         }
+
+        state.buttonsArray = objectLayer;
     }
 
     parseInfo(objectLayer, layerName) {

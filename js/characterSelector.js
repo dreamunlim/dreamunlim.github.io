@@ -125,20 +125,29 @@ class CharacterSelector {
                 var x2 = this.selectorBox.width / 2 * canvasScaler;
                 
                 if (x1 > x2) {
-                    this.charPointer = (++this.charPointer) % (this.charList.length - this.hiddenChars);
-                    this.selectorBox.skipRightArrowDraw = true;
-                    this.selectorBox.t1 = frameStartTime;
+                    this.selectNextChar();
                 } else {
-                    this.charPointer = mod(--this.charPointer, (this.charList.length - this.hiddenChars));
-                    this.selectorBox.skipLeftArrowDraw = true;
-                    this.selectorBox.t1 = frameStartTime;
+                    this.selectPreviousChar();
                 }
-                this.updatePlayerInitData();
             }
 
             // reset mouse
             inputHandler.mouseLeftPressed = false;
         }
+    }
+
+    selectNextChar() {
+        this.charPointer = (++this.charPointer) % (this.charList.length - this.hiddenChars);
+        this.selectorBox.skipRightArrowDraw = true;
+        this.selectorBox.t1 = frameStartTime;
+        this.updatePlayerInitData();
+    }
+
+    selectPreviousChar() {
+        this.charPointer = mod(--this.charPointer, (this.charList.length - this.hiddenChars));
+        this.selectorBox.skipLeftArrowDraw = true;
+        this.selectorBox.t1 = frameStartTime;
+        this.updatePlayerInitData();
     }
 
     updatePlayerInitData() {

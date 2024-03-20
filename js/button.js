@@ -1,5 +1,6 @@
-import { drawText, drawRoundRectangle } from "./auxiliary.js";
+import { ctx } from "./canvas.js";
 import { frameStartTime } from "./main.js";
+import { drawText, drawRoundRectangle } from "./auxiliary.js";
 import { inputHandler } from "./inputHandler.js";
 import { collisionManager } from "./collisionManager.js";
 import { gameStateMachine } from "./gameStateMachine.js";
@@ -23,6 +24,9 @@ class Button {
         this.callbackDelay = 65; // in ms
         this.resolveCallback = false;
         this.hintDelay = 2000;
+        this.highlight = false;
+
+        this.setButtonStyle();
 
         // keep initial dimensions to restore
         this.initial = {
@@ -30,8 +34,6 @@ class Button {
             width: this.width,
             height: this.height,
         }
-
-        this.setButtonStyle();
 
         // state specific adjustments
         switch (this.state.constructor.name) {
@@ -54,6 +56,8 @@ class Button {
                 this.fillColour ="rgba(165,42,42, 0.8)"; //brown
                 this.fontShadowColour = this.strokeColour;
                 this.fontColour = "lightsalmon";
+                this.highlightStrokeWidth = 4;
+                this.highlightStrokeColour = "lightsalmon";
                 break;
             case "PlayState":
                 this.titleFont = "55px Bebas Neue";
@@ -70,6 +74,7 @@ class Button {
                 this.fillColour ="rgba(255,192,203, 0.3)"; //pink
                 this.fontShadowColour = "brown";
                 this.fontColour = "indianred";
+                this.highlightStrokeColour = "brown";
                 break;
         }
         this.cornerRadius = 12;
@@ -87,11 +92,24 @@ class Button {
         }
     }
 
+    handleClick() {
+        this.t1 = frameStartTime;
+        this.resolveCallback = true;
+
+        // shrink button
+        let shiftX = this.width * 0.04;
+        let shiftY = this.height * 0.05;
+        this.width = this.width - shiftX * 2;
+        this.height = this.height - shiftY * 2;
+        this.position.x += shiftX;
+        this.position.y += shiftY;
+    }
+
     updateObject() {
         this.deactivateButton();
 
         // reset dimensions
-        if((frameStartTime - this.t1) > this.resetDelay) {
+        if ((frameStartTime - this.t1) > this.resetDelay) {
             this.position.x = this.initial.position.x;
             this.position.y = this.initial.position.y;
             this.width = this.initial.width;
@@ -99,25 +117,15 @@ class Button {
         }
 
         // resolve callback
-        if(this.resolveCallback && ((frameStartTime - this.t1) > this.callbackDelay)) {
+        if (this.resolveCallback && ((frameStartTime - this.t1) > this.callbackDelay)) {
             this.state.funcPointersMap[this.text](this);
             this.resolveCallback = false;
         }
 
         // mouse
-        if(inputHandler.mouseLeftPressed) {
+        if (inputHandler.mouseLeftPressed) {
             if (collisionManager.mouseButtonCollision(inputHandler.mEvent, this)) {
-                this.t1 = frameStartTime;
-    
-                var shiftX = this.width * 0.04;
-                var shiftY = this.height * 0.05;
-                this.width = this.width - shiftX * 2;
-                this.height = this.height - shiftY * 2;
-                this.position.x += shiftX;
-                this.position.y += shiftY;
-
-                this.resolveCallback = true;
-                
+                this.handleClick();
                 inputHandler.mouseLeftPressed = false;
             }
         }
@@ -133,6 +141,7 @@ class Button {
 
         this.showHintMessage(x, y, width, height);
         this.shadeButton(x, y, width, height);
+        this.highlightButton(x, y, width, height, this.cornerRadius);
     }
 
     setHintMessage(hintMessage) {
@@ -161,6 +170,46 @@ class Button {
             }
 
             drawRoundRectangle(x, y, width, height, this.strokeWidth, this.shadeColour, this.shadeColour, this.cornerRadius);
+        }
+    }
+
+    doPlainHighlight() {
+        this.highlight = true;
+    }
+
+    removeHighlight() {
+        this.highlight = false;
+    }
+
+    doAnimatedHighlight() {
+        this.t1 = frameStartTime;
+        this.highlight = true;
+
+        // pop out button
+        let shiftX = this.width * 0.04;
+        let shiftY = this.height * 0.05;
+        this.width = this.width + shiftX * 2;
+        this.height = this.height + shiftY * 2;
+        this.position.x -= shiftX;
+        this.position.y -= shiftY;
+    }
+    
+    highlightButton(x, y, width, height, cornerRadius) {
+        if (this.highlight) {
+            switch (this.state.constructor.name) {
+                case "MenuState":
+                    x -= 1;
+                    y -= 1;
+                    width += 2;
+                    height += 2;
+                    break;
+            }
+
+            ctx.lineWidth = this.highlightStrokeWidth || this.strokeWidth;
+            ctx.strokeStyle = this.highlightStrokeColour;
+            ctx.beginPath();
+            ctx.roundRect(x, y, width, height, cornerRadius);
+            ctx.stroke();
         }
     }
 }

@@ -1,5 +1,6 @@
 import { setGameJson, loop } from "./main.js";
 import { ctx, canvasInitialWidth, resizeCanvas } from "./canvas.js";
+import { inputHandler } from "./inputHandler.js";
 import { gameStateMachine } from "./gameStateMachine.js";
 import { PlayState } from "./playState.js";
 import { PauseState } from "./pauseState.js";
@@ -103,10 +104,10 @@ function storageAvailable(type) {
 }
 
 function onStorageChange() {
-    var menuState = gameStateMachine.stack[0];
+    let menuState = gameStateMachine.stack[0];
 
     if (menuState.localStorageAvailable && localStorage.length) {
-        var storage = JSON.parse(localStorage.getItem("data"));
+        let storage = JSON.parse(localStorage.getItem("data"));
 
         menuState.topScore = storage.topScore;
         menuState.shareScoreObj.dataToShare = storage.fbShareData;
@@ -115,6 +116,7 @@ function onStorageChange() {
         menuState.characterSelector.hiddenChars = storage.hiddenChars;
         menuState.characterUnlocker.charUnlocked = storage.charUnlocked;
         menuState.consentGranted = storage.consentGranted;
+        inputHandler.keyEvent = storage.keyboardUsed;
     }
 }
 

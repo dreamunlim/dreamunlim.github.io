@@ -1,12 +1,13 @@
 import { GameState } from "./gameState.js";
 import { ctx, canvasInitialHeight, canvasInitialWidth, clearCanvas } from "./canvas.js";
-import { storageAvailable, onStorageChange, registerServiceWorker, drawText, insertionSort } from "./auxiliary.js";
+import { mod, storageAvailable, onStorageChange, registerServiceWorker, drawText, insertionSort } from "./auxiliary.js";
 import { TextBox } from "./textBox.js";
 import { ShareScore } from "./shareScore.js";
 import { OverridePicture } from "./overridePicture.js";
 import { CharacterUnlocker } from "./characterUnlocker.js";
 import { CharacterSelector } from "./characterSelector.js";
 import { levelParser } from "./levelParser.js";
+import { inputHandler } from "./inputHandler.js";
 import { gameObjectFactory } from "./gameObjectFactory.js";
 import { gameStateMachine, StateID } from "./gameStateMachine.js";
 
@@ -27,6 +28,12 @@ class ConsentPopup {
 
     update() {
         this.okButton.updateObject();
+
+        // keyboard
+        if (inputHandler.enterPressed && !inputHandler.keyEvent.repeat) {
+            inputHandler.enterPressed = false;
+            this.okButton.handleClick();
+        }
     }
 
     draw() {
@@ -60,6 +67,9 @@ class MenuState extends GameState {
 
         this.localStorageAvailable = storageAvailable("localStorage");
 
+        this.buttonsArray = null;
+        this.selectedButton = 0;
+
         // fuction pointers
         this.funcPointersMap = {
             "Play": this.switchToPlayState,
@@ -68,6 +78,39 @@ class MenuState extends GameState {
             "Help": this.redirectToAbout,
             "OK": this.removeConsentPopup
         };
+    }
+
+    handleKeyboardInput() {
+        if (inputHandler.enterPressed && !inputHandler.keyEvent.repeat) {
+            inputHandler.enterPressed = false;
+            this.buttonsArray[this.selectedButton].handleClick();
+
+        } else if (inputHandler.leftPressed) {
+            inputHandler.leftPressed = false;
+            this.buttonsArray[this.selectedButton].removeHighlight();
+            this.selectedButton = mod(--this.selectedButton, this.buttonsArray.length);
+            this.buttonsArray[this.selectedButton].doAnimatedHighlight();
+
+        } else if (inputHandler.rightPressed) {
+            inputHandler.rightPressed = false;
+            this.buttonsArray[this.selectedButton].removeHighlight();
+            this.selectedButton = (++this.selectedButton) % this.buttonsArray.length;
+            this.buttonsArray[this.selectedButton].doAnimatedHighlight();
+
+        } else if (inputHandler.upPressed) {
+            inputHandler.upPressed = false;
+            this.characterSelector.selectPreviousChar();
+
+        } else if (inputHandler.downPressed) {
+            inputHandler.downPressed = false;
+            this.characterSelector.selectNextChar();
+        }
+    }
+
+    highlightSelectedButton() {
+        if (inputHandler.keyEvent) {
+            this.buttonsArray[this.selectedButton].doPlainHighlight();
+        }
     }
 
     update() {
@@ -87,6 +130,8 @@ class MenuState extends GameState {
         
         this.characterUnlocker.update();
         this.characterSelector.update();
+
+        this.handleKeyboardInput();
     }
 
     draw() {
@@ -148,13 +193,14 @@ class MenuState extends GameState {
 
     cacheDataToLocalStorage() {
         if (this.localStorageAvailable) {
-            var data = {
+            let data = {
                 topScore: this.topScore,
                 fbShareData: this.shareScoreObj.dataToShare,
                 selectedChar: this.characterSelector.charPointer,
                 hiddenChars: this.characterSelector.hiddenChars,
                 charUnlocked: this.characterUnlocker.charUnlocked,
                 consentGranted: this.consentGranted,
+                keyboardUsed: !!inputHandler.keyEvent
             };
 
             localStorage.setItem("data", JSON.stringify(data));
@@ -171,6 +217,8 @@ class MenuState extends GameState {
         // create consent popup
         if (! this.consentGranted) {
             this.consentPopup = new ConsentPopup(this);
+        } else {
+            this.highlightSelectedButton();
         }
         
         // by this time the browser will have fetched all resources
@@ -219,6 +267,7 @@ class MenuState extends GameState {
     removeConsentPopup(button) {
         button.state.consentGranted = true;
         button.state.consentPopup = null;
+        button.state.highlightSelectedButton();
         button.state.cacheDataToLocalStorage();
     }
 

@@ -1,8 +1,10 @@
 import { GameState } from "./gameState.js";
-import { frameStartTime } from "./main.js";
+import { mod } from "./auxiliary.js";
 import { canvas } from "./canvas.js";
+import { frameStartTime } from "./main.js";
 import { TextBox } from "./textBox.js";
 import { levelParser } from "./levelParser.js";
+import { inputHandler } from "./inputHandler.js";
 import { gameStateMachine } from "./gameStateMachine.js";
 
 class GameoverState extends GameState {
@@ -23,6 +25,9 @@ class GameoverState extends GameState {
             alreadyPosted: false
         };
 
+        this.buttonsArray = null;
+        this.selectedButton = 0;
+
         // fuction pointers
         this.funcPointersMap = {
             "OK": this.switchToMenuState,
@@ -30,8 +35,44 @@ class GameoverState extends GameState {
         };
     }
 
+    handleKeyboardInput() {
+        if (inputHandler.enterPressed && !inputHandler.keyEvent.repeat) {
+            inputHandler.enterPressed = false;
+            this.buttonsArray[this.selectedButton].handleClick();
+
+        } else if (inputHandler.leftPressed) {
+            inputHandler.leftPressed = false;
+            this.buttonsArray[this.selectedButton].removeHighlight();
+            this.selectedButton = mod(--this.selectedButton, this.buttonsArray.length);
+            this.buttonsArray[this.selectedButton].doAnimatedHighlight();
+
+        } else if (inputHandler.rightPressed) {
+            inputHandler.rightPressed = false;
+            this.buttonsArray[this.selectedButton].removeHighlight();
+            this.selectedButton = (++this.selectedButton) % this.buttonsArray.length;
+            this.buttonsArray[this.selectedButton].doAnimatedHighlight();
+        }
+    }
+
+    redefineSelectedButton() {
+        if (this.playState.timerObject.timerCurrentValue > 0 &&
+            this.playState.playerObject.lives > 0) {
+            this.selectedButton = 1;
+        } else {
+            this.selectedButton = 0;
+        }
+    }
+
+    highlightSelectedButton() {
+        if (inputHandler.keyEvent) {
+            this.buttonsArray[this.selectedButton].doPlainHighlight();
+        }
+    }
+
     update() {
         this.level.update();
+
+        this.handleKeyboardInput();
     }
 
     draw() {
@@ -52,6 +93,9 @@ class GameoverState extends GameState {
         this.dataToShare.formattedScore = this.playState.scoreObject.formattedScore;
         this.dataToShare.formattedMinutes = Math.floor(this.playState.timerObject.totalTimePassed / 1000 / 60);
         this.dataToShare.formattedSeconds = Math.floor(this.playState.timerObject.totalTimePassed / 1000 % 60);
+
+        this.redefineSelectedButton();
+        this.highlightSelectedButton();
 
         return true;
     }
@@ -78,6 +122,7 @@ class GameoverState extends GameState {
         this.menuState = null;
         this.playState = null;
         this.dataToShare = {};
+        this.buttonsArray = null;
     }
 
     //call back functions

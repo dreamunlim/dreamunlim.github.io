@@ -21,9 +21,10 @@ class PauseState extends GameState {
         this.playState.pauseButton.updateObject();
 
         // keyboard
-        if (inputHandler.escPressed) {
+        if ((inputHandler.enterPressed || inputHandler.escPressed) && !inputHandler.keyEvent.repeat) {
             inputHandler.escPressed = false;
-            this.switchToPlayState();
+            inputHandler.enterPressed = false;
+            this.playState.pauseButton.handleClick();
         }
     }
 

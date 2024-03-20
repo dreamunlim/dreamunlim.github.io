@@ -4,14 +4,17 @@ class InputHandler {
         this.rightPressed = false;
         this.upPressed = false;
         this.downPressed = false;
-
         this.escPressed = false;
+        this.enterPressed = false;
+        this.keyEvent; // bookkeep keyboard event
 
         this.mouseLeftPressed = false;
-        this.mEvent; // bookkeep mouse event 
+        this.mEvent; // bookkeep mouse event
     }
 
     keyDownHandler(e) {
+        inputHandler.keyEvent = e;
+
         switch (e.key) {
             case "ArrowLeft":
                 inputHandler.leftPressed = true;
@@ -24,6 +27,9 @@ class InputHandler {
                 break;
             case "ArrowDown":
                 inputHandler.downPressed = true;
+                break;
+            case "Enter":
+                inputHandler.enterPressed = true;
                 break;
             case "Escape":
                 inputHandler.escPressed = true;
@@ -44,6 +50,9 @@ class InputHandler {
                 break;
             case "ArrowDown":
                 inputHandler.downPressed = false;
+                break;
+            case "Enter":
+                inputHandler.enterPressed = false;
                 break;
             case "Escape":
                 inputHandler.escPressed = false;
