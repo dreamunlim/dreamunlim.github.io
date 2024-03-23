@@ -27,6 +27,7 @@ class GameoverState extends GameState {
 
         this.buttonsArray = null;
         this.selectedButton = 0;
+        this.keyboardEventsDelay = 400; // in ms
 
         // fuction pointers
         this.funcPointersMap = {
@@ -36,6 +37,10 @@ class GameoverState extends GameState {
     }
 
     handleKeyboardInput() {
+        if (this.delayKeyboardEvents()) {
+            return;
+        }
+
         if (inputHandler.enterPressed && !inputHandler.keyEvent.repeat) {
             inputHandler.enterPressed = false;
             this.buttonsArray[this.selectedButton].handleClick();
@@ -52,6 +57,13 @@ class GameoverState extends GameState {
             this.selectedButton = (++this.selectedButton) % this.buttonsArray.length;
             this.buttonsArray[this.selectedButton].doAnimatedHighlight();
         }
+    }
+
+    delayKeyboardEvents() {
+        if ((frameStartTime - this.gameoverStartTime) > this.keyboardEventsDelay) {
+            return false;
+        }
+        return true;
     }
 
     redefineSelectedButton() {
