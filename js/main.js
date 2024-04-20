@@ -45,7 +45,7 @@ function loop(functionStartTime) {
 }
 
 // load game json file and start main loop
-await parseGameJson("json/initAll.json");
+parseGameJson("json/initAll.json");
 
 export {
   FPS, FRAME_TIME, frameStartTime, prevframeStartTime, gameJson, setGameJson, loop
