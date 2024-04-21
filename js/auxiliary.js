@@ -129,6 +129,21 @@ function drawTriangle(p1, p2, p3) {
     ctx.fill();
 }
 
+// add a roundRect() method to Canvas API for Chrome versions below 99
+if (typeof CanvasRenderingContext2D.prototype.roundRect !== "function") {
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, radius) {
+        if (w < 2 * radius) radius = w / 2;
+        if (h < 2 * radius) radius = h / 2;
+        this.beginPath();
+        this.moveTo(x + radius, y);
+        this.arcTo(x + w, y, x + w, y + h, radius);
+        this.arcTo(x + w, y + h, x, y + h, radius);
+        this.arcTo(x, y + h, x, y, radius);
+        this.arcTo(x, y, x + w, y, radius);
+        this.closePath();
+    }
+}
+
 function drawRoundRectangle(x, y, width, height, strokeWidth, strokeColour, fillColour, cornerRadius = 0, strokeThenFill = true) {
     ctx.lineWidth = strokeWidth;
     ctx.strokeStyle = strokeColour;
