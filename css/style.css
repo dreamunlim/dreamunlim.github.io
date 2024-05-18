@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   background-color: #039595;
   background-image: url("/img/background-image.png");
+  background-size: 115%;
   background-repeat: no-repeat;
   background-position: center;
 }
