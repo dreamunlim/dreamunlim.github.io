@@ -160,6 +160,27 @@ function drawRoundRectangle(x, y, width, height, strokeWidth, strokeColour, fill
     }
 }
 
+function smartTV() {
+    let TV = /Smart|TV/i.test(navigator.userAgent);
+
+    if (!TV) {
+        const tvViewportWidths = [1280, 1920, 3840];
+        const currentViewportWidth = window.innerWidth;
+        TV = tvViewportWidths.includes(currentViewportWidth);
+    }
+
+    return TV;
+}
+
+function resizeViewport() {
+    // double resolution in mobile browsers only, excluding TV ones
+    if (! smartTV()) {
+        const viewport = "meta[name=viewport]";
+        const content = "width=device-width, initial-scale=0.5, user-scalable=no";
+        document.querySelector(viewport).setAttribute("content", content);
+    }
+}
+
 function registerServiceWorker() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("service-worker.js")
@@ -181,5 +202,5 @@ function registerServiceWorker() {
 export {
     parseGameJson, random, mod, insertionSort, drawText, onVisibilityChange,
     onResize, storageAvailable, onStorageChange, drawTriangle, drawRoundRectangle,
-    registerServiceWorker
+    smartTV, resizeViewport, registerServiceWorker
 };

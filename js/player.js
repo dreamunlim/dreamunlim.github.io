@@ -92,6 +92,11 @@ class Player extends GameObject {
             this.targLane = (++this.targLane) % this.numLanes;
             this.currentRow = 1;
         }
+        // avoid lane fly-throughs on TVs due to slow 'keyup' event
+        if (this.state.smartTV) {
+            inputHandler.leftPressed = false;
+            inputHandler.rightPressed = false;
+        }
 
         // mouse
         if (!this.animate && inputHandler.mouseLeftPressed) {

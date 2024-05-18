@@ -1,6 +1,8 @@
 import "./eventHandlers.js";
-import { parseGameJson } from "./auxiliary.js";
+import { resizeViewport, parseGameJson } from "./auxiliary.js";
 import { gameStateMachine } from "./gameStateMachine.js";
+
+resizeViewport();
 
 const FPS = 60;
 const FRAME_TIME = 1000 / FPS;
