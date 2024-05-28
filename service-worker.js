@@ -1,6 +1,6 @@
 'use strict'
 
-// 12.12.2023
+// 28.05.2024
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -18,7 +18,7 @@ const filesToCache = [
     "img/enemy-red.png",
     "img/enemy-spider.png",
     "img/enemy-star.png",
-    // "img/favicon.png", // noncrucial for offline
+    "img/favicon.png",
     // "img/fb-share-4.jpg", // noncrucial for offline
     "img/hi.png",
     "img/icon-192x192.png",
