@@ -1,5 +1,10 @@
+import { smartTV } from "./auxiliary.js";
+
 class InputHandler {
     constructor() {
+        // host device identifier
+        this.smartTV = smartTV();
+
         this.leftPressed = false;
         this.rightPressed = false;
         this.upPressed = false;
@@ -35,6 +40,27 @@ class InputHandler {
                 inputHandler.escPressed = true;
                 break;
         }
+
+        // used on some TV's
+        if (this.smartTV) {
+            switch (e.keyCode) {
+                case "VK_LEFT":
+                    inputHandler.leftPressed = true;
+                    break;
+                case "VK_RIGHT":
+                    inputHandler.rightPressed = true;
+                    break;
+                case "VK_UP":
+                    inputHandler.upPressed = true;
+                    break;
+                case "VK_DOWN":
+                    inputHandler.downPressed = true;
+                    break;
+                case "VK_ENTER":
+                    inputHandler.enterPressed = true;
+                    break;
+            }
+        }
     }
 
     keyUpHandler(e) {
@@ -57,6 +83,27 @@ class InputHandler {
             case "Escape":
                 inputHandler.escPressed = false;
                 break;
+        }
+
+        // used on some TV's 
+        if (this.smartTV) {
+            switch (e.keyCode) {
+                case "VK_LEFT":
+                    inputHandler.leftPressed = false;
+                    break;
+                case "VK_RIGHT":
+                    inputHandler.rightPressed = false;
+                    break;
+                case "VK_UP":
+                    inputHandler.upPressed = false;
+                    break;
+                case "VK_DOWN":
+                    inputHandler.downPressed = false;
+                    break;
+                case "VK_ENTER":
+                    inputHandler.enterPressed = false;
+                    break;
+            }
         }
     }
 
