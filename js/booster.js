@@ -6,9 +6,9 @@ class Booster extends Enemy {
     constructor () {
         super();
 
-        this.pointsToAdd = 6;
-
         this.state.boosterObject = this;
+
+        this.pointsToAdd = 6;
         
         this.spawned = false;
         this.spawnTimerValue = 2; // in sec
@@ -17,22 +17,23 @@ class Booster extends Enemy {
         this.keepCollidedStatus = FRAME_TIME * 2; // in frames
     }
 
-    initObject(initData) {
-        super.initObject(initData);
-    }
-
-    updateObject() {
-        // remove collided status
-        if((frameStartTime - this.state.timerObject.boosterPickUpTime) > this.keepCollidedStatus) {
+    removeCollidedStatus() {
+        if ((frameStartTime - this.state.timerObject.boosterPickUpTime) > this.keepCollidedStatus) {
             this.collided = false;
         }
-        
-        // check if time to spawn
+    }
+
+    spawn() {
         if (this.state.timerObject.timerCurrentValue == this.spawnTimerValue) {
             this.spawned = true;
         }
-        
-        if(! this.spawned) {
+    }
+
+    updateObject() {
+        this.removeCollidedStatus();
+        this.spawn();
+
+        if (! this.spawned) {
             return;
         }
 
@@ -40,7 +41,7 @@ class Booster extends Enemy {
     }
 
     drawObject() {
-        if(! this.spawned) {
+        if (! this.spawned) {
             return;
         }
 

@@ -10,18 +10,17 @@ class Watermelon extends Enemy {
         this.spawned = false;
         this.spawnPeriod = 4; // in sec
     }
-
-    initObject(initData) {
-        super.initObject(initData);
-    }
-
-    updateObject() {
-        // check if time to spawn
-        var totalSecondsPassed = Math.floor(this.state.timerObject.totalTimePassed / 1000);
+    
+    spawn() {
+        let totalSecondsPassed = Math.floor(this.state.timerObject.totalTimePassed / 1000);
         if (totalSecondsPassed != 0 &&
             totalSecondsPassed % this.spawnPeriod == 0) {
             this.spawned = true;
         }
+    }
+
+    updateObject() {
+        this.spawn();
 
         if (! this.spawned) {
             return;
@@ -32,7 +31,7 @@ class Watermelon extends Enemy {
     }
 
     drawObject() {
-        if(! this.spawned) {
+        if (! this.spawned) {
             return;
         }
 

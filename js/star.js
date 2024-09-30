@@ -24,13 +24,16 @@ class Star extends Enemy {
         this.currentFrame = random(0, this.numFrames - 1);
     }
 
-    updateObject() {
-        // check if time to spawn
+    spawn() {
         if (this.state.timerObject.timerCurrentValue % this.spawnPeriod == 0) {
             this.spawned = true;
         }
-        
-        if(! this.spawned) {
+    }
+
+    updateObject() {
+        this.spawn();
+
+        if (! this.spawned) {
             return;
         }
 
@@ -39,7 +42,7 @@ class Star extends Enemy {
     }
 
     drawObject() {
-        if(! this.spawned) {
+        if (! this.spawned) {
             return;
         }
 
