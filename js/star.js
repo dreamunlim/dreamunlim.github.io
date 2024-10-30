@@ -11,6 +11,7 @@ class Star extends Enemy {
 
         this.spawned = false;
         this.spawnPeriod = 2; // in sec
+        
         this.totalRows = 4;
 
         this.t1 = 0;
@@ -22,6 +23,13 @@ class Star extends Enemy {
 
         // set animation start frame
         this.currentFrame = random(0, this.numFrames - 1);
+    }
+
+    respawn() {
+        super.respawn();
+
+        this.spawned = false;
+        this.currentRow = random(0, this.totalRows - 1);
     }
 
     spawn() {

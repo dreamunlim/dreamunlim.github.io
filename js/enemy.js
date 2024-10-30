@@ -20,7 +20,7 @@ class Enemy extends GameObject {
         super.initObject(initData);
 
         // define position
-        if(! this.position.x) {
+        if (! this.position.x) {
             var lane = random(1, 7);
             this.position.x = this.lanes[lane];
 
@@ -29,8 +29,8 @@ class Enemy extends GameObject {
                 this.placeSpider(lane);
             }
         }
-        
-        if(! this.position.y) {
+
+        if (! this.position.y) {
             this.position.y = -this.dHeight;
         }
 
@@ -54,11 +54,6 @@ class Enemy extends GameObject {
             case "watermelon":
                 this.spawned = false;
                 break;
-            case "star":
-            case "diamond":
-                this.spawned = false;
-                this.currentRow = random(0, this.totalRows - 1);
-                break;
             case "spider":
                 this.placeSpider(lane);
                 break;
@@ -74,13 +69,7 @@ class Enemy extends GameObject {
 
         super.updateObject();
         this.checkPlayerEnemyCollision();
-
-        // offscreen respawn condition
-        if (this.position.y > canvasInitialHeight) {
-            this.respawn();
-        } else if (this.position.y < this.initial.position) {
-            this.respawn();
-        }
+        this.respawnWhenOffscreen();
     }
 
     drawObject() {
@@ -96,6 +85,14 @@ class Enemy extends GameObject {
         var collided = collisionManager.playerEnemyCollision(this.state.playerObject, this);
         if (collided) {
             this.respondToCollision();
+        }
+    }
+
+    respawnWhenOffscreen() {
+        if (this.position.y > canvasInitialHeight) {
+            this.respawn();
+        } else if (this.position.y < this.initial.position) {
+            this.respawn();
         }
     }
 }

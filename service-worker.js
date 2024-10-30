@@ -1,6 +1,6 @@
 'use strict'
 
-// 28.05.2024
+// 30.10.2024
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -13,7 +13,8 @@ const filesToCache = [
     "font/Orbitron-SemiBold.woff2",
     "img/background-image.png",
     "img/booster.png",
-    "img/enemy-diamond.png",
+    "img/enemy-diamond-1.png",
+    "img/enemy-diamond-2.png",
     "img/enemy-purple.png",
     "img/enemy-red.png",
     "img/enemy-spider.png",

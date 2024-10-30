@@ -8,7 +8,25 @@ class Diamond extends Star {
         this.pointsToAdd = 5;
 
         this.spawnPeriod = 3; // in sec
+        
         this.totalRows = 6;
+        this.textures = [];
+        this.rowsPerTexture = null;
+    }
+
+    initObject(initData) {
+        super.initObject(initData);
+
+        this.textures = this.textureID;
+        this.textureID = this.textures[0];
+        this.rowsPerTexture = this.totalRows / this.textures.length;
+    }
+
+    respawn() {
+        super.respawn();
+
+        this.textureID = this.textures[this.currentRow / this.rowsPerTexture | 0];
+        this.currentRow = this.currentRow % this.rowsPerTexture;
     }
 
     spawn() {
