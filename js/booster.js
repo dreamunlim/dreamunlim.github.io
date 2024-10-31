@@ -23,6 +23,11 @@ class Booster extends Enemy {
         }
     }
 
+    respawn() {
+        super.respawn();
+        this.spawned = false;
+    }
+    
     spawn() {
         if (this.state.timerObject.timerCurrentValue == this.spawnTimerValue) {
             this.spawned = true;

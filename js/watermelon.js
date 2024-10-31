@@ -11,6 +11,11 @@ class Watermelon extends Enemy {
         this.spawnPeriod = 4; // in sec
     }
     
+    respawn() {
+        super.respawn();
+        this.spawned = false;
+    }
+
     spawn() {
         let totalSecondsPassed = Math.floor(this.state.timerObject.totalTimePassed / 1000);
         if (totalSecondsPassed != 0 &&

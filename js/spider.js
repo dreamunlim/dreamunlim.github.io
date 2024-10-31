@@ -1,5 +1,5 @@
 import { Enemy } from "./enemy.js";
-import { ctx } from "./canvas.js";
+import { ctx, canvasInitialHeight } from "./canvas.js";
 import { frameStartTime } from "./main.js";
 import { soundManager } from "./soundManager.js";
 
@@ -12,7 +12,7 @@ class Spider extends Enemy {
         this.timeLowestBoundary = 37.5;
         this.timeDecreaseSteps = 6;
         this.timeDecreaseValue = ((this.time - this.timeLowestBoundary) / this.timeDecreaseSteps).toFixed(3) * 1;
-        this.dist = 640;
+        this.dist = canvasInitialHeight;
 
         this.animate = false;
         this.animDuration = 1000; // in ms
@@ -23,7 +23,8 @@ class Spider extends Enemy {
     }
 
     initObject(initData) {
-        super.initObject(initData);
+        const lane = super.initObject(initData);
+        this.placeSpider(lane);
 
         this.velocity.y = this.dist / this.time;
         this.accel = this.velocity.y / this.time;
@@ -33,6 +34,11 @@ class Spider extends Enemy {
 
         // keep initial velocity for respawn 
         this.initial.velocity = this.velocity.y;
+    }
+
+    respawn() {
+        const lane = super.respawn();
+        this.placeSpider(lane);
     }
 
     increaseVelocity() {

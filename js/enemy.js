@@ -23,11 +23,6 @@ class Enemy extends GameObject {
         if (! this.position.x) {
             var lane = random(1, 7);
             this.position.x = this.lanes[lane];
-
-            // spider specific adjustments
-            if (this.enemyID == "spider") {
-                this.placeSpider(lane);
-            }
         }
 
         if (! this.position.y) {
@@ -40,24 +35,18 @@ class Enemy extends GameObject {
             velocity: initData.velocity.y,
             acceleration: initData.acceleration.y
         }
+
+        return lane;
     }
 
     respawn() {
-        var lane = random(1, 7);
+        const lane = random(1, 7);
         this.position.x = this.lanes[lane];
         this.position.y = this.initial.position;
         this.velocity.y = this.initial.velocity;
         this.acceleration.y = this.initial.acceleration;
-
-        switch (this.enemyID) {
-            case "booster":
-            case "watermelon":
-                this.spawned = false;
-                break;
-            case "spider":
-                this.placeSpider(lane);
-                break;
-        }
+        
+        return lane;
     }
 
     updateObject() {
@@ -82,7 +71,7 @@ class Enemy extends GameObject {
             return;
         }
 
-        var collided = collisionManager.playerEnemyCollision(this.state.playerObject, this);
+        const collided = collisionManager.playerEnemyCollision(this.state.playerObject, this);
         if (collided) {
             this.respondToCollision();
         }
