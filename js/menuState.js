@@ -254,14 +254,7 @@ class MenuState extends GameState {
     }
 
     redirectToAbout(button) {
-        // "this" points to "funcPointersMap" from here
-        // can't do "this.topScore[0][0] === 0"
-
-        if(button.state.topScore[0][0] === 0) {
-            window.open(button.url, "_self");
-        } else {
-            window.open(button.url, "_blank"); // avoid losing score
-        }
+        window.open(button.url, "_self");
     }
 
     removeConsentPopup(button) {

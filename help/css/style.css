@@ -1,0 +1,123 @@
+@font-face {
+  font-family: "Outfit";
+  src: url("../font/Outfit-SemiBold.woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Coiny";
+  src: url("/font/Coiny-Regular.woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+
+html, body {
+  margin: 0;
+  background-color: #039595;
+  background-image: url("/img/background-image.png");
+  background-size: 115%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+html {
+  font-family: Arial, sans-serif;
+  height: 100%;
+}
+
+body {
+  height: inherit;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+a:link, a:visited {
+  color: rgb(1, 11, 19);
+  text-decoration: underline;
+}
+
+a:hover, a:active {
+  color: rgb(55, 71, 79);
+  text-decoration: underline;
+}
+
+h1, p, ul {
+  font-family: "Coiny";
+  font-size: 1.65em;
+  line-height: 1.5em;
+  text-align: left;
+  color: lightsalmon;
+}
+
+p, ul {
+  font-family: "Outfit";
+  font-size: 1.65em;
+  color: rgb(1, 11, 19);
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.txt {
+  width: 100%;
+  height: 100%;
+  padding: 5%;
+  overflow-y: scroll; /* Add the ability to scroll */
+  box-sizing: border-box;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.txt::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.txt {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.links {
+  font-family: "Outfit";
+  font-size: 1.5em;
+  margin: 0 -3px 2em; /* account for the buttons border */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.links a:link, a:visited {
+  background-color: rgba(50, 50, 50, 1);
+  color: lightsalmon;
+  padding: 10px 3.75%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: 3px solid #039595;
+  border-radius: 12px;
+}
+
+.links a:hover, a:active {
+  background-color: rgb(55, 71, 79);
+  color: lightsalmon;
+}
+
+@media (min-width: 900px) {
+  .links a:link, a:visited {
+    padding: 14px 3.75%;
+  }
+}
+
+#last_element {
+  padding-bottom: 3px; /* account for the buttons border */
+  margin-bottom: 0px;
+}
