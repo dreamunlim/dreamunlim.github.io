@@ -1,6 +1,6 @@
 'use strict'
 
-// 30.10.2024
+// 24.12.2024
 
 const cacheName = "cache-v1";
 const filesToCache = [
@@ -11,6 +11,12 @@ const filesToCache = [
     "font/BebasNeue-Regular.woff2",
     "font/Coiny-Regular.woff2",
     "font/Orbitron-SemiBold.woff2",
+    "help/css/style.css",
+    "help/font/Outfit-SemiBold.woff2",
+    "help/img/about.jpg",
+    "help/img/share-score-1.jpg",
+    "help/img/share-score-2.jpg",
+    "help/help.html",
     "img/background-image.png",
     "img/booster.png",
     "img/enemy-diamond-1.png",
@@ -113,6 +119,9 @@ self.addEventListener("fetch", (event) => {
         caches.match(event.request, matchOptions)
             .then(cachedResponse => {
                 return cachedResponse || fetch(event.request);
+            })
+            .catch(error => {
+                console.error(error);
             })
     );
 });
